@@ -1,16 +1,19 @@
 <template>
   <div id="app">
     <tool-panel></tool-panel>
+    <drawing-window></drawing-window>
   </div>
 </template>
 
 <script>
 import ToolPanel from "./components/ToolPanel.vue";
+import DrawingWindow from "./components/DrawingWindow.vue";
 
 export default {
   name:"app",
   components: {
-    ToolPanel
+    ToolPanel,
+    DrawingWindow
   }
 };
 </script>
@@ -21,4 +24,10 @@ html
 
 body
   margin 0
+  
+#app
+  display flex
+  flex-direction column
+  height 100vh
+  width 100vw
 </style>
