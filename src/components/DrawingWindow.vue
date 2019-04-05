@@ -3,8 +3,14 @@
 </template>
 
 <script>
+import GUI from './../classes/GUI.js';
+
 export default {
-  name: "drawing-window"
+  name: "drawing-window",
+  mounted() {
+    const gui = new GUI(this.$store);
+    gui.init();
+  }
 }
 </script>
 
