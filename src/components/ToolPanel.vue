@@ -1,18 +1,25 @@
 <template>
   <nav id="tool-panel" class="tool-panel">
-    <div class="tool-panel__tool-item tool-item">
-      <img
-        src="../assets/move.svg"
-        alt="move-tool-icon"
-        class="tool-item__tool-icon tool-icon"
-      />
-    </div>
+    <component class="tool-panel__tool-item" v-for="controller of currentToolControllers" :is="controller"></component>
   </nav>
 </template>
 
 <script>
+import IconControl from "./tool-controllers/IconControl.vue";
+
+/**
+ * @vue-computed {Array} currentToolControllers Returns the list of the current tool controllers
+ */
 export default {
-  name: "tool-panel"
+  name: "tool-panel",
+  components: {
+    IconControl
+  },
+  computed: {
+    currentToolControllers() {
+      return this.$store.getters.getCurrentTool.toolControllers;
+    }
+  }
 };
 </script>
 
@@ -26,12 +33,7 @@ export default {
 .tool-panel__tool-item
   display flex
   align-items center
-  margin-right 10px
+  margin-right 20px
+  
 
-.tool-item__tool-icon
-  display inline-block
-  height auto
-  width 24px
-  
-  
 </style>
