@@ -3,7 +3,7 @@
 </template>
 
 <script>
-import GUI from './../classes/GUI.js';
+import GUI from "./../classes/GUI.js";
 
 export default {
   name: "drawing-window",
@@ -11,7 +11,7 @@ export default {
     const gui = new GUI(this.$store);
     gui.init();
   }
-}
+};
 </script>
 
 <style lang="stylus">

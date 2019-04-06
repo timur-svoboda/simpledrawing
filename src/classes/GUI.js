@@ -6,7 +6,7 @@ export default class GUI {
    */
   constructor(store) {
     this.store = store;
-    this.paper = Snap("#drawing-window");
+    this.paper = Snap("#drawing-window"); // eslint-disable-line no-undef
   }
 
   init() {}

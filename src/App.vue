@@ -10,7 +10,7 @@ import ToolPanel from "./components/ToolPanel.vue";
 import DrawingWindow from "./components/DrawingWindow.vue";
 
 export default {
-  name:"app",
+  name: "app",
   components: {
     ToolPanel,
     DrawingWindow
@@ -24,7 +24,7 @@ html
 
 body
   margin 0
-  
+
 #app
   display flex
   flex-direction column

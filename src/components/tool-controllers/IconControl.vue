@@ -1,26 +1,23 @@
 <template>
   <div class="tool-item">
     <img
-    :src="currentToolIconPath"
-    :alt="currentToolIconAlt"
-    class="tool-item__tool-icon tool-icon"
+      :src="getCurrentToolIconPath"
+      :alt="getCurrentToolIconAlt"
+      class="tool-item__tool-icon tool-icon"
     />
   </div>
 </template>
 
 <script>
-/**
- * @vue-computed {string} currentToolIconPath Returns the path to the current tool icon
- * @vue-computed {string} currentToolIconAlt Returns the string for the alt attribute
- */
 export default {
   computed: {
-    currentToolIconPath() {
-      const iconName = this.$store.getters.getCurrentTool.icon;
-      return iconName ? require(`./../../assets/${iconName}`) : ''
+    getCurrentToolIconPath() {
+      const iconName = this.$store.getters.getCurrentTool.iconName;
+      return iconName ? require(`@/assets/${iconName}`) : "";
     },
-    currentToolIconAlt() {
-      return `${this.$store.getters.getCurrentTool.id}-tool-icon`;
+    getCurrentToolIconAlt() {
+      const toolId = this.$store.getters.getCurrentTool.id;
+      return toolId ? `${toolId}-tool-icon` : "";
     }
   }
 };
@@ -32,4 +29,3 @@ export default {
   height auto
   width 24px
 </style>
-

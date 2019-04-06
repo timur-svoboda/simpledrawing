@@ -1,6 +1,11 @@
 <template>
   <nav id="tool-panel" class="tool-panel">
-    <component class="tool-panel__tool-item" v-for="controller of currentToolControllers" :is="controller"></component>
+    <component
+      class="tool-panel__tool-item"
+      v-for="controller of currentToolControllers"
+      :is="controller"
+      :key="controller.id"
+    ></component>
   </nav>
 </template>
 
@@ -29,11 +34,9 @@ export default {
   align-items center
   padding 15px 20px
   box-shadow: 0 5px 10px 0 rgba(0,0,0,0.2)
-  
+
 .tool-panel__tool-item
   display flex
   align-items center
   margin-right 20px
-  
-
 </style>

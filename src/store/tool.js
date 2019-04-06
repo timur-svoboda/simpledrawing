@@ -2,7 +2,7 @@ export default {
   state: {
     currentTool: {
       id: "select",
-      icon: "select.svg",
+      iconName: "select.svg",
       toolControllers: ["IconControl"]
     }
   },
