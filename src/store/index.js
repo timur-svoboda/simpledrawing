@@ -9,7 +9,14 @@ export default new Vuex.Store({
   modules: {
     tool
   },
-  state: {},
+  state: {
+    scale: 4
+  },
+  getters: {
+    getScale(state) {
+      return state.scale;
+    }
+  },
   mutations: {},
   actions: {}
 });

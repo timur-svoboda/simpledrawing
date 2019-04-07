@@ -7,8 +7,11 @@ const localVue = createLocalVue();
 localVue.use(Vuex);
 
 describe("ToolPanel.vue", () => {
+  let getters;
+  let store;
+
   beforeEach(() => {
-    const getters = {
+    getters = {
       getCurrentTool() {
         return {
           toolControllers: ["IconControl"]
@@ -16,7 +19,7 @@ describe("ToolPanel.vue", () => {
       }
     };
 
-    const store = new Vuex.Store({
+    store = new Vuex.Store({
       getters
     });
   });

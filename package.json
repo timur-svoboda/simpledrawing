@@ -27,9 +27,11 @@
     "eslint": "^5.8.0",
     "eslint-plugin-vue": "^5.0.0",
     "husky": "^1.3.1",
+    "imports-loader": "^0.8.0",
     "jsdoc": "^3.5.5",
     "jsdoc-vuejs": "^2.4.3",
     "lint-staged": "^8.1.5",
+    "snapsvg": "^0.5.1",
     "stylus": "^0.54.5",
     "stylus-loader": "^3.0.2",
     "vue-template-compiler": "^2.5.21"

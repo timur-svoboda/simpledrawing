@@ -7,8 +7,10 @@ const localVue = createLocalVue();
 localVue.use(Vuex);
 
 describe("IconControl.vue", () => {
+  let getters;
+  let store;
   beforeEach(() => {
-    const getters = {
+    getters = {
       getCurrentTool() {
         return {
           id: "select",
@@ -17,7 +19,7 @@ describe("IconControl.vue", () => {
       }
     };
 
-    const store = new Vuex.Store({
+    store = new Vuex.Store({
       getters
     });
   });

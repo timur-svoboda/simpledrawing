@@ -1,3 +1,5 @@
+import Canvas from "./Canvas.js";
+const Snap = require(`imports-loader?this=>window,fix=>module.exports=0!snapsvg/dist/snap.svg.js`);
 /** Class representing the graphic user Interface */
 export default class GUI {
   /**
@@ -9,5 +11,10 @@ export default class GUI {
     this.paper = Snap("#drawing-window"); // eslint-disable-line no-undef
   }
 
-  init() {}
+  init() {
+    const canvas = new Canvas(this.paper, this.store);
+    canvas.init({
+      orientation: "vertical"
+    });
+  }
 }

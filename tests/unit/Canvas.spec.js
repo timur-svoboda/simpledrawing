@@ -1,112 +1,145 @@
+import { createLocalVue } from "@vue/test-utils";
+import Vuex from "vuex";
 import Canvas from "./../../src/classes/Canvas.js";
 
+const Snap = require(`imports-loader?this=>window,fix=>module.exports=0!snapsvg/dist/snap.svg.js`);
+
+const localVue = createLocalVue();
+
+localVue.use(Vuex);
+
 describe("Canvas.js init", () => {
-  it("rotates canvasGroup", () => {
-    const canvasInstance = new Canvas();
-    const canvasGroup = canvasInstance.init();
+  let store;
+  let canvasInstance;
+
+  beforeEach(() => {
+    store = new Vuex.Store({
+      scale: 4,
+      getters: {
+        getScale(state) {
+          return state.scale;
+        }
+      }
+    });
+
+    paper = Snap("#drawing-window");
+
+    canvasInstance = new Canvas(paper, store);
+  });
+
+  it("rotates canvasGroup if horizontal", () => {
+    const canvasGroup = canvasInstance.init({ orientation: "horizontal" });
     expect(canvasGroup._.transform).toBe("r-90");
   });
-});
 
-describe("Canvas.js _drawCanvas: canvas width and height for the certain canvas format.", () => {
-  beforeEach(() => {
-    const canvasInstance = new Canvas();
-  });
-
-  it("Width; A4", () => {
-    const canvas = canvasInstance._drawCanvas("A4");
-    expect(canvas.getBbox().width).toBe(297);
-  });
-
-  it("Height; A4", () => {
-    const canvas = canvasInstance._drawCanvas("A4");
-    expect(canvas.getBbox().height).toBe(210);
-  });
-});
-
-describe("Canvas.js _drawBorder: border width and height for the certain canvas format.", () => {
-  beforeEach(() => {
-    const canvasInstance = new Canvas();
-  });
-
-  it("Width; A4", () => {
-    const border = canvasInstance._drawBorder("A4");
-    expect(border.getBbox().width).toBe(287);
-  });
-
-  it("Height; A4", () => {
-    const border = canvasInstance._drawBorder("A4");
-    expect(border.getBbox().height).toBe(185);
+  it("doesn't rotate canvasGroup if vertical", () => {
+    const canvasGroup = canvasInstance.init({ orientation: "vertical" });
+    expect(canvasGroup._.transform).toEqual([]);
   });
 });
 
 describe("Canvas.js _drawMainInscription", () => {
+  let store;
+  let canvasInstance;
+
   beforeEach(() => {
-    const canvasInstance = new Canvas();
+    store = new Vuex.Store({
+      scale: 4,
+      getters: {
+        getScale(state) {
+          return state.scale;
+        }
+      }
+    });
+
+    paper = Snap("#drawing-window");
+
+    canvasInstance = new Canvas(paper, store);
   });
 
-  it("Checks fields.length", () => {
-    const fields = canvasInstance
-      ._drawMainInscription("educational")
-      .children();
-    expect(fields.length).toBe(11);
+  it("checks the text of the author field", () => {
+    const fields = canvasInstance._drawMainInscription(0, 0);
+    expect(fields.children().length).toBe(11);
+  });
+});
+
+describe("Canvas.js _drawField", () => {
+  let store;
+  let canvasInstance;
+
+  beforeEach(() => {
+    store = new Vuex.Store({
+      scale: 4,
+      getters: {
+        getScale(state) {
+          return state.scale;
+        }
+      }
+    });
+
+    paper = Snap("#drawing-window");
+
+    canvasInstance = new Canvas(paper, store);
   });
 
-  it("Checks fields[9].children().length", () => {
-    const fields = canvasInstance
-      ._drawMainInscription("educational")
-      .children();
-    expect(fields[9].children().length).toBe(2);
+  it("checks children length", () => {
+    const field = canvasInstance._drawField(
+      0,
+      0,
+      100,
+      20,
+      "some text",
+      "some-id"
+    );
+    expect(field.children().length).toBe(2);
   });
 
-  it("Checks fields[8].children()[0].type", () => {
-    const fields = canvasInstance
-      ._drawMainInscription("educational")
-      .children();
-    expect(fields[8].children()[0].type).toBe("rect");
+  it("checks the first children tag name", () => {
+    const field = canvasInstance._drawField(
+      0,
+      0,
+      100,
+      20,
+      "some text",
+      "some-id"
+    );
+    expect(field.children()[0].tagName.toLowerCase()).toBe("rect");
   });
 
-  it("Checks fields[7].children()[2].type", () => {
-    const fields = canvasInstance
-      ._drawMainInscription("educational")
-      .children();
-    expect(fields[7].children()[2].type).toBe("text");
+  it("checks the second children tag name", () => {
+    const field = canvasInstance._drawField(
+      0,
+      0,
+      100,
+      20,
+      "some text",
+      "some-id"
+    );
+    expect(field.children()[1].tagName.toLowerCase()).toBe("text");
   });
 
-  it("Checks the text of the author field", () => {
-    const fields = canvasInstance
-      ._drawMainInscription("educational")
-      .children();
-    expect(fields[0].children()[2].node.innerText).toBe("Author");
+  it("checks the id", () => {
+    const field = canvasInstance._drawField(
+      0,
+      0,
+      100,
+      20,
+      "some text",
+      "some-id"
+    );
+    expect(field.id).toBe("some-id");
+    expect(field.node.id).toBe("some-id");
   });
 
-  it("Checks the text of the examiner field", () => {
-    const fields = canvasInstance
-      ._drawMainInscription("educational")
-      .children();
-    expect(fields[3].children()[2].node.innerText).toBe("Examiner");
-  });
-
-  it("Renders text of the 5th field, when it's focused", () => {
-    const inscr = canvasInstance._drawMainInscription("educational");
-    const field5 = inscr.children()[5];
-
-    field5.dispatchEvent(new MouseEvent("click"));
-    field5.dispatchEvent(new FocusEvent("focus"));
-    window.dispatchEvent(new KeyboardEvent("keydown", { key: "t" }));
-
-    expect(field5.innerText).toBe("t");
-  });
-
-  it("Doesn't render text of the 5th field, when it's blured", () => {
-    const inscr = canvasInstance._drawMainInscription("educational");
-    const field5 = inscr.children()[5];
-
-    field5.dispatchEvent(new MouseEvent("click"));
-    field5.dispatchEvent(new FocusEvent("focus"));
-    field5.dispatchEvent(new FocusEvent("blur"));
-    window.dispatchEvent(new KeyboardEvent("keydown", { key: "t" }));
-
-    expect(field5.innerText).toBe("");
+  it("checks the text", () => {
+    const field = canvasInstance._drawField(
+      0,
+      0,
+      100,
+      20,
+      "some text",
+      "some-id"
+    );
+    expect(field.children()[1].innerText).toBe("some text");
   });
 });

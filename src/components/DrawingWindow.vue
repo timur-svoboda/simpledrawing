@@ -21,4 +21,22 @@ export default {
   background-color rgba( 0, 0, 0, 0.8 )
   cursor crosshair
   overflow hidden
+
+.canvas
+  fill #fff
+
+.canvas__border
+  fill transparent
+  stroke #000
+  stroke-width 2
+
+.main-inscription__field rect
+  fill transparent
+  stroke #000
+  stroke-width 2
+
+.main-inscription__field text
+  text-anchor middle
+  fill #000
+  font: bold 12px Arial, sans-serif
 </style>
