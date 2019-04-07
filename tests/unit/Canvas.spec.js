@@ -2,7 +2,7 @@ import { createLocalVue } from "@vue/test-utils";
 import Vuex from "vuex";
 import Canvas from "./../../src/classes/Canvas.js";
 
-const Snap = require(`imports-loader?this=>window,fix=>module.exports=0!snapsvg/dist/snap.svg.js`);
+const Snap = require("./../../node_modules/snapsvg/dist/snap.svg-min.js");
 
 const localVue = createLocalVue();
 
@@ -11,6 +11,7 @@ localVue.use(Vuex);
 describe("Canvas.js init", () => {
   let store;
   let canvasInstance;
+  let paper;
 
   beforeEach(() => {
     store = new Vuex.Store({
@@ -22,7 +23,7 @@ describe("Canvas.js init", () => {
       }
     });
 
-    paper = Snap("#drawing-window");
+    paper = Snap(1366, 600);
 
     canvasInstance = new Canvas(paper, store);
   });
@@ -41,6 +42,7 @@ describe("Canvas.js init", () => {
 describe("Canvas.js _drawMainInscription", () => {
   let store;
   let canvasInstance;
+  let paper;
 
   beforeEach(() => {
     store = new Vuex.Store({
@@ -52,7 +54,7 @@ describe("Canvas.js _drawMainInscription", () => {
       }
     });
 
-    paper = Snap("#drawing-window");
+    paper = Snap(1366, 600);
 
     canvasInstance = new Canvas(paper, store);
   });
@@ -66,6 +68,7 @@ describe("Canvas.js _drawMainInscription", () => {
 describe("Canvas.js _drawField", () => {
   let store;
   let canvasInstance;
+  let paper;
 
   beforeEach(() => {
     store = new Vuex.Store({
@@ -77,7 +80,7 @@ describe("Canvas.js _drawField", () => {
       }
     });
 
-    paper = Snap("#drawing-window");
+    paper = Snap(1366, 600);
 
     canvasInstance = new Canvas(paper, store);
   });
@@ -103,7 +106,7 @@ describe("Canvas.js _drawField", () => {
       "some text",
       "some-id"
     );
-    expect(field.children()[0].tagName.toLowerCase()).toBe("rect");
+    expect(field.children()[0].node.tagName.toLowerCase()).toBe("rect");
   });
 
   it("checks the second children tag name", () => {
@@ -115,7 +118,7 @@ describe("Canvas.js _drawField", () => {
       "some text",
       "some-id"
     );
-    expect(field.children()[1].tagName.toLowerCase()).toBe("text");
+    expect(field.children()[1].node.tagName.toLowerCase()).toBe("text");
   });
 
   it("checks the id", () => {
@@ -140,6 +143,6 @@ describe("Canvas.js _drawField", () => {
       "some text",
       "some-id"
     );
-    expect(field.children()[1].innerText).toBe("some text");
+    expect(field.children()[1].innerSVG()).toBe("some text");
   });
 });
