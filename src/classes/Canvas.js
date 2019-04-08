@@ -34,6 +34,8 @@ export default class Canvas {
       canvasGroup.transform("r-90");
     }
 
+    this._bindEvents();
+
     return canvasGroup;
   }
 
@@ -98,6 +100,8 @@ export default class Canvas {
 
     inscr.addClass("main-inscription");
 
+    inscr.node.addEventListener("click", e => e.stopPropagation());
+
     return inscr;
   }
 
@@ -110,6 +114,31 @@ export default class Canvas {
     field.id = field.node.id = id;
     field.addClass("main-inscription__field");
 
+    field.node.addEventListener("focus", () => {
+      field.node.classList.add("inscription__field_highlighted");
+    });
+
+    field.node.addEventListener("blur", () => {
+      field.node.classList.remove("inscription__field_highlighted");
+    });
+
     return field;
+  }
+
+  _bindEvents() {
+    window.addEventListener("keydown", e => {
+      const key = e.key;
+      const textTag = document.querySelector(
+        ".inscription__field_highlighted text"
+      );
+      if (textTag) {
+        if (key === "Backspace" || key === "Delete") {
+          let text = textTag.textContent;
+          textTag.textContent = text.slice(0, -1);
+        } else if (key.length === 1 && /./i.test(key)) {
+          textTag.textContent += key;
+        }
+      }
+    });
   }
 }

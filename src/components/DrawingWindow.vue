@@ -1,5 +1,9 @@
 <template>
-  <svg id="drawing-window" class="drawing-window"></svg>
+  <svg
+    id="drawing-window"
+    class="drawing-window"
+    viewBox="0 500 1366 500"
+  ></svg>
 </template>
 
 <script>
@@ -21,6 +25,7 @@ export default {
   background-color rgba( 0, 0, 0, 0.8 )
   cursor crosshair
   overflow hidden
+  user-select none
 
 .canvas
   fill #fff
@@ -30,6 +35,9 @@ export default {
   stroke #000
   stroke-width 2
 
+.main-inscription__field
+  cursor text
+
 .main-inscription__field rect
   fill transparent
   stroke #000
@@ -38,5 +46,10 @@ export default {
 .main-inscription__field text
   text-anchor middle
   fill #000
-  font: bold 12px Arial, sans-serif
+  font bold 12px Arial, sans-serif
+
+.inscription__field_highlighted
+  outline none
+  rect
+    fill #41b883
 </style>
