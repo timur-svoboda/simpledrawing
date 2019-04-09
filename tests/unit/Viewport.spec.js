@@ -13,9 +13,17 @@ describe("Viewport.js init", () => {
 
   beforeEach(() => {
     paper = Snap(1366, 600);
+    /* clientWidth and clientHeight will equal zero because of element has no associated CSS layout Box,
+     * so I define these properties manually.
+     * https://drafts.csswg.org/cssom-view/#dom-element-clientwidth
+     */
+    Object.defineProperty(paper.node, "clientWidth", { value: 1366 });
+    Object.defineProperty(paper.node, "clientHeight", { value: 600 });
 
     store = new Vuex.Store({
-      scrollDistance: 0,
+      state: {
+        scrollDistance: 0
+      },
       getters: {
         getScrollDistance(state) {
           return state.scrollDistance;
@@ -55,9 +63,17 @@ describe("Viewport.js _setViewBoxY", () => {
 
   beforeEach(() => {
     paper = Snap(1366, 600);
+    /* clientWidth and clientHeight will equal zero because of element has no associated CSS layout Box,
+     * so I define these properties manually.
+     * https://drafts.csswg.org/cssom-view/#dom-element-clientwidth
+     */
+    Object.defineProperty(paper.node, "clientWidth", { value: 1366 });
+    Object.defineProperty(paper.node, "clientHeight", { value: 600 });
 
     store = new Vuex.Store({
-      scrollDistance: 0,
+      state: {
+        scrollDistance: 0
+      },
       getters: {
         getScrollDistance(state) {
           return state.scrollDistance;
@@ -86,9 +102,17 @@ describe("Viewport.js event handling", () => {
 
   beforeEach(() => {
     paper = Snap(1366, 600);
+    /* clientWidth and clientHeight will equal zero because of element has no associated CSS layout Box,
+     * so I define these properties manually.
+     * https://drafts.csswg.org/cssom-view/#dom-element-clientwidth
+     */
+    Object.defineProperty(paper.node, "clientWidth", { value: 1366 });
+    Object.defineProperty(paper.node, "clientHeight", { value: 600 });
 
     store = new Vuex.Store({
-      scrollDistance: 0,
+      state: {
+        scrollDistance: 0
+      },
       getters: {
         getScrollDistance(state) {
           return state.scrollDistance;
