@@ -15,7 +15,7 @@ export default class GUI {
   init() {
     const canvas = new Canvas(this.paper, this.store);
     canvas.init({
-      orientation: "vertical"
+      orientation: "horizontal"
     });
 
     const viewport = new Viewport(this.paper, this.store);

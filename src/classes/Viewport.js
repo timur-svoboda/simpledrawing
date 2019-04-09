@@ -16,7 +16,7 @@ export default class Viewport {
 
   _bindEvents() {
     this.paper.node.addEventListener("wheel", e => {
-      const deltaY = e.deltaY;
+      const deltaY = e.deltaY / 4;
       const prevScrollDistance = this.store.getters.getScrollDistance;
       const currentScrollDistance = prevScrollDistance + deltaY;
 
