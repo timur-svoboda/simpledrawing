@@ -10,7 +10,9 @@ localVue.use(Vuex);
 
 describe("Canvas.js _drawField", () => {
   const store = new Vuex.Store({
-    scale: 4,
+    state: {
+      scale: 4
+    },
     getters: {
       getScale(state) {
         return state.scale;

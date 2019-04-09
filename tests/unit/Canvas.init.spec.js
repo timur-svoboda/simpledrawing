@@ -10,7 +10,9 @@ localVue.use(Vuex);
 
 describe("Canvas.js init", () => {
   const store = new Vuex.Store({
-    scale: 4,
+    store: {
+      scale: 4
+    },
     getters: {
       getScale(state) {
         return state.scale;

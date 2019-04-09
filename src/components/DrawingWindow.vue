@@ -1,8 +1,5 @@
 <template>
-  <svg
-    id="drawing-window"
-    class="drawing-window"
-  ></svg>
+  <svg id="drawing-window" class="drawing-window"></svg>
 </template>
 
 <script>
