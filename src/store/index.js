@@ -10,13 +10,21 @@ export default new Vuex.Store({
     tool
   },
   state: {
-    scale: 4
+    scale: 4,
+    scrollDistance: 0
   },
   getters: {
     getScale(state) {
       return state.scale;
+    },
+    getScrollDistance(state) {
+      return state.scrollDistance;
     }
   },
-  mutations: {},
+  mutations: {
+    setScrollDistance(state, distance) {
+      state.scrollDistance = distance;
+    }
+  },
   actions: {}
 });

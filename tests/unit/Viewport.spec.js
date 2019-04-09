@@ -1,6 +1,6 @@
 import { createLocalVue } from "@vue/test-utils";
 import Vuex from "vuex";
-import Canvas from "./../../src/classes/Viewport.js";
+import Viewport from "./../../src/classes/Viewport.js";
 
 const Snap = require("./../../node_modules/snapsvg/dist/snap.svg-min.js");
 
@@ -9,10 +9,25 @@ const localVue = createLocalVue();
 localVue.use(Vuex);
 
 describe("Viewport.js init", () => {
-  let paper, viewportInstance;
+  let paper, viewportInstance, store;
 
   beforeEach(() => {
     paper = Snap(1366, 600);
+
+    store = new Vuex.Store({
+      scrollDistance: 0,
+      getters: {
+        getScrollDistance(state) {
+          return state.scrollDistance;
+        }
+      },
+      mutations: {
+        setScrollDistance(state, distance) {
+          state.scrollDistance = distance;
+        }
+      }
+    });
+
     viewportInstance = new Viewport(paper, store);
   });
 
@@ -36,10 +51,25 @@ describe("Viewport.js init", () => {
 });
 
 describe("Viewport.js _setViewBoxY", () => {
-  let paper, viewportInstance;
+  let paper, viewportInstance, store;
 
   beforeEach(() => {
     paper = Snap(1366, 600);
+
+    store = new Vuex.Store({
+      scrollDistance: 0,
+      getters: {
+        getScrollDistance(state) {
+          return state.scrollDistance;
+        }
+      },
+      mutations: {
+        setScrollDistance(state, distance) {
+          state.scrollDistance = distance;
+        }
+      }
+    });
+
     viewportInstance = new Viewport(paper, store);
   });
 
@@ -88,6 +118,6 @@ describe("Viewport.js event handling", () => {
     viewportInstance.paper.node.dispatchEvent(
       new WheelEvent("wheel", { deltaY: 100 })
     );
-    expect(viewBoxObject.store.getScrollDistance).toBe(100);
+    expect(store.getters.getScrollDistance).toBe(100);
   });
 });

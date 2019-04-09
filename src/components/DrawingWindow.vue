@@ -2,7 +2,6 @@
   <svg
     id="drawing-window"
     class="drawing-window"
-    viewBox="0 500 1366 500"
   ></svg>
 </template>
 
