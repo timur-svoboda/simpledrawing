@@ -48,4 +48,31 @@ export default {
   outline none
   rect
     fill #41b883
+
+.radialnav
+  user-select none
+  &-sector
+    fill rgba( 65, 184, 131, 1 )
+    stroke rgba( 255, 255, 255, 0.1 )
+    stroke-width 1px
+    transition all 0.4s
+    &.active
+      fill rgba( 255, 255, 255, 0.9 )
+  &-icon
+    pointer-events none
+    fill #eee
+    transition all 0.4s
+    &.active
+      fill #333
+  &-hint
+    -webkit-font-smoothing antialiased
+    text-anchor middle
+    font: bold 14px Arial, sans-serif
+    fill #41b883
+    transition all 0.4s
+    opacity 0
+    &_hide
+      display none
+    &.active
+      opacity 1
 </style>
