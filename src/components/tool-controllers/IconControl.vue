@@ -10,6 +10,7 @@
 
 <script>
 export default {
+  name: "IconControl",
   computed: {
     getCurrentToolIconPath() {
       const iconName = this.$store.getters.getCurrentTool.iconName;

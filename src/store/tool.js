@@ -1,10 +1,38 @@
 export default {
   state: {
+    tools: [
+      {
+        id: "select",
+        iconName: "select.svg",
+        toolControllers: ["IconControl"]
+      },
+      {
+        id: "rails",
+        iconName: "rails.svg",
+        toolControllers: ["IconControl"]
+      },
+      {
+        id: "line",
+        iconName: "line.svg",
+        toolControllers: ["IconControl"]
+      },
+      {
+        id: "circular-arc",
+        iconName: "circular-arc.svg",
+        toolControllers: ["IconControl"]
+      },
+      {
+        id: "ruler",
+        iconName: "ruler.svg",
+        toolControllers: ["IconControl"]
+      }
+    ],
     currentTool: {
       id: "select",
       iconName: "select.svg",
       toolControllers: ["IconControl"]
     },
+
     radialNavParams: {
       size: 500,
       c: 250, // Center
@@ -18,15 +46,15 @@ export default {
         icon: "move",
         text: "Selection",
         on(store) {
-          console.log("bla");
+          store.commit("changeCurrentTool", "select"); // eslint-disable-line eslint no-console
         }
       },
       {
         id: "rails",
         icon: "rails",
-        text: "Rail",
+        text: "Rails",
         on(store) {
-          console.log("bla");
+          store.commit("changeCurrentTool", "rails"); // eslint-disable-line eslint no-console
         }
       },
       {
@@ -34,7 +62,7 @@ export default {
         icon: "line",
         text: "Line",
         on(store) {
-          console.log("bla");
+          store.commit("changeCurrentTool", "line"); // eslint-disable-line eslint no-console
         }
       },
       {
@@ -42,7 +70,15 @@ export default {
         icon: "circular-arc",
         text: "Circle",
         on(store) {
-          console.log("bla");
+          store.commit("changeCurrentTool", "circular-arc"); // eslint-disable-line eslint no-console
+        }
+      },
+      {
+        id: "ruler",
+        icon: "ruler",
+        text: "Ruler",
+        on(store) {
+          store.commit("changeCurrentTool", "ruler"); // eslint-disable-line eslint no-console
         }
       }
     ]
@@ -51,11 +87,31 @@ export default {
     getRadialNavIcons(state) {
       return state.radialNavIcons;
     },
+    getTools(state) {
+      return state.tools;
+    },
     getCurrentTool(state) {
       return state.currentTool;
     },
     getRadialNavParams(state) {
       return state.radialNavParams;
+    }
+  },
+  mutations: {
+    changeCurrentTool(state, payload) {
+      let tools = state.tools,
+        currentTool;
+
+      for (let i = 0, len = tools.length; i < len; i++) {
+        if (tools[i].id === payload) {
+          currentTool = tools[i];
+        }
+        if (tools[i].id === state.currentTool.id) {
+          state.tools[i] = state.currentTool;
+        }
+      }
+
+      state.currentTool = currentTool;
     }
   }
 };
