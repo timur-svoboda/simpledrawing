@@ -4,7 +4,7 @@ export default class Canvas {
     this.store = store;
   }
 
-  init({ orientation }) {
+  init() {
     const s = this.store.getters.getScale;
     const canvasWidth = 210 * s;
     const canvasHeight = 297 * s;
@@ -29,10 +29,6 @@ export default class Canvas {
     );
 
     const canvasGroup = this.paper.g(canvas, border, mainInscription);
-
-    if (orientation === "horizontal") {
-      canvasGroup.transform("r-90");
-    }
 
     this._bindEvents();
 
@@ -98,7 +94,7 @@ export default class Canvas {
       this._drawField(x + 125 * s, y + 14 * s, 20 * s, 8 * s, "", "scale")
     );
 
-    inscr.addClass("main-inscription");
+    inscr.addClass("canvas__main-inscription");
 
     inscr.node.addEventListener("click", e => e.stopPropagation());
 

@@ -10,7 +10,7 @@ localVue.use(Vuex);
 
 describe("Canvas.js init", () => {
   const store = new Vuex.Store({
-    store: {
+    state: {
       scale: 4
     },
     getters: {
@@ -20,15 +20,28 @@ describe("Canvas.js init", () => {
     }
   });
   const paper = Snap(1366, 600);
-  const canvasInstance = new Canvas(paper, store);
 
-  it("rotates canvasGroup if horizontal", () => {
-    const canvasGroup = canvasInstance.init({ orientation: "horizontal" });
-    expect(canvasGroup._.transform).toBe("r-90");
+  it("checks the existence of the canvasGroup", () => {
+    const canvasInstance = new Canvas(paper, store);
+    const canvasGroup = canvasInstance.init();
+    expect(canvasGroup).toBeDefined();
   });
 
-  it("doesn't rotate canvasGroup if vertical", () => {
-    const canvasGroup = canvasInstance.init({ orientation: "vertical" });
-    expect(canvasGroup._.transform).toEqual([]);
+  it("checks if the canvasGroup contains the canvas", () => {
+    const canvasInstance = new Canvas(paper, store);
+    const canvasGroup = canvasInstance.init();
+    expect(canvasGroup.select(".canvas")).toBeDefined();
+  });
+
+  it("checks if the canvasGroup contains the border", () => {
+    const canvasInstance = new Canvas(paper, store);
+    const canvasGroup = canvasInstance.init();
+    expect(canvasGroup.select(".canvas__border")).toBeDefined();
+  });
+
+  it("checks if the canvasGroup contains the main inscription ", () => {
+    const canvasInstance = new Canvas(paper, store);
+    const canvasGroup = canvasInstance.init();
+    expect(canvasGroup.select(".canvas__main-inscription")).toBeDefined();
   });
 });
