@@ -23,7 +23,7 @@ export default {
   overflow hidden
   user-select none
 
-.canvas
+.canvas__sheet
   fill #fff
 
 .canvas__border

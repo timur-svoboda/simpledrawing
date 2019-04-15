@@ -5,6 +5,9 @@ export default class Canvas {
   }
 
   init() {
+    this.canvas = this.paper.svg();
+    this.canvas.addClass("canvas");
+
     const s = this.store.getters.getScale;
     const canvasWidth = 210 * s;
     const canvasHeight = 297 * s;
@@ -28,23 +31,23 @@ export default class Canvas {
       canvasY + canvasHeight - 27 * s
     );
 
-    const canvasGroup = this.paper.g(canvas, border, mainInscription);
+    const canvasGroup = this.canvas.g(canvas, border, mainInscription);
 
     this._bindEvents();
 
-    return canvasGroup;
+    return this.canvas;
   }
 
   _drawCanvas(x, y, width, height) {
-    const canvas = this.paper.rect(x, y, width, height);
+    const canvas = this.canvas.rect(x, y, width, height);
 
-    canvas.addClass("canvas");
+    canvas.addClass("canvas__sheet");
 
     return canvas;
   }
 
   _drawBorder(x, y, width, height) {
-    const border = this.paper.rect(x, y, width, height);
+    const border = this.canvas.rect(x, y, width, height);
 
     border.addClass("canvas__border");
 
@@ -52,7 +55,7 @@ export default class Canvas {
   }
 
   _drawMainInscription(x, y) {
-    const inscr = this.paper.g();
+    const inscr = this.canvas.g();
     const s = this.store.getters.getScale;
 
     inscr.add(this._drawField(x, y, 25 * s, 7 * s, "Author", "author"));
@@ -96,16 +99,14 @@ export default class Canvas {
 
     inscr.addClass("canvas__main-inscription");
 
-    inscr.node.addEventListener("click", e => e.stopPropagation());
-
     return inscr;
   }
 
   _drawField(x, y, width, height, text, id) {
-    const field = this.paper.g();
+    const field = this.canvas.g();
 
-    field.add(this.paper.rect(x, y, width, height));
-    field.add(this.paper.text(x + width / 2, y + height / 2 + 4, text));
+    field.add(this.canvas.rect(x, y, width, height));
+    field.add(this.canvas.text(x + width / 2, y + height / 2 + 4, text));
 
     field.id = field.node.id = id;
     field.addClass("main-inscription__field");

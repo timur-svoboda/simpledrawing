@@ -2,6 +2,7 @@ export default class Viewport {
   constructor(paper, store) {
     this.paper = paper;
     this.store = store;
+    this.canvas = this.paper.select(".canvas");
   }
 
   init() {
@@ -9,13 +10,13 @@ export default class Viewport {
     const width = paperNode.clientWidth;
     const height = paperNode.clientHeight;
 
-    this.paper.attr("viewBox", `0 0 ${width} ${height}`);
+    this.canvas.attr("viewBox", `0 0 ${width} ${height}`);
 
     this._bindEvents();
   }
 
   _bindEvents() {
-    this.paper.node.addEventListener("wheel", e => {
+    this.canvas.node.addEventListener("wheel", e => {
       const deltaY = e.deltaY / 4;
       const prevScrollDistance = this.store.getters.getScrollDistance;
       const currentScrollDistance = prevScrollDistance + deltaY;
@@ -26,8 +27,8 @@ export default class Viewport {
   }
 
   _setViewBoxY(scrollDistance) {
-    const viewBoxObject = this.paper.attr("viewBox");
+    const viewBoxObject = this.canvas.attr("viewBox");
     viewBoxObject.y = scrollDistance;
-    this.paper.attr("viewBox", viewBoxObject);
+    this.canvas.attr("viewBox", viewBoxObject);
   }
 }
