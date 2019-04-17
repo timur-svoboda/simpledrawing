@@ -2,12 +2,11 @@ export default class Canvas {
   constructor(paper, store) {
     this.paper = paper;
     this.store = store;
+    this.canvas = this.paper.svg();
+    this.canvas.addClass("canvas");
   }
 
   init() {
-    this.canvas = this.paper.svg();
-    this.canvas.addClass("canvas");
-
     const s = this.store.getters.getScale;
     const canvasWidth = 210 * s;
     const canvasHeight = 297 * s;
@@ -35,7 +34,11 @@ export default class Canvas {
 
     this._bindEvents();
 
-    return this.canvas;
+    return {
+      canvas: this.canvas,
+      width: this.paper.node.clientWidth,
+      height: this.paper.node.clientHeight
+    };
   }
 
   _drawCanvas(x, y, width, height) {

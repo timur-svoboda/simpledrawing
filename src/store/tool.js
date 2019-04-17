@@ -81,9 +81,13 @@ export default {
           store.commit("changeCurrentTool", "ruler"); // eslint-disable-line eslint no-console
         }
       }
-    ]
+    ],
+    canvasObjects: []
   },
   getters: {
+    getCanvasObjects(state) {
+      return state.canvasObjects;
+    },
     getRadialNavIcons(state) {
       return state.radialNavIcons;
     },

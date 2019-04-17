@@ -75,4 +75,8 @@ export default {
       display none
     &.active
       opacity 1
+      
+.canvas__rail
+  stroke #41b883
+  stroke-width 1
 </style>

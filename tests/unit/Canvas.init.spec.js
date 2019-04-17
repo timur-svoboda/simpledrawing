@@ -21,27 +21,27 @@ describe("Canvas.js init", () => {
   });
   const paper = Snap(1366, 600);
 
-  it("checks the existence of the canvasGroup", () => {
+  it("checks the existence of the canvasObj", () => {
     const canvasInstance = new Canvas(paper, store);
-    const canvasGroup = canvasInstance.init();
-    expect(canvasGroup).toBeDefined();
+    const canvasObj = canvasInstance.init();
+    expect(canvasObj).toBeDefined();
   });
 
-  it("checks if the canvasGroup contains the canvas", () => {
+  it("checks if the canvas contains the canvas", () => {
     const canvasInstance = new Canvas(paper, store);
-    const canvasGroup = canvasInstance.init();
-    expect(canvasGroup.select(".canvas")).toBeDefined();
+    const canvasObj = canvasInstance.init();
+    expect(canvasObj.canvas.select(".canvas")).toBeDefined();
   });
 
-  it("checks if the canvasGroup contains the border", () => {
+  it("checks if the canvas contains the border", () => {
     const canvasInstance = new Canvas(paper, store);
-    const canvasGroup = canvasInstance.init();
-    expect(canvasGroup.select(".canvas__border")).toBeDefined();
+    const canvasObj = canvasInstance.init();
+    expect(canvasObj.canvas.select(".canvas__border")).toBeDefined();
   });
 
-  it("checks if the canvasGroup contains the main inscription ", () => {
+  it("checks if the canvas contains the main inscription ", () => {
     const canvasInstance = new Canvas(paper, store);
-    const canvasGroup = canvasInstance.init();
-    expect(canvasGroup.select(".canvas__main-inscription")).toBeDefined();
+    const canvasObj = canvasInstance.init();
+    expect(canvasObj.canvas.select(".canvas__main-inscription")).toBeDefined();
   });
 });

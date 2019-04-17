@@ -13,12 +13,6 @@ describe("Viewport.js _setViewBoxY", () => {
 
   beforeEach(() => {
     paper = Snap(1366, 600);
-    /* clientWidth and clientHeight will equal zero because of element has no associated CSS layout Box,
-     * so I define these properties manually.
-     * https://drafts.csswg.org/cssom-view/#dom-element-clientwidth
-     */
-    Object.defineProperty(paper.node, "clientWidth", { value: 1366 });
-    Object.defineProperty(paper.node, "clientHeight", { value: 600 });
 
     store = new Vuex.Store({
       state: {
@@ -36,13 +30,20 @@ describe("Viewport.js _setViewBoxY", () => {
       }
     });
 
-    viewportInstance = new Viewport(paper, store);
+    viewportInstance = new Viewport(
+      {
+        canvas: paper,
+        width: 1366,
+        height: 600
+      },
+      store
+    );
   });
 
   it("sets the y coords of the viewBox attribute", () => {
     viewportInstance.init();
     viewportInstance._setViewBoxY(100);
-    const viewBoxObject = viewportInstance.paper.attr("viewBox");
+    const viewBoxObject = viewportInstance.canvasObj.canvas.attr("viewBox");
     expect(viewBoxObject.y).toBe(100);
   });
 });

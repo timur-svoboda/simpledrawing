@@ -13,12 +13,6 @@ describe("Viewport.js init", () => {
 
   beforeEach(() => {
     paper = Snap(1366, 600);
-    /* clientWidth and clientHeight will equal zero because of element has no associated CSS layout Box,
-     * so I define these properties manually.
-     * https://drafts.csswg.org/cssom-view/#dom-element-clientwidth
-     */
-    Object.defineProperty(paper.node, "clientWidth", { value: 1366 });
-    Object.defineProperty(paper.node, "clientHeight", { value: 600 });
 
     store = new Vuex.Store({
       state: {
@@ -36,24 +30,31 @@ describe("Viewport.js init", () => {
       }
     });
 
-    viewportInstance = new Viewport(paper, store);
+    viewportInstance = new Viewport(
+      {
+        canvas: paper,
+        width: 1366,
+        height: 600
+      },
+      store
+    );
   });
 
   it("renders the viewBox attribute", () => {
     viewportInstance.init();
-    const viewBoxObject = viewportInstance.paper.attr("viewBox");
+    const viewBoxObject = viewportInstance.canvasObj.canvas.attr("viewBox");
     expect(viewBoxObject).toBeDefined();
   });
 
   it("checks the width", () => {
     viewportInstance.init();
-    const viewBoxObject = viewportInstance.paper.attr("viewBox");
+    const viewBoxObject = viewportInstance.canvasObj.canvas.attr("viewBox");
     expect(viewBoxObject.width).toBe(1366);
   });
 
   it("checks the height", () => {
     viewportInstance.init();
-    const viewBoxObject = viewportInstance.paper.attr("viewBox");
+    const viewBoxObject = viewportInstance.canvasObj.canvas.attr("viewBox");
     expect(viewBoxObject.height).toBe(600);
   });
 });

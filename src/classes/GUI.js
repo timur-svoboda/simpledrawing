@@ -15,9 +15,9 @@ export default class GUI {
 
   init() {
     const canvas = new Canvas(this.paper, this.store);
-    canvas.init();
+    const canvasObj = canvas.init();
 
-    const viewport = new Viewport(this.paper, this.store);
+    const viewport = new Viewport(canvasObj, this.store);
     viewport.init();
 
     const radialNav = new RadialNav(this.paper, this.store);
