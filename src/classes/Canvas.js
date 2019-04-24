@@ -140,5 +140,30 @@ export default class Canvas {
         }
       }
     });
+
+    this.canvas.node.addEventListener("mousedown", this._action.bind(this));
+  }
+
+  _action(e) {
+    if (e.button === 0) {
+      const currentToolId = this.store.getters.getCurrentTool.id;
+      switch (currentToolId) {
+        case "select":
+          alert("select");
+          break;
+        case "rails":
+          alert("rails");
+          break;
+        case "line":
+          alert("line");
+          break;
+        case "circular-arc":
+          alert("circular-arc");
+          break;
+        case "ruler":
+          alert("ruler");
+          break;
+      }
+    }
   }
 }

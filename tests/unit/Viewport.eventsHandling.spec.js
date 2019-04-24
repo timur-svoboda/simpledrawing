@@ -42,18 +42,18 @@ describe("Viewport.js event handling", () => {
 
   it("sets the y coords of the viewBox attribute", () => {
     viewportInstance.init();
-    viewportInstance.canvasObj.canvas.node.dispatchEvent(
-      new WheelEvent("wheel", { deltaY: -100 })
-    );
+    viewportInstance.canvasObj.canvas
+      .parent()
+      .node.dispatchEvent(new WheelEvent("wheel", { deltaY: -100 }));
     const viewBoxObject = viewportInstance.canvasObj.canvas.attr("viewBox");
     expect(viewBoxObject.y).toBe(-25);
   });
 
   it("sets the scrollDistance property of the store", () => {
     viewportInstance.init();
-    viewportInstance.canvasObj.canvas.node.dispatchEvent(
-      new WheelEvent("wheel", { deltaY: 100 })
-    );
+    viewportInstance.canvasObj.canvas
+      .parent()
+      .node.dispatchEvent(new WheelEvent("wheel", { deltaY: 100 }));
     expect(store.getters.getScrollDistance).toBe(25);
   });
 });
