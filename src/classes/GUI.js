@@ -1,5 +1,5 @@
 import Canvas from "./Canvas.js";
-import Viewport from "./Viewport.js";
+import Scroll from "./Scroll.js";
 import RadialNav from "./RadialNav.js";
 const Snap = require(`imports-loader?this=>window,fix=>module.exports=0!snapsvg/dist/snap.svg.js`);
 /** Class representing the graphic user Interface */
@@ -14,11 +14,11 @@ export default class GUI {
   }
 
   init() {
-    const canvas = new Canvas(this.paper, this.store);
-    const canvasObj = canvas.init();
+    const canvasInstance = new Canvas(this.paper, this.store);
+    const canvas = canvasInstance.init();
 
-    const viewport = new Viewport(canvasObj, this.store);
-    viewport.init();
+    const scrollInstance = new Scroll(canvas, this.store);
+    scrollInstance.init();
 
     const radialNav = new RadialNav(this.paper, this.store);
     radialNav.init();

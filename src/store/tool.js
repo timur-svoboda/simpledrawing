@@ -9,7 +9,8 @@ export default {
       {
         id: "rails",
         iconName: "rails.svg",
-        toolControllers: ["IconControl"]
+        toolControllers: ["IconControl"],
+        railType: "horizontal"
       },
       {
         id: "line",
@@ -82,11 +83,11 @@ export default {
         }
       }
     ],
-    canvasObjects: []
+    objects: []
   },
   getters: {
-    getCanvasObjects(state) {
-      return state.canvasObjects;
+    getobjects(state) {
+      return state.objects;
     },
     getRadialNavIcons(state) {
       return state.radialNavIcons;

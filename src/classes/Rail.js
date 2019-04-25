@@ -1,8 +1,25 @@
+import Mouse from "./Mouse.js";
+
 export default class Rail {
   constructor(canvas, store) {
     this.canvas = canvas;
     this.store = store;
-    this.canvasObjects = store.getters.getCanvasObjects;
+    this.objects = store.getters.getobjects;
+    this.mouse = new Mouse(canvas, store);
+  }
+
+  drawRail(e) {
+    const railType = this.store.getters.getCurrentTool.railType;
+    const { x, y } = this.mouse.getCoords(e);
+    let railObject;
+
+    if (railType === "vertical") {
+      railObject = this._drawVerticalRail(x, y);
+    } else if (railType === "horizontal") {
+      railObject = this._drawHorizontalRail(x, y);
+    }
+
+    return railObject;
   }
 
   _drawVerticalRail(x, y) {
@@ -11,9 +28,10 @@ export default class Rail {
 
     const railObject = {
       el: rail,
-      type: "vertical"
+      type: "vertical",
+      controlPoints: []
     };
-    this.canvasObjects.push(railObject);
+    this.objects.push(railObject);
     return railObject;
   }
 
@@ -23,9 +41,10 @@ export default class Rail {
 
     const railObject = {
       el: rail,
-      type: "horizontal"
+      type: "horizontal",
+      controlPoints: []
     };
-    this.canvasObjects.push(railObject);
+    this.objects.push(railObject);
     return railObject;
   }
 }

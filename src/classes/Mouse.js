@@ -5,12 +5,11 @@ export default class Mouse {
   }
 
   getCoords(e) {
-    const bcr = this.paper.node.getBoundingClientRect();
     const scrollDistance = this.store.getters.getScrollDistance;
 
     return {
-      x: e.clientX - bcr.left,
-      y: e.clientY - bcr.top + scrollDistance
+      x: e.offsetX,
+      y: e.offsetY + scrollDistance
     };
   }
 }
