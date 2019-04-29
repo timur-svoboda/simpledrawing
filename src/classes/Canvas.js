@@ -1,5 +1,7 @@
-import Rail from "./Rail.js";
 import MainInscription from "./MainInscription.js";
+import Selection from "./Selection.js";
+import Rail from "./Rail.js";
+import Trash from "./Trash.js";
 
 export default class Canvas {
   constructor(paper, store) {
@@ -8,7 +10,9 @@ export default class Canvas {
     this.canvas = this.paper.g();
     this.canvas.addClass("canvas");
 
+    this.selection = new Selection(this.canvas, this.store);
     this.rail = new Rail(this.canvas, this.store);
+    this.trash = new Trash(this.store);
   }
 
   init() {
@@ -58,15 +62,19 @@ export default class Canvas {
   }
 
   _bindEvents() {
-    this.canvas.node.addEventListener("mousedown", this._action.bind(this));
+    this.canvas.node.addEventListener(
+      "mousedown",
+      this._mousedownAction.bind(this)
+    );
+    window.addEventListener("keydown", this._keydownAction.bind(this));
   }
 
-  _action(e) {
+  _mousedownAction(e) {
     if (e.button === 0) {
       const currentToolId = this.store.getters.getCurrentTool.id;
       switch (currentToolId) {
         case "select":
-          alert("select");
+          this.selection.select(e);
           break;
         case "rails":
           this.rail.drawRail(e);
@@ -81,6 +89,16 @@ export default class Canvas {
           alert("ruler");
           break;
       }
+    }
+  }
+
+  _keydownAction(e) {
+    const key = e.key;
+
+    if (key === "Delete") {
+      this.trash.removeSelectedObjects();
+    } else if (e.key === "a" && e.ctrlKey) {
+      this.selection.selectAll();
     }
   }
 }

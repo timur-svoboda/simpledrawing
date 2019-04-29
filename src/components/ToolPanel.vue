@@ -11,6 +11,7 @@
 
 <script>
 import IconControl from "./tool-controllers/IconControl.vue";
+import RailTypeControl from "./tool-controllers/RailTypeControl.vue";
 
 /**
  * @vue-computed {Array} currentToolControllers Returns the list of the current tool controllers
@@ -18,7 +19,8 @@ import IconControl from "./tool-controllers/IconControl.vue";
 export default {
   name: "tool-panel",
   components: {
-    IconControl
+    IconControl,
+    RailTypeControl
   },
   computed: {
     currentToolControllers() {

@@ -1,4 +1,11 @@
+import radialNav from "./radialNav.js";
+import railTool from "./railTool.js";
+
 export default {
+  modules: {
+    radialNav,
+    railTool
+  },
   state: {
     tools: [
       {
@@ -9,8 +16,8 @@ export default {
       {
         id: "rails",
         iconName: "rails.svg",
-        toolControllers: ["IconControl"],
-        railType: "horizontal"
+        toolControllers: ["IconControl", "RailTypeControl"],
+        railType: "vertical"
       },
       {
         id: "line",
@@ -33,77 +40,35 @@ export default {
       iconName: "select.svg",
       toolControllers: ["IconControl"]
     },
-
-    radialNavParams: {
-      size: 500,
-      c: 250, // Center
-      r: 125, // Outer radius
-      r2: 44, // Inner radius
-      animDuration: 300
-    },
-    radialNavIcons: [
-      {
-        id: "select",
-        icon: "move",
-        text: "Selection",
-        on(store) {
-          store.commit("changeCurrentTool", "select"); // eslint-disable-line eslint no-console
-        }
-      },
-      {
-        id: "rails",
-        icon: "rails",
-        text: "Rails",
-        on(store) {
-          store.commit("changeCurrentTool", "rails"); // eslint-disable-line eslint no-console
-        }
-      },
-      {
-        id: "line",
-        icon: "line",
-        text: "Line",
-        on(store) {
-          store.commit("changeCurrentTool", "line"); // eslint-disable-line eslint no-console
-        }
-      },
-      {
-        id: "circular-arc",
-        icon: "circular-arc",
-        text: "Circle",
-        on(store) {
-          store.commit("changeCurrentTool", "circular-arc"); // eslint-disable-line eslint no-console
-        }
-      },
-      {
-        id: "ruler",
-        icon: "ruler",
-        text: "Ruler",
-        on(store) {
-          store.commit("changeCurrentTool", "ruler"); // eslint-disable-line eslint no-console
-        }
-      }
-    ],
-    objects: []
+    objects: [],
+    controlPoints: []
   },
   getters: {
-    getobjects(state) {
-      return state.objects;
-    },
-    getRadialNavIcons(state) {
-      return state.radialNavIcons;
-    },
     getTools(state) {
       return state.tools;
     },
     getCurrentTool(state) {
       return state.currentTool;
     },
-    getRadialNavParams(state) {
-      return state.radialNavParams;
+    getObjects(state) {
+      return state.objects;
+    },
+    getSelectedObjects(state) {
+      return state.objects.filter(obj => {
+        return obj.selected;
+      });
+    },
+    getRails(state) {
+      return state.objects.filter(obj => {
+        return obj.types.indexOf("rail") !== -1;
+      });
+    },
+    getControlPoints(state) {
+      return state.controlPoints;
     }
   },
   mutations: {
-    changeCurrentTool(state, payload) {
+    setCurrentTool(state, payload) {
       let tools = state.tools,
         currentTool;
 
@@ -117,6 +82,13 @@ export default {
       }
 
       state.currentTool = currentTool;
+    },
+    setRailType(state, payload) {
+      const curTool = state.currentTool;
+
+      if (curTool.railType) {
+        curTool.railType = payload;
+      }
     }
   }
 };

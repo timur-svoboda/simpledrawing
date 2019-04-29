@@ -77,6 +77,8 @@ export default {
       opacity 1
       
 .canvas__rail
-  stroke #41b883
+  stroke #35495e
   stroke-width 1
+  &.highlighted
+    stroke #41b883
 </style>

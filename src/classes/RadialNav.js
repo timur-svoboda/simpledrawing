@@ -137,13 +137,17 @@ export default class RadialNav {
   }
 
   _button(btn, sector, icon, hint) {
-    let store = this.store;
+    const id = btn.id;
+    const store = this.store;
+
     return this.area
       .g(sector, icon, hint)
-      .data("cb", btn.on)
+      .data("cb", function(id) {
+        store.commit("setCurrentTool", id);
+      })
       .mouseup(function() {
         if (this.data("cb") !== null) {
-          this.data("cb")(store);
+          this.data("cb")(id);
         }
       })
       .hover(function() {
