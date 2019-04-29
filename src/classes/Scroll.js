@@ -19,7 +19,7 @@ export default class Scroll {
     const prevScrollDistance = this.store.getters.getScrollDistance;
     const currentScrollDistance = prevScrollDistance + deltaY;
 
-    this.canvas.transform(`t0,${-currentScrollDistance}`);
     this.store.commit("setScrollDistance", currentScrollDistance);
+    this.canvas.transform(`t0,${-this.store.getters.getScrollDistance}`);
   }
 }

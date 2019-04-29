@@ -1,4 +1,5 @@
 import Util from "./Util.js";
+import Selection from "./Selection.js";
 const Snap = require(`imports-loader?this=>window,fix=>module.exports=0!snapsvg/dist/snap.svg.js`);
 const iconsPath = require("./../assets/icons.svg");
 
@@ -22,6 +23,8 @@ export default class RadialNav {
     this.r = p.r;
     this.r2 = p.r2;
     this.animDuration = p.animDuration;
+
+    this.selection = new Selection(this.paper, this.store);
   }
 
   /******************
@@ -221,6 +224,7 @@ export default class RadialNav {
   hide(e) {
     if (e.which === 3) {
       this._animateContainer(1, 0, this.animDuration, mina.easeinout); // eslint-disable-line no-undef
+      this.selection.unselectAll();
     }
   }
 }

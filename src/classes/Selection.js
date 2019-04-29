@@ -5,7 +5,7 @@ export default class Selection {
     this.canvas = canvas;
     this.store = store;
     this.mouse = new Mouse(canvas, store);
-    this.selectDistance = 20;
+    this.selectDistance = 10;
   }
 
   select(e) {
@@ -24,13 +24,13 @@ export default class Selection {
             co.el.removeClass("highlighted");
           }
         } else {
-          this._unselectAll();
+          this.unselectAll();
           co.selected = true;
           co.el.addClass("highlighted");
         }
       } else {
         if (!e.ctrlKey) {
-          this._unselectAll();
+          this.unselectAll();
         }
       }
     }
@@ -45,7 +45,7 @@ export default class Selection {
     });
   }
 
-  _unselectAll() {
+  unselectAll() {
     const selectedObjects = this.store.getters.getSelectedObjects;
 
     selectedObjects.forEach(obj => {
