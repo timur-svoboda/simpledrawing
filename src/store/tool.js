@@ -97,14 +97,14 @@ export default {
     setRailType(state, payload) {
       const curTool = state.currentTool;
 
-      if (curTool.railType) {
+      if (curTool.railType !== payload) {
         curTool.railType = payload;
       }
     },
     setLineType(state, payload) {
       const curTool = state.currentTool;
 
-      if (curTool.lineType) {
+      if (curTool.lineType !== payload) {
         curTool.lineType = payload;
       }
     }
