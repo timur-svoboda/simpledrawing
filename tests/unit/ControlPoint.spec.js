@@ -1,4 +1,3 @@
-import { createLocalVue } from "@vue/test-utils";
 import ControlPoint from "./../../src/classes/ControlPoint.js";
 
 describe("_calcCoords", () => {

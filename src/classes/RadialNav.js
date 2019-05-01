@@ -1,5 +1,4 @@
 import Util from "./Util.js";
-import Selection from "./Selection.js";
 const Snap = require(`imports-loader?this=>window,fix=>module.exports=0!snapsvg/dist/snap.svg.js`);
 const iconsPath = require("./../assets/icons.svg");
 

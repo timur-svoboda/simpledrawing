@@ -6,7 +6,7 @@ export default class Line {
   constructor(canvas, store) {
     this.canvas = canvas;
     this.store = store;
-    this.mouse = new Mouse(canvas, store);
+    this.mouse = new Mouse(store);
     this.tps = []; // Temporary points
     this.el = null;
     this.subtype;

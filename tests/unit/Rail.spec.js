@@ -91,8 +91,6 @@ describe("_calcControlPoints", () => {
   let canvas;
   let store;
   let rail;
-  let offset;
-  let verticalRail;
 
   beforeEach(() => {
     canvas = new Snap(800, 600);
@@ -101,7 +99,7 @@ describe("_calcControlPoints", () => {
         controlPoints: []
       },
       getters: {
-        getRails(state) {
+        getRails() {
           return [{ types: ["rail", "vertical"], offset: 100 }];
         },
         getControlPoints(state) {

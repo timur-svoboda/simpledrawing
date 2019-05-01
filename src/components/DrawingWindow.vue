@@ -75,13 +75,13 @@ export default {
       display none
     &.active
       opacity 1
-      
+
 .canvas__rail
   stroke #35495e
   stroke-width 1
   &.highlighted
     stroke #41b883
-    
+
 .canvas__line
   stroke #000
   &.highlighted

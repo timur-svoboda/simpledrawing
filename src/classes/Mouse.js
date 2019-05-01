@@ -1,6 +1,5 @@
 export default class Mouse {
-  constructor(paper, store) {
-    this.paper = paper;
+  constructor(store) {
     this.store = store;
   }
 

@@ -11,20 +11,24 @@ export default class Trash {
 
       if (obj.selected) {
         if (obj.types[0] === "rail") {
-          const controlPoints = this.store.getters.getControlPoints;
-
-          for (let k = 0; k < controlPoints.length; k++) {
-            const cp = controlPoints[k];
-            if (cp.rails.indexOf(obj) !== -1) {
-              controlPoints.splice(k, 1);
-              k--;
-            }
-          }
+          this._removeControlPoints(obj);
         }
 
         obj.el.remove();
 
         objects.splice(i, 1);
+        i--;
+      }
+    }
+  }
+
+  _removeControlPoints(rail) {
+    const controlPoints = this.store.getters.getControlPoints;
+
+    for (let i = 0; i < controlPoints.length; i++) {
+      const cp = controlPoints[i];
+      if (cp.rails.indexOf(rail) !== -1) {
+        controlPoints.splice(i, 1);
         i--;
       }
     }
