@@ -5,7 +5,6 @@ export default class Rail {
   constructor(canvas, store) {
     this.canvas = canvas;
     this.store = store;
-    this.objects = store.getters.getObjects;
     this.mouse = new Mouse(canvas, store);
   }
 
@@ -30,16 +29,16 @@ export default class Rail {
       el,
       types,
       offset,
-      getDistToPoint: this.getDistToPoint,
+      distToPoint: this.distToPoint,
       selected: false
     };
 
     this._calcControlPoints(rail);
 
-    this.store.getters.getObjects.unshift(rail);
+    this.store.getters.getObjects.push(rail);
   }
 
-  getDistToPoint(x, y) {
+  distToPoint(x, y) {
     let dist;
 
     if (this.types[1] === "vertical") {

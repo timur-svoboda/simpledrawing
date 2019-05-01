@@ -13,6 +13,21 @@ export default class Mouse {
     };
   }
 
+  getBindingCoords(e) {
+    let { x, y } = this.getCoords(e);
+    const cps = this.store.getters.getControlPoints;
+    const { co, dist } = this.getClosestObject(x, y, cps);
+    const bindingDist = this.store.getters.getBindingDistance;
+
+    if (co !== null && dist !== null) {
+      if (dist <= bindingDist) {
+        x = co.x;
+        y = co.y;
+      }
+    }
+    return { x, y };
+  }
+
   getClosestObject(x, y, objects) {
     objects = objects ? objects : this.store.getters.getObjects;
 
@@ -20,7 +35,7 @@ export default class Mouse {
       const dists = this._getDistancesToObjects(x, y, objects);
       const dist = Math.min(...dists);
 
-      const i = dists.indexOf(dist);
+      const i = dists.lastIndexOf(dist);
       const co = objects[i]; // Closest objects
 
       return { co, dist };
@@ -31,15 +46,7 @@ export default class Mouse {
 
   _getDistancesToObjects(x, y, objects) {
     return objects.map(obj => {
-      let dist;
-
-      switch (obj.types[0]) {
-        case "rail":
-          dist = obj.getDistToPoint(x, y);
-          break;
-      }
-
-      return dist;
+      return obj.distToPoint(x, y);
     });
   }
 }

@@ -12,6 +12,7 @@
 <script>
 import IconControl from "./tool-controllers/IconControl.vue";
 import RailTypeControl from "./tool-controllers/RailTypeControl.vue";
+import LineTypeControl from "./tool-controllers/LineTypeControl.vue";
 
 /**
  * @vue-computed {Array} currentToolControllers Returns the list of the current tool controllers
@@ -20,7 +21,8 @@ export default {
   name: "tool-panel",
   components: {
     IconControl,
-    RailTypeControl
+    RailTypeControl,
+    LineTypeControl
   },
   computed: {
     currentToolControllers() {
@@ -36,6 +38,7 @@ export default {
   align-items center
   padding 15px 20px
   border-bottom 1px solid rgba(0,0,0,0.5)
+  user-select none
 
 .tool-panel__tool-item
   display flex

@@ -11,7 +11,8 @@ export default new Vuex.Store({
   },
   state: {
     scale: 4,
-    scrollDistance: 0
+    scrollDistance: 0,
+    bindingDistance: 15
   },
   getters: {
     getScale(state) {
@@ -19,6 +20,9 @@ export default new Vuex.Store({
     },
     getScrollDistance(state) {
       return state.scrollDistance;
+    },
+    getBindingDistance(state) {
+      return state.bindingDistance;
     }
   },
   mutations: {

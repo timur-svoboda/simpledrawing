@@ -1,6 +1,7 @@
 import MainInscription from "./MainInscription.js";
 import Selection from "./Selection.js";
 import Rail from "./Rail.js";
+import Line from "./Line.js";
 import Trash from "./Trash.js";
 
 export default class Canvas {
@@ -12,6 +13,7 @@ export default class Canvas {
 
     this.selection = new Selection(this.canvas, this.store);
     this.rail = new Rail(this.canvas, this.store);
+    this.line = new Line(this.canvas, this.store);
     this.trash = new Trash(this.store);
   }
 
@@ -67,6 +69,7 @@ export default class Canvas {
       this._mousedownAction.bind(this)
     );
     window.addEventListener("keydown", this._keydownAction.bind(this));
+    window.addEventListener("toolChanged", this._reset.bind(this));
   }
 
   _mousedownAction(e) {
@@ -80,7 +83,7 @@ export default class Canvas {
           this.rail.drawRail(e);
           break;
         case "line":
-          alert("line");
+          this.line.drawLine(e);
           break;
         case "circular-arc":
           alert("circular-arc");
@@ -99,6 +102,28 @@ export default class Canvas {
       this.trash.removeSelectedObjects();
     } else if (e.key === "a" && e.ctrlKey) {
       this.selection.selectAll();
+    }
+  }
+
+  _reset(e) {
+    const id = e.detail.id;
+
+    switch (id) {
+      case "select":
+        this.selection.reset();
+        break;
+      case "rails":
+        // alert(id);
+        break;
+      case "line":
+        this.line.reset();
+        break;
+      case "circular-arc":
+        // alert(id);
+        break;
+      case "ruler":
+        // alert(id);
+        break;
     }
   }
 }

@@ -1,6 +1,6 @@
 <template>
   <div class="tool-item">
-    <select v-model="currentRailId">
+    <select v-model="currentRailType">
       <option v-for="railType of railTypes" :value="railType.id" :key="railType.id" >{{railType.label}}</option>
     </select>
   </div>
@@ -9,7 +9,7 @@
 <script>
   export default {
     computed: {
-      currentRailId: {
+      currentRailType: {
         get() {
           return this.$store.getters.getCurrentTool.railType;
         },

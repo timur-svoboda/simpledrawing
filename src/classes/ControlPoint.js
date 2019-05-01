@@ -1,6 +1,7 @@
 export default class ControlPoint {
   constructor(rail1, rail2) {
     this.rails = [rail1, rail2];
+    this.types = ["point", "control"];
     this._calcCoords();
   }
 

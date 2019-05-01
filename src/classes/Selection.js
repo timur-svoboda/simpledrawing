@@ -5,7 +5,6 @@ export default class Selection {
     this.canvas = canvas;
     this.store = store;
     this.mouse = new Mouse(canvas, store);
-    this.selectDistance = 10;
   }
 
   select(e) {
@@ -14,7 +13,7 @@ export default class Selection {
     const { co, dist } = this.mouse.getClosestObject(x, y, objects);
 
     if (co !== null && dist !== null) {
-      if (dist <= this.selectDistance) {
+      if (dist <= this.store.getters.getBindingDistance) {
         if (e.ctrlKey) {
           if (!co.selected) {
             co.selected = true;
@@ -52,5 +51,9 @@ export default class Selection {
       obj.selected = false;
       obj.el.removeClass("highlighted");
     });
+  }
+
+  reset() {
+    this.unselectAll();
   }
 }

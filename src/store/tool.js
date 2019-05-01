@@ -1,10 +1,12 @@
 import radialNav from "./radialNav.js";
 import railTool from "./railTool.js";
+import lineTool from "./lineTool.js";
 
 export default {
   modules: {
     radialNav,
-    railTool
+    railTool,
+    lineTool
   },
   state: {
     tools: [
@@ -22,7 +24,8 @@ export default {
       {
         id: "line",
         iconName: "line.svg",
-        toolControllers: ["IconControl"]
+        toolControllers: ["IconControl", "LineTypeControl"],
+        lineType: "solid-bold"
       },
       {
         id: "circular-arc",
@@ -80,14 +83,29 @@ export default {
           state.tools[i] = state.currentTool;
         }
       }
-
-      state.currentTool = currentTool;
+      if (state.currentTool.id !== currentTool.id) {
+        window.dispatchEvent(
+          new CustomEvent("toolChanged", {
+            detail: {
+              id: state.currentTool.id
+            }
+          })
+        );
+        state.currentTool = currentTool;
+      }
     },
     setRailType(state, payload) {
       const curTool = state.currentTool;
 
       if (curTool.railType) {
         curTool.railType = payload;
+      }
+    },
+    setLineType(state, payload) {
+      const curTool = state.currentTool;
+
+      if (curTool.lineType) {
+        curTool.lineType = payload;
       }
     }
   }
