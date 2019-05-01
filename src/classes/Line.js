@@ -96,16 +96,17 @@ export default class Line {
   }
 
   _bindEvents() {
-    this.canvas.node.onmousemove = this._animate.bind(this);
+    this.canvas.node.onmousemove = e => {
+      const { x, y } = this.mouse.getBindingCoords(e);
+      this._animate(x, y);
+    };
   }
 
   _unbindEvents() {
     this.canvas.node.onmousemove = undefined;
   }
 
-  _animate(e) {
-    const { x, y } = this.mouse.getBindingCoords(e);
-
+  _animate(x, y) {
     this.el.attr({
       x2: x,
       y2: y

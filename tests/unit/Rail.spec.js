@@ -52,38 +52,38 @@ describe("_drawHorizontalRail", () => {
   let store;
   let rail;
   let offset;
-  let verticalRail;
+  let horizontalRail;
 
   beforeEach(() => {
     canvas = new Snap(800, 600);
     store = new Vuex.Store();
     rail = new Rail(canvas, store);
     offset = 100;
-    verticalRail = rail._drawHorizontalRail(offset);
+    horizontalRail = rail._drawHorizontalRail(offset);
   });
 
   it("checks the existance of the rail element", () => {
-    expect(verticalRail).toBeDefined();
+    expect(horizontalRail).toBeDefined();
   });
 
   it("checks the class of the rail element", () => {
-    expect(verticalRail.hasClass("canvas__rail")).toBeTruthy();
+    expect(horizontalRail.hasClass("canvas__rail")).toBeTruthy();
   });
 
   it("checks the equality of y1 and y2 coords", () => {
-    expect(+verticalRail.attr("y1")).toBe(+verticalRail.attr("y2"));
+    expect(+horizontalRail.attr("y1")).toBe(+horizontalRail.attr("y2"));
   });
 
   it("checks y1 coord", () => {
-    expect(+verticalRail.attr("y1")).toBe(offset);
+    expect(+horizontalRail.attr("y1")).toBe(offset);
   });
 
   it("checks x1 coord", () => {
-    expect(+verticalRail.attr("x1")).toBe(-50000);
+    expect(+horizontalRail.attr("x1")).toBe(-50000);
   });
 
   it("checks x2 coord", () => {
-    expect(+verticalRail.attr("x2")).toBe(50000);
+    expect(+horizontalRail.attr("x2")).toBe(50000);
   });
 });
 

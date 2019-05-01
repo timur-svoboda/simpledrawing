@@ -29,7 +29,7 @@ describe("getCoords", () => {
     const e = new MouseEvent("click");
     e.offsetX = 100;
     e.offsetY = 200;
-    const { x, y } = mouse.getCoords(e);
+    const x = mouse.getCoords(e).x;
 
     expect(x).toBe(100);
   });
@@ -38,7 +38,7 @@ describe("getCoords", () => {
     const e = new MouseEvent("click");
     e.offsetX = 100;
     e.offsetY = 200;
-    const { x, y } = mouse.getCoords(e);
+    const y = mouse.getCoords(e).y;
 
     expect(y).toBe(300);
   });

@@ -1,7 +1,6 @@
 import { createLocalVue } from "@vue/test-utils";
 import Vuex from "vuex";
 import Trash from "./../../src/classes/Trash.js";
-const Snap = require("./../../node_modules/snapsvg/dist/snap.svg-min.js");
 
 const localVue = createLocalVue();
 
@@ -21,7 +20,7 @@ describe("_removeControlPoints", () => {
       rails[i] = { x: i };
     }
 
-    let state = {
+    state = {
       controlPoints: [
         { rails: [rails[0], rails[1]] },
         { rails: [rails[2], rails[3]] },

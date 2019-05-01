@@ -45,9 +45,9 @@ export default class Selection {
   }
 
   unselectAll() {
-    const selectedObjects = this.store.getters.getSelectedObjects;
+    const objects = this.store.getters.getObjects;
 
-    selectedObjects.forEach(obj => {
+    objects.forEach(obj => {
       obj.selected = false;
       obj.el.removeClass("highlighted");
     });
