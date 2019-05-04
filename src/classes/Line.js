@@ -1,22 +1,7 @@
+import CanvasObject from "./CanvasObject.js";
 import Vector from "./Vector.js";
 
-export default class Line {
-  constructor(el, types) {
-    this.el = el;
-    this.types = types;
-    this.selected = false;
-  }
-
-  select() {
-    this.selected = true;
-    this.el.addClass("highlighted");
-  }
-
-  unselect() {
-    this.selected = false;
-    this.el.removeClass("highlighted");
-  }
-
+export default class Line extends CanvasObject {
   distToPoint(x, y) {
     if ((this.x1 === x && this.y1 === y) || (this.x2 === x && this.y2 === y))
       return 0;

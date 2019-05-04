@@ -1,30 +1,12 @@
-export default class Rail {
-  constructor(el, types) {
-    this.el = el;
-    this.types = types;
-    this.selected = false;
-  }
+import CanvasObject from "./CanvasObject.js";
 
-  select() {
-    this.selected = true;
-    this.el.addClass("highlighted");
-  }
-
-  unselect() {
-    this.selected = false;
-    this.el.removeClass("highlighted");
-  }
-
+export default class Rail extends CanvasObject {
   distToPoint(x, y) {
-    let dist;
-
     if (this.types.indexOf("vertical") !== -1) {
-      dist = Math.abs(x - this.offset);
+      return Math.abs(x - this.offset);
     } else {
-      dist = Math.abs(y - this.offset);
+      return Math.abs(y - this.offset);
     }
-
-    return dist;
   }
 
   get offset() {
