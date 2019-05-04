@@ -1,47 +1,24 @@
-import Mouse from "./Mouse.js";
-import ControlPoint from "./ControlPoint.js";
-
 export default class Rail {
-  constructor(canvas, store) {
-    this.canvas = canvas;
-    this.store = store;
-    this.mouse = new Mouse(store);
+  constructor(el, types) {
+    this.el = el;
+    this.types = types;
+    this.selected = false;
   }
 
-  drawRail(e) {
-    const railType = this.store.getters.getCurrentTool.railType;
-    const { x, y } = this.mouse.getCoords(e);
-    const types = ["rail"];
-    let el;
-    let offset;
+  select() {
+    this.selected = true;
+    this.el.addClass("highlighted");
+  }
 
-    if (railType === "vertical") {
-      el = this._drawVerticalRail(x);
-      offset = x;
-      types.push("vertical");
-    } else if (railType === "horizontal") {
-      el = this._drawHorizontalRail(y);
-      offset = y;
-      types.push("horizontal");
-    }
-
-    const rail = {
-      el,
-      types,
-      offset,
-      distToPoint: this.distToPoint,
-      selected: false
-    };
-
-    this._calcControlPoints(rail);
-
-    this.store.getters.getObjects.push(rail);
+  unselect() {
+    this.selected = false;
+    this.el.removeClass("highlighted");
   }
 
   distToPoint(x, y) {
     let dist;
 
-    if (this.types[1] === "vertical") {
+    if (this.types.indexOf("vertical") !== -1) {
       dist = Math.abs(x - this.offset);
     } else {
       dist = Math.abs(y - this.offset);
@@ -50,27 +27,19 @@ export default class Rail {
     return dist;
   }
 
-  _drawVerticalRail(x) {
-    const el = this.canvas.line(x, -50000, x, 50000);
-    el.addClass("canvas__rail");
-    return el;
+  get offset() {
+    if (this.types.indexOf("vertical") !== -1)
+      return Number(this.el.attr("x1"));
+    else return Number(this.el.attr("y1"));
   }
 
-  _drawHorizontalRail(y) {
-    const el = this.canvas.line(-50000, y, 50000, y);
-    el.addClass("canvas__rail");
-    return el;
-  }
-
-  _calcControlPoints(rail1) {
-    const rails = this.store.getters.getRails;
-    const controlPoints = this.store.getters.getControlPoints;
-
-    rails.forEach(rail2 => {
-      const cp = new ControlPoint(rail1, rail2);
-      if (cp.x && cp.y) {
-        controlPoints.push(cp);
-      }
-    });
+  set offset(value) {
+    if (this.types.indexOf("vertical")) {
+      this.el.attr("x1", value);
+      this.el.attr("x2", value);
+    } else {
+      this.el.attr("y1", value);
+      this.el.attr("y2", value);
+    }
   }
 }

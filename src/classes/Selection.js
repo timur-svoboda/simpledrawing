@@ -16,16 +16,13 @@ export default class Selection {
       if (dist <= this.store.getters.getBindingDistance) {
         if (e.ctrlKey) {
           if (!co.selected) {
-            co.selected = true;
-            co.el.addClass("highlighted");
+            co.select();
           } else {
-            co.selected = false;
-            co.el.removeClass("highlighted");
+            co.unselect();
           }
         } else {
           this.unselectAll();
-          co.selected = true;
-          co.el.addClass("highlighted");
+          co.select();
         }
       } else {
         if (!e.ctrlKey) {
@@ -39,8 +36,7 @@ export default class Selection {
     const objects = this.store.getters.getObjects;
 
     objects.forEach(obj => {
-      obj.selected = true;
-      obj.el.addClass("highlighted");
+      obj.select();
     });
   }
 
@@ -48,8 +44,7 @@ export default class Selection {
     const objects = this.store.getters.getObjects;
 
     objects.forEach(obj => {
-      obj.selected = false;
-      obj.el.removeClass("highlighted");
+      obj.unselect();
     });
   }
 

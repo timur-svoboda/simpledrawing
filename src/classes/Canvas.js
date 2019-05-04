@@ -1,7 +1,7 @@
 import MainInscription from "./MainInscription.js";
 import Selection from "./Selection.js";
-import Rail from "./Rail.js";
-import Line from "./Line.js";
+import RailCreater from "./RailCreater.js";
+import LineCreater from "./LineCreater.js";
 import Trash from "./Trash.js";
 
 export default class Canvas {
@@ -12,8 +12,8 @@ export default class Canvas {
     this.canvas.addClass("canvas");
 
     this.selection = new Selection(this.canvas, this.store);
-    this.rail = new Rail(this.canvas, this.store);
-    this.line = new Line(this.canvas, this.store);
+    this.railCreater = new RailCreater(this.canvas, this.store);
+    this.lineCreater = new LineCreater(this.canvas, this.store);
     this.trash = new Trash(this.store);
   }
 
@@ -80,10 +80,10 @@ export default class Canvas {
           this.selection.select(e);
           break;
         case "rails":
-          this.rail.drawRail(e);
+          this.railCreater.drawRail(e);
           break;
         case "line":
-          this.line.drawLine(e);
+          this.lineCreater.drawLine(e);
           break;
         case "circular-arc":
           alert("circular-arc");
@@ -116,7 +116,7 @@ export default class Canvas {
         // alert(id);
         break;
       case "line":
-        this.line.reset();
+        this.lineCreater.reset();
         break;
       case "circular-arc":
         // alert(id);

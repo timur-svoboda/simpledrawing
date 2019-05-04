@@ -1,54 +1,20 @@
-import Mouse from "./Mouse.js";
-import Point from "./Point.js";
 import Vector from "./Vector.js";
 
 export default class Line {
-  constructor(canvas, store) {
-    this.canvas = canvas;
-    this.store = store;
-    this.mouse = new Mouse(store);
-    this.tps = []; // Temporary points
-    this.el = null;
-    this.subtype;
+  constructor(el, types) {
+    this.el = el;
+    this.types = types;
+    this.selected = false;
   }
 
-  drawLine(e) {
-    const { x, y } = this.mouse.getBindingCoords(e);
+  select() {
+    this.selected = true;
+    this.el.addClass("highlighted");
+  }
 
-    this._addPoint(x, y);
-
-    if (this.tps.length === 1) {
-      if (!this.el) {
-        this.el = this.canvas.line(
-          this.tps[0].x,
-          this.tps[0].y,
-          this.tps[0].x,
-          this.tps[0].y
-        );
-        this.el.addClass("canvas__line");
-
-        this.subtype = this.store.getters.getCurrentTool.lineType;
-        this.el.addClass(`canvas__line_${this.subtype}`);
-
-        this._bindEvents();
-      }
-    } else if (this.tps.length === 2) {
-      const line = {
-        el: this.el,
-        types: ["line", this.subtype],
-        x1: this.tps[0].x,
-        y1: this.tps[0].y,
-        x2: this.tps[1].x,
-        y2: this.tps[1].y,
-        distToPoint: this.distToPoint,
-        selected: false
-      };
-
-      this.store.getters.getObjects.push(line);
-      this._unbindEvents();
-      this.tps = [];
-      this.el = null;
-    }
+  unselect() {
+    this.selected = false;
+    this.el.removeClass("highlighted");
   }
 
   distToPoint(x, y) {
@@ -77,39 +43,35 @@ export default class Line {
     );
   }
 
-  reset() {
-    this._unbindEvents();
-    this.tps = [];
-    if (this.el) {
-      this.el.remove();
-      this.el = null;
-    }
+  get x1() {
+    return Number(this.el.attr("x1"));
   }
 
-  _addPoint(x, y) {
-    const alreadyExist = this.tps.some(tp => {
-      return tp.x === x && tp.y === y;
-    });
-    if (!alreadyExist) {
-      this.tps.push(new Point(x, y));
-    }
+  get y1() {
+    return Number(this.el.attr("y1"));
   }
 
-  _bindEvents() {
-    this.canvas.node.onmousemove = e => {
-      const { x, y } = this.mouse.getBindingCoords(e);
-      this._animate(x, y);
-    };
+  get x2() {
+    return Number(this.el.attr("x2"));
   }
 
-  _unbindEvents() {
-    this.canvas.node.onmousemove = undefined;
+  get y2() {
+    return Number(this.el.attr("y2"));
   }
 
-  _animate(x, y) {
-    this.el.attr({
-      x2: x,
-      y2: y
-    });
+  set x1(value) {
+    this.el.attr("x1", value);
+  }
+
+  set y1(value) {
+    this.el.attr("y1", value);
+  }
+
+  set x2(value) {
+    this.el.attr("x2", value);
+  }
+
+  set y2(value) {
+    this.el.attr("y2", value);
   }
 }
