@@ -14,15 +14,12 @@ export default class RailCreater {
     const { x, y } = this.mouse.getCoords(e);
     const types = ["rail"];
     let el;
-    let offset;
 
     if (railType === "vertical") {
       el = this._drawVerticalRail(x);
-      offset = x;
       types.push("vertical");
     } else if (railType === "horizontal") {
       el = this._drawHorizontalRail(y);
-      offset = y;
       types.push("horizontal");
     }
 

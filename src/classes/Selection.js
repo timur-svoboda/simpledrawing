@@ -1,8 +1,7 @@
 import Mouse from "./Mouse.js";
 
 export default class Selection {
-  constructor(canvas, store) {
-    this.canvas = canvas;
+  constructor(store) {
     this.store = store;
     this.mouse = new Mouse(store);
   }

@@ -1,124 +1,92 @@
-import { createLocalVue } from "@vue/test-utils";
-import Vuex from "vuex";
 import Rail from "./../../src/classes/Rail.js";
 const Snap = require("./../../node_modules/snapsvg/dist/snap.svg-min.js");
 
-const localVue = createLocalVue();
-
-localVue.use(Vuex);
-
-describe("_drawVerticalRail", () => {
+describe("offset", () => {
   let canvas;
-  let store;
-  let rail;
-  let offset;
-  let verticalRail;
+  let types;
 
   beforeEach(() => {
     canvas = new Snap(800, 600);
-    store = new Vuex.Store();
-    rail = new Rail(canvas, store);
-    offset = 100;
-    verticalRail = rail._drawVerticalRail(offset);
+    types = ["rail"];
   });
 
-  it("checks the existance of the rail element", () => {
-    expect(verticalRail).toBeDefined();
+  it("gets offset when a rail is vertical", () => {
+    const el = canvas.line(100, -5000, 100, 5000);
+    types.push("vertical");
+    const rail = new Rail(el, types);
+
+    expect(rail.offset).toBe(+el.attr("x1"));
   });
 
-  it("checks the class of the rail element", () => {
-    expect(verticalRail.hasClass("canvas__rail")).toBeTruthy();
+  it("gets offset when a rail is horizontal", () => {
+    const el = canvas.line(-5000, 100, 5000, 100);
+    types.push("horizontal");
+    const rail = new Rail(el, types);
+
+    expect(rail.offset).toBe(+el.attr("y1"));
   });
 
-  it("checks the equality of x1 and x2 coords", () => {
-    expect(+verticalRail.attr("x1")).toBe(+verticalRail.attr("x2"));
+  it("sets offset when a rail is vertical", () => {
+    const el = canvas.line(100, -5000, 100, 5000);
+    types.push("vertical");
+    const rail = new Rail(el, types);
+    rail.offset = 200;
+
+    expect(rail.offset).toBe(+el.attr("x1"));
   });
 
-  it("checks x1 coord", () => {
-    expect(+verticalRail.attr("x1")).toBe(offset);
-  });
+  it("sets offset when a rail is horizontal", () => {
+    const el = canvas.line(-5000, 100, 5000, 100);
+    types.push("horizontal");
+    const rail = new Rail(el, types);
+    rail.offset = 200;
 
-  it("checks y1 coord", () => {
-    expect(+verticalRail.attr("y1")).toBe(-50000);
-  });
-
-  it("checks y2 coord", () => {
-    expect(+verticalRail.attr("y2")).toBe(50000);
+    expect(rail.offset).toBe(+el.attr("y1"));
   });
 });
 
-describe("_drawHorizontalRail", () => {
+describe("distToPoint", () => {
   let canvas;
-  let store;
-  let rail;
-  let offset;
-  let horizontalRail;
+  let types;
 
   beforeEach(() => {
     canvas = new Snap(800, 600);
-    store = new Vuex.Store();
-    rail = new Rail(canvas, store);
-    offset = 100;
-    horizontalRail = rail._drawHorizontalRail(offset);
+    types = ["rail"];
   });
 
-  it("checks the existance of the rail element", () => {
-    expect(horizontalRail).toBeDefined();
+  it("gets the distance from the vertical rail with offset 100 and the point with coords 150, 100", () => {
+    const el = canvas.line(100, -5000, 100, 5000);
+    types.push("vertical");
+    const rail = new Rail(el, types);
+    const dist = rail.distToPoint(150, 100);
+
+    expect(dist).toBe(50);
   });
 
-  it("checks the class of the rail element", () => {
-    expect(horizontalRail.hasClass("canvas__rail")).toBeTruthy();
+  it("gets the distance from the vertical rail with offset 100 and the point with coords 75, 100", () => {
+    const el = canvas.line(100, -5000, 100, 5000);
+    types.push("vertical");
+    const rail = new Rail(el, types);
+    const dist = rail.distToPoint(75, 100);
+
+    expect(dist).toBe(25);
   });
 
-  it("checks the equality of y1 and y2 coords", () => {
-    expect(+horizontalRail.attr("y1")).toBe(+horizontalRail.attr("y2"));
+  it("gets the distance from the horizontal rail with offset 100 and the point with coords 100, 200", () => {
+    const el = canvas.line(-5000, 100, 5000, 100);
+    types.push("horizontal");
+    const rail = new Rail(el, types);
+    const dist = rail.distToPoint(100, 200);
+
+    expect(dist).toBe(100);
   });
 
-  it("checks y1 coord", () => {
-    expect(+horizontalRail.attr("y1")).toBe(offset);
-  });
+  it("gets the distance from the horizontal rail with offset 100 and the point with coords 100, 25", () => {
+    const el = canvas.line(-5000, 100, 5000, 100);
+    types.push("horizontal");
+    const rail = new Rail(el, types);
+    const dist = rail.distToPoint(100, 25);
 
-  it("checks x1 coord", () => {
-    expect(+horizontalRail.attr("x1")).toBe(-50000);
-  });
-
-  it("checks x2 coord", () => {
-    expect(+horizontalRail.attr("x2")).toBe(50000);
-  });
-});
-
-describe("_calcControlPoints", () => {
-  let canvas;
-  let store;
-  let rail;
-
-  beforeEach(() => {
-    canvas = new Snap(800, 600);
-    store = new Vuex.Store({
-      state: {
-        controlPoints: []
-      },
-      getters: {
-        getRails() {
-          return [{ types: ["rail", "vertical"], offset: 100 }];
-        },
-        getControlPoints(state) {
-          return state.controlPoints;
-        }
-      }
-    });
-    rail = new Rail(canvas, store);
-  });
-
-  it("checks controlPoints length when there is one intersection", () => {
-    rail._calcControlPoints({ types: ["rail", "horizontal"], offset: 100 });
-    expect(store.getters.getControlPoints.length).toBe(1);
-  });
-
-  it("checks controlPoints length when there are three intersection", () => {
-    rail._calcControlPoints({ types: ["rail", "horizontal"], offset: 100 });
-    rail._calcControlPoints({ types: ["rail", "horizontal"], offset: 200 });
-    rail._calcControlPoints({ types: ["rail", "horizontal"], offset: 300 });
-    expect(store.getters.getControlPoints.length).toBe(3);
+    expect(dist).toBe(75);
   });
 });

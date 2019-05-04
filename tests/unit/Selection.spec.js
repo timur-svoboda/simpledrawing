@@ -1,79 +1,103 @@
 import { createLocalVue } from "@vue/test-utils";
 import Vuex from "vuex";
 import Selection from "./../../src/classes/Selection.js";
+import CanvasObject from "./../../src/classes/CanvasObject.js";
 const Snap = require("./../../node_modules/snapsvg/dist/snap.svg-min.js");
 
 const localVue = createLocalVue();
 
 localVue.use(Vuex);
 
-describe("selectAll and unselectAll", () => {
-  let canvas;
+describe("selectAll", () => {
   let objects;
-  let state;
+  let canvas;
   let getters;
   let store;
   let selection;
 
   beforeEach(() => {
-    canvas = new Snap(800, 600);
-
     objects = [];
 
-    for (let i = 0; i < 50; i += 5) {
-      objects.push({
-        el: canvas.line(i, 0, i + 5, 5),
-        selected: i % 2 ? true : false
-      });
+    canvas = new Snap(800, 600);
+
+    for (let i = 0; i < 10; i += 5) {
+      const el = canvas.line(i, 0, i + 5, 5);
+      const types = ["line", "some-line"];
+      objects.push(new CanvasObject(el, types));
     }
 
-    state = {
-      objects: objects
-    };
-
     getters = {
-      getObjects(state) {
-        return state.objects;
+      getObjects() {
+        return objects;
       }
     };
 
     store = new Vuex.Store({
-      state,
       getters
     });
 
-    selection = new Selection(canvas, store);
+    selection = new Selection(store);
   });
 
-  it("checks if properties 'selected' are true", () => {
+  it("checks 'selected' property", () => {
     selection.selectAll();
-
-    store.getters.getObjects.forEach(obj => {
-      expect(obj.selected).toBeTruthy();
+    objects.forEach(obj => {
+      expect(obj.selected).toBe(true);
     });
   });
 
-  it("checks if elements have class 'highlighted'", () => {
+  it("checks 'highlighted' class", () => {
     selection.selectAll();
+    objects.forEach(obj => {
+      expect(obj.el.hasClass("highlighted")).toBe(true);
+    });
+  });
+});
 
-    store.getters.getObjects.forEach(obj => {
-      expect(obj.el.hasClass("highlighted")).toBeTruthy();
+describe("unselectAll", () => {
+  let objects;
+  let canvas;
+  let getters;
+  let store;
+  let selection;
+
+  beforeEach(() => {
+    objects = [];
+
+    canvas = new Snap(800, 600);
+
+    for (let i = 0; i < 10; i += 5) {
+      const el = canvas.line(i, 0, i + 5, 5);
+      const types = ["line", "some-line"];
+      objects.push(new CanvasObject(el, types));
+    }
+
+    getters = {
+      getObjects() {
+        return objects;
+      }
+    };
+
+    store = new Vuex.Store({
+      getters
+    });
+
+    selection = new Selection(store);
+  });
+
+  it("checks 'selected' property", () => {
+    selection.selectAll();
+    selection.unselectAll();
+    objects.forEach(obj => {
+      expect(obj.selected).toBe(false);
     });
   });
 
-  it("checks if properties 'selected' are false", () => {
+  it("checks 'highlighted' class", () => {
+    selection.selectAll();
     selection.unselectAll();
-
-    store.getters.getObjects.forEach(obj => {
-      expect(obj.selected).toBeFalsy();
-    });
-  });
-
-  it("checks if elements don't have class 'highlighted'", () => {
-    selection.unselectAll();
-
-    store.getters.getObjects.forEach(obj => {
-      expect(obj.el.hasClass("highlighted")).toBeFalsy();
+    objects.forEach(obj => {
+      expect(obj.el.hasClass("highlighted")).toBe(false);
     });
   });
 });

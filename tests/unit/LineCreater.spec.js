@@ -1,6 +1,6 @@
 import { createLocalVue } from "@vue/test-utils";
 import Vuex from "vuex";
-import Line from "./../../src/classes/Line.js";
+import LineCreater from "./../../src/classes/LineCreater.js";
 const Snap = require("./../../node_modules/snapsvg/dist/snap.svg-min.js");
 
 const localVue = createLocalVue();
@@ -16,7 +16,7 @@ describe("_addPoint", () => {
   beforeEach(() => {
     canvas = new Snap(800, 600);
     store = new Vuex.Store();
-    line = new Line(canvas, store);
+    line = new LineCreater(canvas, store);
   });
 
   it("checks temporaryPoints length", () => {

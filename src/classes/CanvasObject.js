@@ -14,6 +14,4 @@ export default class CanvasObject {
     this.selected = false;
     this.el.removeClass("highlighted");
   }
-
-  distToPoint(x, y) {}
 }

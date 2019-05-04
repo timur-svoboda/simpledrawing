@@ -11,7 +11,7 @@ export default class Canvas {
     this.canvas = this.paper.g();
     this.canvas.addClass("canvas");
 
-    this.selection = new Selection(this.canvas, this.store);
+    this.selection = new Selection(this.store);
     this.railCreater = new RailCreater(this.canvas, this.store);
     this.lineCreater = new LineCreater(this.canvas, this.store);
     this.trash = new Trash(this.store);

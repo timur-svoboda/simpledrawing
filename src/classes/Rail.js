@@ -10,13 +10,15 @@ export default class Rail extends CanvasObject {
   }
 
   get offset() {
-    if (this.types.indexOf("vertical") !== -1)
+    if (this.types.indexOf("vertical") !== -1) {
       return Number(this.el.attr("x1"));
-    else return Number(this.el.attr("y1"));
+    } else {
+      return Number(this.el.attr("y1"));
+    }
   }
 
   set offset(value) {
-    if (this.types.indexOf("vertical")) {
+    if (this.types.indexOf("vertical") !== -1) {
       this.el.attr("x1", value);
       this.el.attr("x2", value);
     } else {
