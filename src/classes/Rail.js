@@ -9,6 +9,19 @@ export default class Rail extends CanvasObject {
     }
   }
 
+  clone() {
+    const el = this.el.clone();
+    const types = ["rail"];
+
+    if (this.types.indexOf("vertical") !== -1) {
+      types.push("vertical");
+    } else {
+      types.push("horizontal");
+    }
+
+    return new Rail(el, types);
+  }
+
   get offset() {
     if (this.types.indexOf("vertical") !== -1) {
       return Number(this.el.attr("x1"));
