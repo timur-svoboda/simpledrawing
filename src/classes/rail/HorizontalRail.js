@@ -1,6 +1,11 @@
-import Rail from "./Rail.js";
+import CanvasObject from "./../CanvasObject.js";
 
-export default class HorizontalRail extends Rail {
+export default class HorizontalRail extends CanvasObject {
+  constructor(el) {
+    super(el);
+    this.addTypes("rail", "horizontal");
+  }
+
   get offset() {
     return Number(this.el.attr("y1"));
   }
@@ -16,9 +21,5 @@ export default class HorizontalRail extends Rail {
 
   clone() {
     return new HorizontalRail(this.el.clone());
-  }
-
-  get types() {
-    return ["rail", "horizontal"];
   }
 }

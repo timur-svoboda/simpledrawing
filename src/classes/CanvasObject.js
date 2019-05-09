@@ -16,6 +16,6 @@ export default class CanvasObject {
   }
 
   addTypes(...types) {
-    this.types.push(types);
+    this.types = this.types.concat(types);
   }
 }
