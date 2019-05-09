@@ -1,7 +1,8 @@
 import MainInscription from "./MainInscription.js";
+import Mouse from "./Mouse.js";
 import Selection from "./Selection.js";
-import RailCreater from "./RailCreater.js";
-import LineCreater from "./LineCreater.js";
+import RailCreator from "./rail/RailCreator.js";
+import LineCreator from "./LineCreator.js";
 import Trash from "./Trash.js";
 
 export default class Canvas {
@@ -11,9 +12,10 @@ export default class Canvas {
     this.canvas = this.paper.g();
     this.canvas.addClass("canvas");
 
+    this.mouse = new Mouse(this.store);
     this.selection = new Selection(this.store);
-    this.railCreater = new RailCreater(this.canvas, this.store);
-    this.lineCreater = new LineCreater(this.canvas, this.store);
+    this.railCreator = new RailCreator(this.canvas, this.store);
+    this.lineCreator = new LineCreator(this.canvas, this.store);
     this.trash = new Trash(this.store);
   }
 
@@ -39,6 +41,8 @@ export default class Canvas {
     this.canvas.add(sheet, border, mainInscription);
 
     this._bindEvents();
+
+    this.railCreator.createRailsWrapper();
     return this.canvas;
   }
 
@@ -75,15 +79,17 @@ export default class Canvas {
   _mousedownAction(e) {
     if (e.button === 0) {
       const currentToolId = this.store.getters.getCurrentTool.id;
+      const point = this.mouse.getCoords(e);
+
       switch (currentToolId) {
         case "select":
           this.selection.select(e);
           break;
         case "rails":
-          this.railCreater.drawRail(e);
+          this.railCreator.create(point);
           break;
         case "line":
-          this.lineCreater.drawLine(e);
+          this.lineCreator.create(e);
           break;
         case "circular-arc":
           alert("circular-arc");
@@ -102,6 +108,9 @@ export default class Canvas {
       this.trash.removeSelectedObjects();
     } else if (e.key === "a" && e.ctrlKey) {
       this.selection.selectAll();
+    } else if (e.key === "h" && e.ctrlKey) {
+      e.preventDefault();
+      this.railCreator.toggleRails();
     }
   }
 
@@ -113,10 +122,10 @@ export default class Canvas {
         this.selection.reset();
         break;
       case "rails":
-        // alert(id);
+        this.railCreator.reset();
         break;
       case "line":
-        this.lineCreater.reset();
+        this.lineCreator.reset();
         break;
       case "circular-arc":
         // alert(id);

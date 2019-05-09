@@ -19,7 +19,9 @@ export default class ControlPoint {
     }
   }
 
-  distToPoint(x, y) {
-    return Math.sqrt(Math.pow(this.x - x, 2) + Math.pow(this.y - y, 2));
+  distToPoint(point) {
+    return Math.sqrt(
+      Math.pow(this.x - point.x, 2) + Math.pow(this.y - point.y, 2)
+    );
   }
 }

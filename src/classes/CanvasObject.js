@@ -1,7 +1,7 @@
 export default class CanvasObject {
-  constructor(el, types) {
+  constructor(el) {
     this.el = el;
-    this.types = types;
+    this.types = [];
     this.selected = false;
   }
 
@@ -13,5 +13,9 @@ export default class CanvasObject {
   unselect() {
     this.selected = false;
     this.el.removeClass("highlighted");
+  }
+
+  addTypes(...types) {
+    this.types = this.types.concat(types);
   }
 }

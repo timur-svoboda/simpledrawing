@@ -12,6 +12,7 @@
 <script>
 import IconControl from "./tool-controllers/IconControl.vue";
 import RailTypeControl from "./tool-controllers/RailTypeControl.vue";
+import DistToBaseRail from "./tool-controllers/DistToBaseRail.vue";
 import LineTypeControl from "./tool-controllers/LineTypeControl.vue";
 
 /**
@@ -22,6 +23,7 @@ export default {
   components: {
     IconControl,
     RailTypeControl,
+    DistToBaseRail,
     LineTypeControl
   },
   computed: {
