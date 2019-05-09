@@ -10,6 +10,10 @@ export default {
         id: "horizontal"
       },
       {
+        label: "Parallel rail",
+        id: "parallel"
+      },
+      {
         label: "Symmetrical rails",
         id: "symmetrical"
       }

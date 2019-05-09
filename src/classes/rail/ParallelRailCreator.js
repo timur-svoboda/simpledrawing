@@ -1,6 +1,6 @@
 import Mouse from "./../Mouse.js";
 
-export default class SymmetricalRailsCreator {
+export default class ParallelRailCreator {
   constructor(canvas, store) {
     this.canvas = canvas;
     this.store = store;
@@ -17,18 +17,12 @@ export default class SymmetricalRailsCreator {
   }
 
   _firstStep(point) {
-    const rails = this.store.getters.getRails;
     const { co, dist } = this.mouse.getClosestObject(point, rails);
+    const rails = this.store.getters.getRails;
 
     if (co && dist <= 15) {
       this.baseRail = co;
-      this.rails = [];
-
-      for (let i = 0; i < 2; i++) {
-        const rail = this.baseRail.clone();
-        this.rails.push(rail);
-      }
-
+      this.rail = this.baseRail.clone();
       this.baseRail.select();
 
       this.store.getters.getCurrentTool.toolControllers.push("DistToBaseRail");
@@ -51,7 +45,7 @@ export default class SymmetricalRailsCreator {
     this.step = 0;
 
     return {
-      value: this.rails,
+      value: [this.rail],
       done: true
     };
   }
@@ -59,9 +53,10 @@ export default class SymmetricalRailsCreator {
   _bindEvents() {
     this.canvas.node.onmousemove = e => {
       const point = this.mouse.getCoords(e);
+      this._setOffset(point);
+
       const offset = this.baseRail.offset;
       const deltaOffset = this.baseRail.distToPoint(point);
-      this._setOffset(offset, deltaOffset);
       this.store.commit("setDistToBaseRail", deltaOffset);
     };
   }
@@ -70,8 +65,11 @@ export default class SymmetricalRailsCreator {
     this.canvas.node.onmousemove = undefined;
   }
 
-  _setOffset(offset, deltaOffset) {
-    this.rails[0].offset = offset + deltaOffset;
-    this.rails[1].offset = offset - deltaOffset;
+  _setOffset(point) {
+    if (this.rail.types.indexOf("horizontal") !== -1) {
+      this.rail.offset = point.y;
+    } else {
+      this.rail.offset = point.x;
+    }
   }
 }

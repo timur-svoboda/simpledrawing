@@ -1,5 +1,6 @@
 import HorizontalRailCreator from "./HorizontalRailCreator.js";
 import VerticalRailCreator from "./VerticalRailCreator.js";
+import ParallelRailCreator from "./ParallelRailCreator.js";
 import SymmetricalRailsCreator from "./SymmetricalRailsCreator.js";
 import ControlPoint from "./../ControlPoint.js";
 
@@ -10,6 +11,7 @@ export default class RailCreator {
 
     this.horizontalRailCreator = new HorizontalRailCreator(canvas);
     this.verticalRailCreator = new VerticalRailCreator(canvas);
+    this.parallelRailCreator = new ParallelRailCreator(canvas, store);
     this.symmetricalRailsCreator = new SymmetricalRailsCreator(canvas, store);
   }
 
@@ -21,6 +23,8 @@ export default class RailCreator {
       res = this.horizontalRailCreator.create(point);
     } else if (railType === "vertical") {
       res = this.verticalRailCreator.create(point);
+    } else if (railType === "parallel") {
+      res = this.parallelRailCreator.create(point);
     } else if (railType === "symmetrical") {
       res = this.symmetricalRailsCreator.create(point);
     }
