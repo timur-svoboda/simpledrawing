@@ -8,6 +8,20 @@ export default class ParallelRailCreator {
     this.step = 0;
   }
 
+  reset() {
+    if (this.step === 1) {
+      this._unbindEvents();
+      this.baseRail.unselect();
+      this.rail.el.remove();
+
+      const controls = this.store.getters.getCurrentTool.toolControllers;
+      const index = controls.indexOf("DistToBaseRail");
+      controls.splice(index, 1);
+
+      this.step = 0;
+    }
+  }
+
   create(point) {
     if (this.step === 0) {
       return this._firstStep(point);

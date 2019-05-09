@@ -16,8 +16,9 @@ export default class Mouse {
     const cps = this.store.getters.getControlPoints;
     const { co, dist } = this.getClosestObject(point, cps);
     const bindingDist = this.store.getters.getBindingDistance;
+    const railsState = this.store.getters.getRailsState;
 
-    if (co !== null && dist !== null) {
+    if (co !== null && dist !== null && railsState) {
       if (dist <= bindingDist) {
         point.x = co.x;
         point.y = co.y;

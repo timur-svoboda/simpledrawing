@@ -41,6 +41,8 @@ export default class Canvas {
     this.canvas.add(sheet, border, mainInscription);
 
     this._bindEvents();
+
+    this.railCreator.createRailsWrapper();
     return this.canvas;
   }
 
@@ -106,6 +108,9 @@ export default class Canvas {
       this.trash.removeSelectedObjects();
     } else if (e.key === "a" && e.ctrlKey) {
       this.selection.selectAll();
+    } else if (e.key === "h" && e.ctrlKey) {
+      e.preventDefault();
+      this.railCreator.toggleRails();
     }
   }
 
@@ -117,7 +122,7 @@ export default class Canvas {
         this.selection.reset();
         break;
       case "rails":
-        // alert(id);
+        this.railCreator.reset();
         break;
       case "line":
         this.lineCreater.reset();

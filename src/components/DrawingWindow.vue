@@ -23,6 +23,9 @@ export default {
   overflow hidden
   user-select none
 
+.hide
+  display: none
+
 .canvas__sheet
   fill #fff
 

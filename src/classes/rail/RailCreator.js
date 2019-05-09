@@ -15,6 +15,16 @@ export default class RailCreator {
     this.symmetricalRailsCreator = new SymmetricalRailsCreator(canvas, store);
   }
 
+  createRailsWrapper() {
+    this.railsWrapper = this.canvas.g();
+    this.railsWrapper.addClass("rails-wrappper");
+  }
+
+  toggleRails() {
+    this.railsWrapper.toggleClass("hide");
+    this.store.commit("toggleRailsState");
+  }
+
   create(point) {
     const railType = this.store.getters.getCurrentTool.railType;
     let res;
@@ -34,8 +44,19 @@ export default class RailCreator {
 
       for (let rail of res.value) {
         this._calcControlPoints(rail);
+        this.railsWrapper.add(rail.el);
         canvasObjects.push(rail);
       }
+    }
+  }
+
+  reset() {
+    const railType = this.store.getters.getCurrentTool.railType;
+
+    if (railType === "parallel") {
+      this.parallelRailCreator.reset();
+    } else if (railType === "symmetrical") {
+      this.symmetricalRailsCreator.reset();
     }
   }
 
