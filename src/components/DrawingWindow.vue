@@ -89,14 +89,15 @@ export default {
   stroke #000
   &.highlighted
     stroke #41b883
-  &_solid-bold
-    stroke-width 2
-  &_solid-thin
-    stroke-width 1
-  &_dashed
-    stroke-width 1
-    stroke-dasharray 16,8
-  &_dashed-dotted-thin
-    stroke-width 1
-    stroke-dasharray 80,16,1,16
+    
+.solid-bold
+  stroke-width 2
+.solid-thin
+  stroke-width 1
+.dashed
+  stroke-width 1
+  stroke-dasharray 16,8
+.dashed-dotted-thin
+  stroke-width 1
+  stroke-dasharray 80,16,1,16
 </style>

@@ -2,7 +2,7 @@ import MainInscription from "./MainInscription.js";
 import Mouse from "./Mouse.js";
 import Selection from "./Selection.js";
 import RailCreator from "./rail/RailCreator.js";
-import LineCreater from "./LineCreater.js";
+import LineCreator from "./LineCreator.js";
 import Trash from "./Trash.js";
 
 export default class Canvas {
@@ -15,7 +15,7 @@ export default class Canvas {
     this.mouse = new Mouse(this.store);
     this.selection = new Selection(this.store);
     this.railCreator = new RailCreator(this.canvas, this.store);
-    this.lineCreater = new LineCreater(this.canvas, this.store);
+    this.lineCreator = new LineCreator(this.canvas, this.store);
     this.trash = new Trash(this.store);
   }
 
@@ -89,7 +89,7 @@ export default class Canvas {
           this.railCreator.create(point);
           break;
         case "line":
-          this.lineCreater.drawLine(e);
+          this.lineCreator.create(e);
           break;
         case "circular-arc":
           alert("circular-arc");
@@ -125,7 +125,7 @@ export default class Canvas {
         this.railCreator.reset();
         break;
       case "line":
-        this.lineCreater.reset();
+        this.lineCreator.reset();
         break;
       case "circular-arc":
         // alert(id);
