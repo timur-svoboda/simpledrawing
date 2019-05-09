@@ -13,11 +13,20 @@ export default {
         label: "Symmetrical rails",
         id: "symmetrical"
       }
-    ]
+    ],
+    distToBaseRail: 0
   },
   getters: {
     getRailTypes(state) {
       return state.railTypes;
+    },
+    getDistToBaseRail(state) {
+      return state.distToBaseRail;
+    }
+  },
+  mutations: {
+    setDistToBaseRail(state, value) {
+      state.distToBaseRail = value;
     }
   }
 };

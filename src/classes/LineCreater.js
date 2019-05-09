@@ -63,8 +63,8 @@ export default class LineCreater {
 
   _bindEvents() {
     this.canvas.node.onmousemove = e => {
-      const { x, y } = this.mouse.getBindingCoords(e);
-      this._animate(x, y);
+      const point = this.mouse.getBindingCoords(e);
+      this._animate(point);
     };
   }
 
@@ -72,10 +72,10 @@ export default class LineCreater {
     this.canvas.node.onmousemove = undefined;
   }
 
-  _animate(x, y) {
+  _animate(point) {
     this.el.attr({
-      x2: x,
-      y2: y
+      x2: point.x,
+      y2: point.y
     });
   }
 }

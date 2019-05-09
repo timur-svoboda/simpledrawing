@@ -1,6 +1,7 @@
 import MainInscription from "./MainInscription.js";
+import Mouse from "./Mouse.js";
 import Selection from "./Selection.js";
-import RailCreater from "./RailCreater.js";
+import RailCreator from "./rail/RailCreator.js";
 import LineCreater from "./LineCreater.js";
 import Trash from "./Trash.js";
 
@@ -11,8 +12,9 @@ export default class Canvas {
     this.canvas = this.paper.g();
     this.canvas.addClass("canvas");
 
+    this.mouse = new Mouse(this.store);
     this.selection = new Selection(this.store);
-    this.railCreater = new RailCreater(this.canvas, this.store);
+    this.railCreator = new RailCreator(this.canvas, this.store);
     this.lineCreater = new LineCreater(this.canvas, this.store);
     this.trash = new Trash(this.store);
   }
@@ -75,12 +77,14 @@ export default class Canvas {
   _mousedownAction(e) {
     if (e.button === 0) {
       const currentToolId = this.store.getters.getCurrentTool.id;
+      const point = this.mouse.getCoords(e);
+
       switch (currentToolId) {
         case "select":
           this.selection.select(e);
           break;
         case "rails":
-          this.railCreater.drawRail(e);
+          this.railCreator.create(point);
           break;
         case "line":
           this.lineCreater.drawLine(e);

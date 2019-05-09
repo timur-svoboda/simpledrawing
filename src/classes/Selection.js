@@ -8,8 +8,8 @@ export default class Selection {
 
   select(e) {
     const objects = this.store.getters.getObjects;
-    const { x, y } = this.mouse.getCoords(e);
-    const { co, dist } = this.mouse.getClosestObject(x, y, objects);
+    const point = this.mouse.getCoords(e);
+    const { co, dist } = this.mouse.getClosestObject(point, objects);
 
     if (co !== null && dist !== null) {
       if (dist <= this.store.getters.getBindingDistance) {

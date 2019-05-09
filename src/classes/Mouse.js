@@ -1,3 +1,5 @@
+import Point from "./Point.js";
+
 export default class Mouse {
   constructor(store) {
     this.store = store;
@@ -6,32 +8,30 @@ export default class Mouse {
   getCoords(e) {
     const scrollDistance = this.store.getters.getScrollDistance;
 
-    return {
-      x: e.offsetX,
-      y: e.offsetY + scrollDistance
-    };
+    return new Point(e.offsetX, e.offsetY + scrollDistance);
   }
 
   getBindingCoords(e) {
-    let { x, y } = this.getCoords(e);
+    const point = this.getCoords(e);
     const cps = this.store.getters.getControlPoints;
-    const { co, dist } = this.getClosestObject(x, y, cps);
+    const { co, dist } = this.getClosestObject(point, cps);
     const bindingDist = this.store.getters.getBindingDistance;
 
     if (co !== null && dist !== null) {
       if (dist <= bindingDist) {
-        x = co.x;
-        y = co.y;
+        point.x = co.x;
+        point.y = co.y;
       }
     }
-    return { x, y };
+
+    return point;
   }
 
-  getClosestObject(x, y, objects) {
+  getClosestObject(point, objects) {
     objects = objects ? objects : this.store.getters.getObjects;
 
     if (objects.length) {
-      const dists = this._getDistancesToObjects(x, y, objects);
+      const dists = this._getDistancesToObjects(point, objects);
       const dist = Math.min(...dists);
 
       const i = dists.lastIndexOf(dist);
@@ -43,9 +43,9 @@ export default class Mouse {
     }
   }
 
-  _getDistancesToObjects(x, y, objects) {
+  _getDistancesToObjects(point, objects) {
     return objects.map(obj => {
-      return obj.distToPoint(x, y);
+      return obj.distToPoint(point);
     });
   }
 }
