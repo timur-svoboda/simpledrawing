@@ -3,6 +3,7 @@ import Mouse from "./Mouse.js";
 import Selection from "./Selection.js";
 import RailCreator from "./rail/RailCreator.js";
 import LineCreator from "./LineCreator.js";
+import ArcCreator from "./circular-arc/ArcCreator.js";
 import Trash from "./Trash.js";
 
 export default class Canvas {
@@ -16,6 +17,7 @@ export default class Canvas {
     this.selection = new Selection(this.store);
     this.railCreator = new RailCreator(this.canvas, this.store);
     this.lineCreator = new LineCreator(this.canvas, this.store);
+    this.arcCreator = new ArcCreator(this.canvas, this.store);
     this.trash = new Trash(this.store);
   }
 
@@ -80,6 +82,7 @@ export default class Canvas {
     if (e.button === 0) {
       const currentToolId = this.store.getters.getCurrentTool.id;
       const point = this.mouse.getCoords(e);
+      const bindingPoint = this.mouse.getBindingCoords(e);
 
       switch (currentToolId) {
         case "select":
@@ -89,10 +92,10 @@ export default class Canvas {
           this.railCreator.create(point);
           break;
         case "line":
-          this.lineCreator.create(e);
+          this.lineCreator.create(bindingPoint);
           break;
         case "circular-arc":
-          alert("circular-arc");
+          this.arcCreator.create(bindingPoint);
           break;
         case "ruler":
           alert("ruler");
@@ -128,7 +131,7 @@ export default class Canvas {
         this.lineCreator.reset();
         break;
       case "circular-arc":
-        // alert(id);
+        this.arcCreator.reset();
         break;
       case "ruler":
         // alert(id);

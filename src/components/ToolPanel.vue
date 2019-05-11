@@ -12,8 +12,10 @@
 <script>
 import IconControl from "./tool-controllers/IconControl.vue";
 import RailTypeControl from "./tool-controllers/RailTypeControl.vue";
-import DistToBaseRail from "./tool-controllers/DistToBaseRail.vue";
-import LineTypeControl from "./tool-controllers/LineTypeControl.vue";
+import DistToBaseRailControl from "./tool-controllers/DistToBaseRailControl.vue";
+import StrokeTypeControl from "./tool-controllers/StrokeTypeControl.vue";
+import ArcTypeControl from "./tool-controllers/ArcTypeControl.vue";
+import RadiusControl from "./tool-controllers/RadiusControl.vue";
 
 /**
  * @vue-computed {Array} currentToolControllers Returns the list of the current tool controllers
@@ -23,8 +25,10 @@ export default {
   components: {
     IconControl,
     RailTypeControl,
-    DistToBaseRail,
-    LineTypeControl
+    DistToBaseRailControl,
+    StrokeTypeControl,
+    ArcTypeControl,
+    RadiusControl
   },
   computed: {
     currentToolControllers() {

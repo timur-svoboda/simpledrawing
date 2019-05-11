@@ -11,9 +11,7 @@ export default class LineCreator {
     this.step = 0;
   }
 
-  create(e) {
-    const point = this.mouse.getBindingCoords(e);
-
+  create(point) {
     if (this.step === 0) {
       this._firstStep(point);
     } else if (this.step === 1) {
@@ -23,12 +21,12 @@ export default class LineCreator {
 
   _firstStep(point) {
     const el = this.canvas.line(point.x, point.y, point.x, point.y);
-    const subtype = this.store.getters.getCurrentTool.lineType;
+    const strokeType = this.store.getters.getCurrentTool.strokeType;
     el.addClass("canvas__line");
-    el.addClass(`${subtype}`);
+    el.addClass(strokeType);
 
     this.line = new Line(el);
-    this.line.addTypes("line", subtype);
+    this.line.addTypes("line", strokeType);
 
     this._bindEvents();
 

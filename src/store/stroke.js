@@ -1,6 +1,6 @@
 export default {
   state: {
-    lineTypes: [
+    strokeTypes: [
       {
         label: "Solid bold line",
         id: "solid-bold"
@@ -20,8 +20,8 @@ export default {
     ]
   },
   getters: {
-    getLineTypes(state) {
-      return state.lineTypes;
+    getStrokeTypes(state) {
+      return state.strokeTypes;
     }
   }
 };

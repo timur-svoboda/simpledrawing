@@ -26,7 +26,7 @@ export default {
       {
         id: "circular-arc",
         icon: "circular-arc",
-        text: "Circle"
+        text: "Arc"
       },
       {
         id: "ruler",

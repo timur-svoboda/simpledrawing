@@ -1,16 +1,16 @@
 <template>
   <div class="tool-item">
-    <span>Distance: {{getDistToBaseRail / getScale}}</span>
+    <span>Distance: {{distToBaseRail / scale}}</span>
   </div>
 </template>
 
 <script>
   export default {
     computed: {
-      getDistToBaseRail() {
+      distToBaseRail() {
         return this.$store.getters.getDistToBaseRail;
       },
-      getScale() {
+      scale() {
         return this.$store.getters.getScale
       }
     }

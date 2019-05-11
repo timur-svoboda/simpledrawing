@@ -1,12 +1,14 @@
 import radialNav from "./radialNav.js";
+import stroke from "./stroke.js";
 import railTool from "./railTool.js";
-import lineTool from "./lineTool.js";
+import arcTool from "./arcTool.js";
 
 export default {
   modules: {
     radialNav,
     railTool,
-    lineTool
+    arcTool,
+    stroke
   },
   state: {
     tools: [
@@ -24,13 +26,15 @@ export default {
       {
         id: "line",
         iconName: "line.svg",
-        toolControllers: ["IconControl", "LineTypeControl"],
-        lineType: "solid-bold"
+        toolControllers: ["IconControl", "StrokeTypeControl"],
+        strokeType: "solid-bold"
       },
       {
         id: "circular-arc",
         iconName: "circular-arc.svg",
-        toolControllers: ["IconControl"]
+        toolControllers: ["IconControl", "ArcTypeControl", "StrokeTypeControl"],
+        arcType: "circle",
+        strokeType: "solid-bold"
       },
       {
         id: "ruler",
@@ -101,11 +105,25 @@ export default {
         curTool.railType = payload;
       }
     },
+    setStrokeType(state, payload) {
+      const curTool = state.currentTool;
+
+      if (curTool.strokeType !== payload) {
+        curTool.strokeType = payload;
+      }
+    },
     setLineType(state, payload) {
       const curTool = state.currentTool;
 
       if (curTool.lineType !== payload) {
         curTool.lineType = payload;
+      }
+    },
+    setArcType(state, payload) {
+      const curTool = state.currentTool;
+
+      if (curTool.arcType !== payload) {
+        curTool.arcType = payload;
       }
     }
   }

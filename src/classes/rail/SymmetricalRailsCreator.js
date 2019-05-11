@@ -15,6 +15,7 @@ export default class SymmetricalRailsCreator {
       this.rails[0].el.remove();
       this.rails[1].el.remove();
 
+      this.store.commit("setDistToBaseRail", 0);
       const controls = this.store.getters.getCurrentTool.toolControllers;
       const index = controls.indexOf("DistToBaseRail");
       controls.splice(index, 1);
@@ -46,7 +47,9 @@ export default class SymmetricalRailsCreator {
 
       this.baseRail.select();
 
-      this.store.getters.getCurrentTool.toolControllers.push("DistToBaseRail");
+      this.store.getters.getCurrentTool.toolControllers.push(
+        "DistToBaseRailControl"
+      );
 
       this._bindEvents();
       this.step = 1;
@@ -59,8 +62,9 @@ export default class SymmetricalRailsCreator {
     this._unbindEvents();
     this.baseRail.unselect();
 
+    this.store.commit("setDistToBaseRail", 0);
     const controls = this.store.getters.getCurrentTool.toolControllers;
-    const index = controls.indexOf("DistToBaseRail");
+    const index = controls.indexOf("DistToBaseRailControl");
     controls.splice(index, 1);
 
     this.step = 0;

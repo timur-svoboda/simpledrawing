@@ -14,6 +14,7 @@ export default class ParallelRailCreator {
       this.baseRail.unselect();
       this.rail.el.remove();
 
+      this.store.commit("setDistToBaseRail", 0);
       const controls = this.store.getters.getCurrentTool.toolControllers;
       const index = controls.indexOf("DistToBaseRail");
       controls.splice(index, 1);
@@ -39,7 +40,9 @@ export default class ParallelRailCreator {
       this.rail = this.baseRail.clone();
       this.baseRail.select();
 
-      this.store.getters.getCurrentTool.toolControllers.push("DistToBaseRail");
+      this.store.getters.getCurrentTool.toolControllers.push(
+        "DistToBaseRailControl"
+      );
 
       this._bindEvents();
       this.step = 1;
@@ -52,8 +55,9 @@ export default class ParallelRailCreator {
     this._unbindEvents();
     this.baseRail.unselect();
 
+    this.store.commit("setDistToBaseRail", 0);
     const controls = this.store.getters.getCurrentTool.toolControllers;
-    const index = controls.indexOf("DistToBaseRail");
+    const index = controls.indexOf("DistToBaseRailControl");
     controls.splice(index, 1);
 
     this.step = 0;

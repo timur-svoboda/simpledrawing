@@ -29,6 +29,5 @@ export default new Vuex.Store({
     setScrollDistance(state, distance) {
       state.scrollDistance = distance;
     }
-  },
-  actions: {}
+  }
 });

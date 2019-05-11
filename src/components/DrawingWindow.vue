@@ -90,6 +90,13 @@ export default {
   &.highlighted
     stroke #41b883
     
+.canvas__arc
+  stroke #000
+  stroke-width 2
+  fill transparent
+  &.highlighted
+    stroke #41b883
+  
 .solid-bold
   stroke-width 2
 .solid-thin
