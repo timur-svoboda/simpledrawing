@@ -17,7 +17,7 @@ export default class RailCreator {
 
   createRailsWrapper() {
     this.railsWrapper = this.canvas.g();
-    this.railsWrapper.addClass("rails-wrappper");
+    this.railsWrapper.addClass("rails-wrapper");
   }
 
   toggleRails() {
@@ -39,6 +39,10 @@ export default class RailCreator {
       res = this.symmetricalRailsCreator.create(point);
     }
 
+    this._register(res);
+  }
+
+  _register(res) {
     if (res.done) {
       const canvasObjects = this.store.getters.getObjects;
 

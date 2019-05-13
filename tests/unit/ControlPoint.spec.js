@@ -1,4 +1,5 @@
 import ControlPoint from "./../../src/classes/ControlPoint.js";
+import Point from "./../../src/classes/Point.js";
 
 describe("_calcCoords", () => {
   it("doesn't define coords when main types don't match", () => {
@@ -52,8 +53,8 @@ describe("distToPoint", () => {
     const rail1 = { types: ["rail", "horizontal"], offset: 100 };
     const rail2 = { types: ["rail", "vertical"], offset: 100 };
     const cp = new ControlPoint(rail1, rail2);
-    const pc = { x: 500, y: 400 };
+    const point = new Point(500, 400);
 
-    expect(cp.distToPoint(pc.x, pc.y)).toBe(500);
+    expect(cp.distToPoint(point)).toBe(500);
   });
 });

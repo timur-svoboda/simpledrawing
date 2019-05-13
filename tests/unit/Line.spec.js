@@ -1,4 +1,5 @@
 import Line from "./../../src/classes/Line.js";
+import Point from "./../../src/classes/Point.js";
 const Snap = require("./../../node_modules/snapsvg/dist/snap.svg-min.js");
 
 describe("distToPoint", () => {
@@ -15,42 +16,52 @@ describe("distToPoint", () => {
   });
 
   it("gets the distance from the line(9, 9, 11, 11) to the point(7, 9)", () => {
-    expect(line.distToPoint(7, 9)).toBe(2);
+    const point = new Point(7, 9);
+    expect(line.distToPoint(point)).toBe(2);
   });
 
   it("gets the distance from the line(9, 9, 11, 11) to the point(8, 8)", () => {
-    expect(line.distToPoint(8, 8)).toBeCloseTo(Math.sqrt(2));
+    const point = new Point(8, 8);
+    expect(line.distToPoint(point)).toBeCloseTo(Math.sqrt(2));
   });
 
   it("gets the distance from the line(9, 9, 11, 11) to the point(8, 10)", () => {
-    expect(line.distToPoint(8, 10)).toBeCloseTo(Math.sqrt(2));
+    const point = new Point(8, 10);
+    expect(line.distToPoint(point)).toBeCloseTo(Math.sqrt(2));
   });
 
   it("gets the distance from the line(9, 9, 11, 11) to the point(9, 9)", () => {
-    expect(line.distToPoint(9, 9)).toBe(0);
+    const point = new Point(9, 9);
+    expect(line.distToPoint(point)).toBe(0);
   });
 
   it("gets the distance from the line(9, 9, 11, 11) to the point(9, 11)", () => {
-    expect(line.distToPoint(9, 11)).toBeCloseTo(Math.sqrt(2));
+    const point = new Point(9, 11);
+    expect(line.distToPoint(point)).toBeCloseTo(Math.sqrt(2));
   });
 
   it("gets the distance from the line(9, 9, 11, 11) to the point(10, 10)", () => {
-    expect(line.distToPoint(10, 10)).toBe(0);
+    const point = new Point(10, 10);
+    expect(line.distToPoint(point)).toBe(0);
   });
 
   it("gets the distance from the line(9, 9, 11, 11) to the point(10, 12)", () => {
-    expect(line.distToPoint(10, 12)).toBeCloseTo(Math.sqrt(2));
+    const point = new Point(10, 12);
+    expect(line.distToPoint(point)).toBeCloseTo(Math.sqrt(2));
   });
 
   it("gets the distance from the line(9, 9, 11, 11) to the point(11, 11)", () => {
-    expect(line.distToPoint(11, 11)).toBe(0);
+    const point = new Point(11, 11);
+    expect(line.distToPoint(point)).toBe(0);
   });
 
   it("gets the distance from the line(9, 9, 11, 11) to the point(11, 13)", () => {
-    expect(line.distToPoint(11, 13)).toBe(2);
+    const point = new Point(11, 13);
+    expect(line.distToPoint(point)).toBe(2);
   });
 
   it("gets the distance from the line(9, 9, 11, 11) to the point(12, 12)", () => {
-    expect(line.distToPoint(12, 12)).toBeCloseTo(Math.sqrt(2));
+    const point = new Point(12, 12);
+    expect(line.distToPoint(point)).toBeCloseTo(Math.sqrt(2));
   });
 });
