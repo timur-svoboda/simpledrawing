@@ -16,9 +16,9 @@ export default class Line extends CanvasObject {
     )
       return 0;
 
-    const v = new Vector(this.x2 - this.x1, this.y2 - this.y1);
-    const w0 = new Vector(point.x - this.x1, point.y - this.y1);
-    const w1 = new Vector(this.x2 - point.x, this.y2 - point.y);
+    const v = new Vector(this.x2 - this.x1, this.y2 - this.y1, 0);
+    const w0 = new Vector(point.x - this.x1, point.y - this.y1, 0);
+    const w1 = new Vector(this.x2 - point.x, this.y2 - point.y, 0);
 
     if (v.length() === 0) return w0.length();
 
