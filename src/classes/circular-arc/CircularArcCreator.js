@@ -83,7 +83,10 @@ export default class CircularArcCreator {
     if (this.step === 0) {
       this.canvas.node.onmousemove = this._animateRadius.bind(this);
     } else if (this.step === 1) {
-      this.canvas.node.onmousemove = this._animateArc.bind(this);
+      this.timeout = 0;
+      this.canvas.node.onmousemove = e => {
+        this.timeout = setTimeout(this._animateArc.bind(this), 16, e);
+      };
     }
   }
 
