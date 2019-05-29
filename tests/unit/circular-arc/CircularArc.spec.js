@@ -258,3 +258,33 @@ describe("get/set end", () => {
     expect(circularArc.end.y).toBe(200);
   });
 });
+
+describe("get/set center", () => {
+  let canvas;
+  let el;
+  let circularArc;
+
+  beforeEach(() => {
+    canvas = new Snap(800, 600);
+    el = canvas.path("M100,50 A50,50,0,1,1,50,100");
+    circularArc = new CircularArc(el);
+  });
+
+  it("checks get center x", () => {
+    expect(circularArc.center.x).toBe(100);
+  });
+
+  it("checks get center y", () => {
+    expect(circularArc.center.y).toBe(100);
+  });
+
+  it("checks set center x", () => {
+    circularArc.center = new Point(200, 200);
+    expect(circularArc.center.x).toBe(200);
+  });
+
+  it("checks set center y", () => {
+    circularArc.center = new Point(200, 200);
+    expect(circularArc.center.y).toBe(200);
+  });
+});

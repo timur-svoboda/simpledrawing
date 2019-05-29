@@ -96,28 +96,28 @@ export default class CircularArc extends CanvasObject {
   }
 
   get center() {
-    const dObj = this.parseD(this.d);
-    const e = dObj.sf === 1 ? -1 : 1;
-    const g = dObj.laf === 1 ? 1 : -1;
+    const e = this.sf === 1 ? -1 : 1;
+    const g = this.laf === 1 ? 1 : -1;
 
     const d = Math.sqrt(
-      Math.pow(dObj.x2 - dObj.x1, 2) + Math.pow(dObj.y2 - dObj.y1, 2)
+      Math.pow(this.end.x - this.start.x, 2) +
+        Math.pow(this.end.y - this.start.y, 2)
     );
 
-    const u = (dObj.x2 - dObj.x1) / d;
-    const v = (dObj.y2 - dObj.y1) / d;
+    const u = (this.end.x - this.start.x) / d;
+    const v = (this.end.y - this.start.y) / d;
 
-    const h = Math.sqrt(Math.pow(dObj.r, 2) - (d * d) / 4);
+    const h = Math.sqrt(Math.pow(this.radius, 2) - (d * d) / 4);
 
-    const cx = (dObj.x1 + dObj.x2) / 2 - g * e * h * v;
-    const cy = (dObj.y1 + dObj.y2) / 2 + g * e * h * u;
+    const cx = (this.start.x + this.end.x) / 2 - g * e * h * v;
+    const cy = (this.start.y + this.end.y) / 2 + g * e * h * u;
 
     return new Point(cx, cy);
   }
 
   set center(point) {
-    const deltaX = this.point.x - this.center.x;
-    const deltaY = this.point.y - this.center.y;
+    const deltaX = point.x - this.center.x;
+    const deltaY = point.y - this.center.y;
 
     this.start = new Point(this.start.x + deltaX, this.start.y + deltaY);
     this.end = new Point(this.end.x + deltaX, this.end.y + deltaY);
