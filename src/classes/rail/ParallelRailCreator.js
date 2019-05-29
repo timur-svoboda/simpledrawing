@@ -69,25 +69,23 @@ export default class ParallelRailCreator {
   }
 
   _bindEvents() {
-    this.canvas.node.onmousemove = e => {
-      const point = this.mouse.getCoords(e);
-      this._setOffset(point);
-
-      const offset = this.baseRail.offset;
-      const deltaOffset = this.baseRail.distToPoint(point);
-      this.store.commit("setDistToBaseRail", deltaOffset);
-    };
+    this.canvas.node.onmousemove = this._animateOffset.bind(this);
   }
 
   _unbindEvents() {
     this.canvas.node.onmousemove = undefined;
   }
 
-  _setOffset(point) {
+  _animateOffset(e) {
+    const point = this.mouse.getCoords(e);
+    const deltaOffset = this.baseRail.distToPoint(point);
+
     if (this.rail.types.indexOf("horizontal") !== -1) {
       this.rail.offset = point.y;
     } else {
       this.rail.offset = point.x;
     }
+
+    this.store.commit("setDistToBaseRail", deltaOffset);
   }
 }

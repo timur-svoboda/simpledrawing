@@ -1,10 +1,17 @@
 import { createLocalVue } from "@vue/test-utils";
 import Vuex from "vuex";
-import Trash from "./../../src/classes/Trash.js";
+import Trash from "@/classes/Trash.js";
 
 const localVue = createLocalVue();
 
 localVue.use(Vuex);
+
+/*--------------------------------------------------------------
+>>> Navigation:
+----------------------------------------------------------------
+# Method - number of tests
+# _removeControlPoints - 4
+--------------------------------------------------------------*/
 
 describe("_removeControlPoints", () => {
   let rails;

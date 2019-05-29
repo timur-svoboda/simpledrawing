@@ -1,4 +1,12 @@
-import Vector from "./../../src/classes/Vector.js";
+import Vector from "@/classes/Vector.js";
+
+/*--------------------------------------------------------------
+>>> Navigation:
+----------------------------------------------------------------
+# Method - number of tests
+# dot - 1
+# length - 1
+--------------------------------------------------------------*/
 
 describe("dot", () => {
   it("calcs dot product of a and b vectors", () => {

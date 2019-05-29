@@ -3,6 +3,7 @@ import CanvasObject from "./../CanvasObject.js";
 export default class VerticalRail extends CanvasObject {
   constructor(el) {
     super(el);
+    this.el.addClass("canvas__rail");
     this.addTypes("rail", "vertical");
   }
 

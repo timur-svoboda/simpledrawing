@@ -1,5 +1,13 @@
-import ControlPoint from "./../../src/classes/ControlPoint.js";
-import Point from "./../../src/classes/Point.js";
+import ControlPoint from "@/classes/ControlPoint.js";
+import Point from "@/classes/Point.js";
+
+/*--------------------------------------------------------------
+>>> Navigation:
+----------------------------------------------------------------
+# Method - number of tests
+# _calcCoords - 5
+# distToPoint - 1
+--------------------------------------------------------------*/
 
 describe("_calcCoords", () => {
   it("doesn't define coords when main types don't match", () => {

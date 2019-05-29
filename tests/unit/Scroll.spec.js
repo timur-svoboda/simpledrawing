@@ -1,11 +1,18 @@
 import { createLocalVue } from "@vue/test-utils";
 import Vuex from "vuex";
-import Scroll from "./../../src/classes/Scroll.js";
+import Scroll from "@/classes/Scroll.js";
 const Snap = require("./../../node_modules/snapsvg/dist/snap.svg-min.js");
 
 const localVue = createLocalVue();
 
 localVue.use(Vuex);
+
+/*--------------------------------------------------------------
+>>> Navigation:
+----------------------------------------------------------------
+# Method - number of tests
+# _doScroll - 3
+--------------------------------------------------------------*/
 
 describe("_doScroll", () => {
   let canvas;

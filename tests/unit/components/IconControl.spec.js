@@ -1,6 +1,6 @@
 import { shallowMount, createLocalVue } from "@vue/test-utils";
 import Vuex from "vuex";
-import IconControl from "./../../src/components/tool-controllers/IconControl.vue";
+import IconControl from "@/components/tool-controllers/IconControl.vue";
 
 const localVue = createLocalVue();
 

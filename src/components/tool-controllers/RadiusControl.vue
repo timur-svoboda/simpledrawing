@@ -1,6 +1,6 @@
 <template>
   <div class="tool-item">
-    <span>Radius: {{radius / getScale}}</span>
+    Radius: <span class="radius">{{radius / getScale}}</span>
   </div>
 </template>
 

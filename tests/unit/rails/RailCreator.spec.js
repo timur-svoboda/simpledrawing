@@ -1,8 +1,8 @@
 import { createLocalVue } from "@vue/test-utils";
 import Vuex from "vuex";
-import RailCreator from "./../../src/classes/rail/RailCreator.js";
-import Point from "./../../src/classes/Point.js";
-const Snap = require("./../../node_modules/snapsvg/dist/snap.svg-min.js");
+import RailCreator from "@/classes/rail/RailCreator.js";
+import Point from "@/classes/Point.js";
+const Snap = require("./../../../node_modules/snapsvg/dist/snap.svg-min.js");
 
 const localVue = createLocalVue();
 

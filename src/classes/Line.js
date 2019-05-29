@@ -2,6 +2,13 @@ import CanvasObject from "./CanvasObject.js";
 import Vector from "./Vector.js";
 
 export default class Line extends CanvasObject {
+  constructor(el, strokeType) {
+    super(el);
+    this.el.addClass("canvas__line");
+    this.el.addClass(strokeType);
+    this.addTypes("line", strokeType);
+  }
+
   distToPoint(point) {
     if (
       (this.x1 === point.x && this.y1 === point.y) ||

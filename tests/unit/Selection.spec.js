@@ -1,12 +1,20 @@
 import { createLocalVue } from "@vue/test-utils";
 import Vuex from "vuex";
-import Selection from "./../../src/classes/Selection.js";
-import CanvasObject from "./../../src/classes/CanvasObject.js";
+import Selection from "@/classes/Selection.js";
+import CanvasObject from "@/classes/CanvasObject.js";
 const Snap = require("./../../node_modules/snapsvg/dist/snap.svg-min.js");
 
 const localVue = createLocalVue();
 
 localVue.use(Vuex);
+
+/*--------------------------------------------------------------
+>>> Navigation:
+----------------------------------------------------------------
+# Method - number of tests
+# selectAll - 2
+# unselectAll - 2
+--------------------------------------------------------------*/
 
 describe("selectAll", () => {
   let objects;

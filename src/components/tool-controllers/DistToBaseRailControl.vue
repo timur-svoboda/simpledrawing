@@ -1,6 +1,6 @@
 <template>
   <div class="tool-item">
-    <span>Distance: {{distToBaseRail / scale}}</span>
+    Distance: <span class="dist">{{distToBaseRail / scale}}</span>
   </div>
 </template>
 

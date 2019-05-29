@@ -1,11 +1,20 @@
 import { createLocalVue } from "@vue/test-utils";
 import Vuex from "vuex";
-import MainInscription from "./../../src/classes/MainInscription.js";
+import MainInscription from "@/classes/MainInscription.js";
 const Snap = require("./../../node_modules/snapsvg/dist/snap.svg-min.js");
 
 const localVue = createLocalVue();
 
 localVue.use(Vuex);
+
+/*--------------------------------------------------------------
+>>> Navigation:
+----------------------------------------------------------------
+# Method - number of tests
+# _drawField - 7
+# focus and blur events - 2
+# keydown event - 3
+--------------------------------------------------------------*/
 
 describe("_drawField", () => {
   let paper;

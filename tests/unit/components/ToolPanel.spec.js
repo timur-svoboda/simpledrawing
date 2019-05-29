@@ -1,6 +1,6 @@
 import { shallowMount, createLocalVue } from "@vue/test-utils";
 import Vuex from "vuex";
-import ToolPanel from "./../../src/components/ToolPanel.vue";
+import ToolPanel from "@/components/ToolPanel.vue";
 
 const localVue = createLocalVue();
 

@@ -4,6 +4,7 @@ export default class HorizontalRail extends CanvasObject {
   constructor(el) {
     super(el);
     this.addTypes("rail", "horizontal");
+    this.el.addClass("canvas__rail");
   }
 
   get offset() {

@@ -1,6 +1,6 @@
 import { shallowMount, createLocalVue } from "@vue/test-utils";
 import Vuex from "vuex";
-import RailTypeControl from "./../../src/components/tool-controllers/RailTypeControl.vue";
+import RailTypeControl from "@/components/tool-controllers/RailTypeControl.vue";
 
 const localVue = createLocalVue();
 

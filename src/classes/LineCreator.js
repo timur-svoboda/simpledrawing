@@ -7,7 +7,6 @@ export default class LineCreator {
     this.canvas = canvas;
     this.store = store;
     this.mouse = new Mouse(store);
-
     this.step = 0;
   }
 
@@ -22,11 +21,8 @@ export default class LineCreator {
   _firstStep(point) {
     const el = this.canvas.line(point.x, point.y, point.x, point.y);
     const strokeType = this.store.getters.getCurrentTool.strokeType;
-    el.addClass("canvas__line");
-    el.addClass(strokeType);
 
-    this.line = new Line(el);
-    this.line.addTypes("line", strokeType);
+    this.line = new Line(el, strokeType);
 
     this._bindEvents();
 
@@ -48,17 +44,15 @@ export default class LineCreator {
   }
 
   _bindEvents() {
-    this.canvas.node.onmousemove = e => {
-      const point = this.mouse.getBindingCoords(e);
-      this._setEndingCoords(point);
-    };
+    this.canvas.node.onmousemove = this._animateEndingCoords.bind(this);
   }
 
   _unbindEvents() {
-    this.canvas.node.onmousemove = undefined;
+    this.canvas.node.onmousemove = null;
   }
 
-  _setEndingCoords(point) {
+  _animateEndingCoords(e) {
+    const point = this.mouse.getBindingCoords(e);
     this.line.x2 = point.x;
     this.line.y2 = point.y;
   }

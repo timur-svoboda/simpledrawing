@@ -112,13 +112,6 @@ export default {
         curTool.strokeType = payload;
       }
     },
-    setLineType(state, payload) {
-      const curTool = state.currentTool;
-
-      if (curTool.lineType !== payload) {
-        curTool.lineType = payload;
-      }
-    },
     setArcType(state, payload) {
       const curTool = state.currentTool;
 
