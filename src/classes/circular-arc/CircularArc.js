@@ -1,5 +1,6 @@
 import CanvasObject from "./../CanvasObject.js";
 import Point from "./../Point.js";
+import Vector from "./../Vector.js";
 
 export default class CircularArc extends CanvasObject {
   constructor(el) {
@@ -29,6 +30,51 @@ export default class CircularArc extends CanvasObject {
     return `M${obj.x1},${obj.y1} A${obj.rx},${obj.ry},${obj.xar},${obj.laf},${
       obj.sf
     },${obj.x2},${obj.y2}`;
+  }
+
+  distToPoint(point) {
+    const distFromArcToPoint = Math.abs(
+      this._distFromCenterToPoint(point) - this.radius
+    );
+    const distFromStartToPoint = this.start.distToPoint(point);
+    const distFromEndToPoint = this.end.distToPoint(point);
+
+    const oa = new Vector(
+      this.start.x - this.center.x,
+      this.start.y - this.center.y,
+      0
+    );
+    const ob = new Vector(
+      this.end.x - this.center.x,
+      this.end.y - this.center.y,
+      0
+    );
+    const op = new Vector(point.x - this.center.x, point.y - this.center.y, 0);
+
+    const a = oa.angle(op);
+    const b = ob.angle(op);
+    const y = oa.angle(ob);
+
+    if (this.laf === 0) {
+      if (a <= y && b <= y) {
+        return distFromArcToPoint;
+      } else {
+        return Math.min(distFromStartToPoint, distFromEndToPoint);
+      }
+    } else if (this.laf === 1) {
+      if (a >= y || b >= y) {
+        return distFromArcToPoint;
+      } else {
+        return Math.min(distFromStartToPoint, distFromEndToPoint);
+      }
+    }
+  }
+
+  _distFromCenterToPoint(point) {
+    return Math.sqrt(
+      Math.pow(this.center.x - point.x, 2) +
+        Math.pow(this.center.y - point.y, 2)
+    );
   }
 
   get d() {
@@ -96,21 +142,22 @@ export default class CircularArc extends CanvasObject {
   }
 
   get center() {
-    const e = this.sf === 1 ? -1 : 1;
-    const g = this.laf === 1 ? 1 : -1;
+    const dObj = this.parseD(this.d);
+
+    const e = dObj.sf === 1 ? -1 : 1;
+    const g = dObj.laf === 1 ? 1 : -1;
 
     const d = Math.sqrt(
-      Math.pow(this.end.x - this.start.x, 2) +
-        Math.pow(this.end.y - this.start.y, 2)
+      Math.pow(dObj.x2 - dObj.x1, 2) + Math.pow(dObj.y2 - dObj.y1, 2)
     );
 
-    const u = (this.end.x - this.start.x) / d;
-    const v = (this.end.y - this.start.y) / d;
+    const u = (dObj.x2 - dObj.x1) / d;
+    const v = (dObj.y2 - dObj.y1) / d;
 
-    const h = Math.sqrt(Math.pow(this.radius, 2) - (d * d) / 4);
+    const h = Math.sqrt(Math.pow(dObj.rx, 2) - (d * d) / 4);
 
-    const cx = (this.start.x + this.end.x) / 2 - g * e * h * v;
-    const cy = (this.start.y + this.end.y) / 2 + g * e * h * u;
+    const cx = (dObj.x1 + dObj.x2) / 2 - g * e * h * v;
+    const cy = (dObj.y1 + dObj.y2) / 2 + g * e * h * u;
 
     return new Point(cx, cy);
   }

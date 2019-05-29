@@ -20,4 +20,8 @@ export default class Vector {
   length() {
     return Math.sqrt(this.dot(this));
   }
+
+  angle(v) {
+    return Math.acos(this.dot(v) / (this.length() * v.length()));
+  }
 }
