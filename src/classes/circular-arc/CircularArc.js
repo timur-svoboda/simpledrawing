@@ -13,19 +13,20 @@ export default class CircularArc extends CanvasObject {
     str = str.replace(/\s/gi, ",");
     const arr = str.split(",");
     return {
-      x1: arr[0],
-      y1: arr[1],
-      r: arr[2],
-      xar: arr[4],
-      laf: arr[5],
-      sf: arr[6],
-      x2: arr[7],
-      y2: arr[8]
+      x1: +arr[0],
+      y1: +arr[1],
+      rx: +arr[2],
+      ry: +arr[3],
+      xar: +arr[4],
+      laf: +arr[5],
+      sf: +arr[6],
+      x2: +arr[7],
+      y2: +arr[8]
     };
   }
 
   stringifyD(obj) {
-    return `M${obj.x1},${obj.y1} A${obj.r},${obj.r},${obj.xar},${obj.laf},${
+    return `M${obj.x1},${obj.y1} A${obj.rx},${obj.ry},${obj.xar},${obj.laf},${
       obj.sf
     },${obj.x2},${obj.y2}`;
   }
@@ -51,12 +52,14 @@ export default class CircularArc extends CanvasObject {
   }
 
   get radius() {
-    return this.parseD(this.d).r;
+    const parsedD = this.parseD(this.d);
+    if (parsedD.rx === parsedD.ry) return parsedD.rx;
   }
 
   set radius(value) {
     const dObj = this.parseD(this.d);
-    dObj.r = value;
+    dObj.rx = value;
+    dObj.ry = value;
     this.d = this.stringifyD(dObj);
   }
 
