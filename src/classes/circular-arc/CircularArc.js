@@ -159,14 +159,22 @@ export default class CircularArc extends CanvasObject {
     const cx = (dObj.x1 + dObj.x2) / 2 - g * e * h * v;
     const cy = (dObj.y1 + dObj.y2) / 2 + g * e * h * u;
 
-    return new Point(cx, cy);
+    if (cx && cy) {
+      return new Point(cx, cy);
+    } else {
+      return false;
+    }
   }
 
   set center(point) {
-    const deltaX = point.x - this.center.x;
-    const deltaY = point.y - this.center.y;
+    const center = this.center;
 
-    this.start = new Point(this.start.x + deltaX, this.start.y + deltaY);
-    this.end = new Point(this.end.x + deltaX, this.end.y + deltaY);
+    if (center) {
+      const deltaX = point.x - center.x;
+      const deltaY = point.y - center.y;
+
+      this.start = new Point(this.start.x + deltaX, this.start.y + deltaY);
+      this.end = new Point(this.end.x + deltaX, this.end.y + deltaY);
+    }
   }
 }

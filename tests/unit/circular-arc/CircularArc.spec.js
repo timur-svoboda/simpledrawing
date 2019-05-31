@@ -13,6 +13,21 @@
   - checks y2
 # stringifyD
   - checks stringified d
+# distToPoint
+  - checks the distance from the small arc to the point(120, 80)
+  - checks the distance from the small arc to the point(150, 50)
+  - checks the distance from the small arc to the point(80, 60)
+  - checks the distance from the small arc to the point(80, 30)
+  - checks the distance from the small arc to the point(140, 110)
+  - checks the distance from the small arc to the point(180, 110)
+  - checks the distance from the large arc to the point(110, 70)
+  - checks the distance from the large arc to the point(120, 40)
+  - checks the distance from the large arc to the point(130, 90)
+  - checks the distance from the large arc to the point(180, 90)
+  - checks the distance from the large arc to the point(90, 120)
+  - checks the distance from the large arc to the point(60, 150)
+# _distFromCenterToPoint
+  - checks the distance from the center to a point
 # get/set d
   - checks get d
   - checks set d
@@ -35,6 +50,11 @@
   - checks get end y
   - checks set end x
   - checks set end y
+# get/set center
+  - checks get center x
+  - checks get center y
+  - checks set center x
+  - checks set center y
 --------------------------------------------------------------*/
 
 import CircularArc from "@/classes/circular-arc/CircularArc.js";
@@ -109,6 +129,120 @@ describe("stringifyD", () => {
 
   it("checks stringified d", () => {
     expect(stringifiedD).toBe("M100,200 A300,300,0,0,1,400,500");
+  });
+});
+
+describe("distToPoint", () => {
+  let canvas;
+  let el;
+  let circularArc;
+
+  beforeEach(() => {
+    canvas = new Snap(800, 600);
+    el = canvas.path("M100,50 A50,50,0,0,1,150,100");
+    circularArc = new CircularArc(el);
+  });
+
+  it("checks the distance from the small arc to the point(120, 80)", () => {
+    const point = new Point(120, 80);
+    const dist = circularArc.distToPoint(point);
+    expect(dist).toBeCloseTo(50 - 20 * Math.sqrt(2));
+  });
+
+  it("checks the distance from the small arc to the point(150, 50)", () => {
+    const point = new Point(150, 50);
+    const dist = circularArc.distToPoint(point);
+    expect(dist).toBeCloseTo(50 * Math.sqrt(2) - 50);
+  });
+
+  it("checks the distance from the small arc to the point(80, 60)", () => {
+    const point = new Point(80, 60);
+    const dist = circularArc.distToPoint(point);
+    expect(dist).toBeCloseTo(10 * Math.sqrt(5));
+  });
+
+  it("checks the distance from the small arc to the point(80, 30)", () => {
+    const point = new Point(80, 30);
+    const dist = circularArc.distToPoint(point);
+    expect(dist).toBeCloseTo(20 * Math.sqrt(2));
+  });
+
+  it("checks the distance from the small arc to the point(140, 110)", () => {
+    const point = new Point(140, 110);
+    const dist = circularArc.distToPoint(point);
+    expect(dist).toBeCloseTo(10 * Math.sqrt(2));
+  });
+
+  it("checks the distance from the small arc to the point(180, 110)", () => {
+    const point = new Point(180, 110);
+    const dist = circularArc.distToPoint(point);
+    expect(dist).toBeCloseTo(10 * Math.sqrt(10));
+  });
+
+  it("checks the distance from the large arc to the point(110, 70)", () => {
+    const point = new Point(110, 70);
+    circularArc.laf = 1;
+    circularArc.sf = 0;
+    const dist = circularArc.distToPoint(point);
+    expect(dist).toBeCloseTo(10 * Math.sqrt(5));
+  });
+
+  it("checks the distance from the large arc to the point(120, 40)", () => {
+    const point = new Point(120, 40);
+    circularArc.laf = 1;
+    circularArc.sf = 0;
+    const dist = circularArc.distToPoint(point);
+    expect(dist).toBeCloseTo(10 * Math.sqrt(5));
+  });
+
+  it("checks the distance from the large arc to the point(130, 90)", () => {
+    const point = new Point(130, 90);
+    circularArc.laf = 1;
+    circularArc.sf = 0;
+    const dist = circularArc.distToPoint(point);
+    expect(dist).toBeCloseTo(10 * Math.sqrt(5));
+  });
+
+  it("checks the distance from the large arc to the point(180, 90)", () => {
+    const point = new Point(180, 90);
+    circularArc.laf = 1;
+    circularArc.sf = 0;
+    const dist = circularArc.distToPoint(point);
+    expect(dist).toBeCloseTo(10 * Math.sqrt(10));
+  });
+
+  it("checks the distance from the large arc to the point(90, 120)", () => {
+    const point = new Point(90, 120);
+    circularArc.laf = 1;
+    circularArc.sf = 0;
+    const dist = circularArc.distToPoint(point);
+    expect(dist).toBeCloseTo(50 - 10 * Math.sqrt(5));
+  });
+
+  it("checks the distance from the large arc to the point(60, 150)", () => {
+    const point = new Point(60, 150);
+    circularArc.laf = 1;
+    circularArc.sf = 0;
+    const dist = circularArc.distToPoint(point);
+    expect(dist).toBeCloseTo(10 * Math.sqrt(41) - 50);
+  });
+});
+
+describe("_distFromCenterToPoint", () => {
+  let canvas;
+  let el;
+  let circularArc;
+
+  beforeEach(() => {
+    canvas = new Snap(800, 600);
+    el = canvas.path("M100,100 A50,50,0,0,1,150,150");
+    circularArc = new CircularArc(el);
+  });
+
+  it("checks the distance from the center to a point", () => {
+    const point = new Point(150, 100);
+    const dist = circularArc._distFromCenterToPoint(point);
+    expect(dist).toBeCloseTo(50 * Math.sqrt(2));
   });
 });
 

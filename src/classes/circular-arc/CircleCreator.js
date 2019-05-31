@@ -65,7 +65,7 @@ export default class CircleCreator {
   }
 
   _unbindEvents() {
-    this.canvas.node.onmousemove = undefined;
+    this.canvas.node.onmousemove = null;
   }
 
   _animateRadius(e) {

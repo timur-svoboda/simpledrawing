@@ -21,10 +21,10 @@ export default class CircularArcCreator {
 
       this.stencil.el.remove();
       this._unbindEvents();
+      if (this.step === 2) {
+        this.arc.el.remove();
+      }
       this.step = 0;
-    }
-    if (this.step === 2) {
-      this.arc.el.remove();
     }
   }
 
@@ -42,7 +42,7 @@ export default class CircularArcCreator {
     const el = this.canvas.circle(p.x, p.y, 0);
     this.stencil = new Circle(el);
     this.stencil.el.addClass("solid-thin");
-    this.stencil.el.attr({ opacity: 0.25 });
+    this.stencil.el.attr({ opacity: 0.4 });
     this.stencil.addTypes("solid-thin", "stencil");
 
     this.store.getters.getCurrentTool.toolControllers.push("RadiusControl");
@@ -57,6 +57,10 @@ export default class CircularArcCreator {
       `M${p.x},${p.y} A${r},${r},0,0,0,${p.x},${p.y}`
     );
     this.arc = new CircularArc(el);
+
+    const strokeType = this.store.getters.getCurrentTool.strokeType;
+    this.arc.el.addClass(strokeType);
+    this.arc.addTypes(strokeType);
 
     this._unbindEvents();
     this._bindEvents();
@@ -103,33 +107,8 @@ export default class CircularArcCreator {
   }
 
   _animateArc(e) {
-    const point = this.mouse.getBindingCoords(e);
-    this._setFlags(point);
-  }
+    const p = this.mouse.getBindingCoords(e);
 
-  _setEndCoords(p, dot) {
-    let center;
-    if (dot >= 0 && this.arc.laf === 0) {
-      center = this.stencil.center;
-    } else {
-      center = this.arc.center;
-    }
-
-    if (p.x === center.x && p.y === center.y) return;
-
-    const d = Math.sqrt(
-      Math.pow(p.x - center.x, 2) + Math.pow(p.y - center.y, 2)
-    );
-    const sin = (p.y - center.y) / d;
-    const cos = (p.x - center.x) / d;
-
-    this.arc.end = new Point(
-      center.x + this.arc.radius * cos,
-      center.y + this.arc.radius * sin
-    );
-  }
-
-  _setFlags(p) {
     const v1 = new Vector(
       this.arc.start.x - this.stencil.center.x,
       this.arc.start.y - this.stencil.center.y,
@@ -162,5 +141,27 @@ export default class CircularArcCreator {
     }
 
     this.prevProduct = product;
+  }
+
+  _setEndCoords(p, dot) {
+    let center;
+    if (dot >= 0 && this.arc.laf === 0) {
+      center = this.stencil.center;
+    } else {
+      center = this.arc.center;
+    }
+
+    if (p.x === center.x && p.y === center.y) return;
+
+    const d = Math.sqrt(
+      Math.pow(p.x - center.x, 2) + Math.pow(p.y - center.y, 2)
+    );
+    const sin = (p.y - center.y) / d;
+    const cos = (p.x - center.x) / d;
+
+    this.arc.end = new Point(
+      center.x + this.arc.radius * cos,
+      center.y + this.arc.radius * sin
+    );
   }
 }

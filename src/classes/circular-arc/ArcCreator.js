@@ -21,7 +21,7 @@ export default class ArcCreator {
       res = this.circularArcCreator.create(point);
     }
 
-    if (res.done) {
+    if (res && res.done && res.value) {
       this.store.getters.getObjects.push(res.value);
     }
   }
