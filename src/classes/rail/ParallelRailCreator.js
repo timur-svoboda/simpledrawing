@@ -32,10 +32,10 @@ export default class ParallelRailCreator {
   }
 
   _firstStep(point) {
-    const { co, dist } = this.mouse.getClosestObject(point, rails);
     const rails = this.store.getters.getRails;
+    const { co, dist } = this.mouse.getClosestObject(point, rails);
 
-    if (co && dist <= 15) {
+    if (co !== null && dist !== null && dist <= 15) {
       this.baseRail = co;
       this.rail = this.baseRail.clone();
       this.baseRail.select();

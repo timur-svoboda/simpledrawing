@@ -1,3 +1,13 @@
+/*--------------------------------------------------------------
+>>> Navigation:
+----------------------------------------------------------------
+#removeSelectedObjects
+#_removeControlPoints
+  - checks controlPoints initial length
+  - checks controlPoints length
+  - checks the existance of the second control point
+  - checks that no control point has a rail
+--------------------------------------------------------------*/
 import { createLocalVue } from "@vue/test-utils";
 import Vuex from "vuex";
 import Trash from "@/classes/Trash.js";
@@ -6,14 +16,63 @@ const localVue = createLocalVue();
 
 localVue.use(Vuex);
 
-/*--------------------------------------------------------------
->>> Navigation:
-----------------------------------------------------------------
-# Method - number of tests
-# _removeControlPoints - 4
---------------------------------------------------------------*/
+describe("#removeSelectedObjects", () => {
+  let store;
+  let objects;
+  let removedObjectsCount;
+  let trash;
 
-describe("_removeControlPoints", () => {
+  beforeEach(() => {
+    store = new Vuex.Store();
+    store.getters.getObjects = [
+      { selected: false, types: [""] },
+      { selected: true, types: [""] },
+      { selected: false, types: ["rail"] },
+      { selected: true, types: ["rail"] },
+      { selected: true, types: [""] },
+      { selected: false, types: [""] }
+    ];
+    removedObjectsCount = 0;
+    store.getters.getObjects.forEach(obj => {
+      obj.el = {};
+      obj.el.remove = jest.fn(() => {
+        removedObjectsCount += 1;
+      });
+    });
+    objects = store.getters.getObjects;
+
+    trash = new Trash(store);
+    trash._removeControlPoints = jest.fn();
+  });
+
+  it("calls _removeControlPoints once", () => {
+    trash.removeSelectedObjects(objects);
+
+    expect(trash._removeControlPoints.mock.calls.length).toBe(1);
+  });
+
+  it("calls obj.el.remove 3 times", () => {
+    trash.removeSelectedObjects(objects);
+
+    expect(removedObjectsCount).toBe(3);
+  });
+
+  it("checks if objects length equals 3", () => {
+    trash.removeSelectedObjects(objects);
+
+    expect(objects.length).toBe(3);
+  });
+
+  it("checks if there are not selected objects", () => {
+    trash.removeSelectedObjects(objects);
+
+    objects.forEach(obj => {
+      expect(obj.selected).toBeFalsy();
+    });
+  });
+});
+
+describe("#_removeControlPoints", () => {
   let rails;
   let state;
   let getters;

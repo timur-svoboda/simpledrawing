@@ -1,3 +1,26 @@
+/*--------------------------------------------------------------
+>>> Navigation:
+----------------------------------------------------------------
+#init
+  - calls mainInscription.draw once
+  - calls mainInscription._bindEvents once
+  - checks if a returned value is mainInscription.inscr
+#_drawField
+  - checks the existance of the field
+  - checks the 'main-inscription__field' class of the field
+  - checks the id of the field
+  - checks the children number
+  - checks the existance of the border
+  - checks the existance of the text
+  - checks the text
+#focus and blur events
+  - checks adding a class
+  - checks removing a class
+#keydown event
+  - prints 'a' letter
+  - prints 'a' and 'b' letters
+  - prints 'a' and 'b' letters and erases the 'b' letter with 'Backspace'
+--------------------------------------------------------------*/
 import { createLocalVue } from "@vue/test-utils";
 import Vuex from "vuex";
 import MainInscription from "@/classes/MainInscription.js";
@@ -7,16 +30,41 @@ const localVue = createLocalVue();
 
 localVue.use(Vuex);
 
-/*--------------------------------------------------------------
->>> Navigation:
-----------------------------------------------------------------
-# Method - number of tests
-# _drawField - 7
-# focus and blur events - 2
-# keydown event - 3
---------------------------------------------------------------*/
+describe("#init", () => {
+  let paper;
+  let store;
+  let mainInscription;
 
-describe("_drawField", () => {
+  beforeEach(() => {
+    paper = new Snap(800, 600);
+
+    store = new Vuex.Store();
+
+    mainInscription = new MainInscription(0, 0, paper, store);
+    mainInscription._draw = jest.fn();
+    mainInscription._bindEvents = jest.fn();
+  });
+
+  it("calls mainInscription._draw once", () => {
+    mainInscription.init();
+
+    expect(mainInscription._draw.mock.calls.length).toBe(1);
+  });
+
+  it("calls mainInscription._bindEvents once", () => {
+    mainInscription.init();
+
+    expect(mainInscription._bindEvents.mock.calls.length).toBe(1);
+  });
+
+  it("checks if a returned value is mainInscription.inscr", () => {
+    const returnedValue = mainInscription.init();
+
+    expect(returnedValue).toBe(mainInscription.inscr);
+  });
+});
+
+describe("#_drawField", () => {
   let paper;
   let getters;
   let store;
@@ -87,7 +135,7 @@ describe("_drawField", () => {
   });
 });
 
-describe("focus and blur events", () => {
+describe("#focus and blur events", () => {
   let paper;
   let getters;
   let store;
@@ -135,7 +183,7 @@ describe("focus and blur events", () => {
   });
 });
 
-describe("keydown event", () => {
+describe("#keydown event", () => {
   let paper;
   let getters;
   let store;

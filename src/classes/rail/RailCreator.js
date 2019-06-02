@@ -43,7 +43,7 @@ export default class RailCreator {
   }
 
   _register(res) {
-    if (res.done) {
+    if (res && res.done && res.value) {
       const canvasObjects = this.store.getters.getObjects;
 
       for (let rail of res.value) {

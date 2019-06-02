@@ -13,15 +13,28 @@ localVue.use(Vuex);
 /*--------------------------------------------------------------
 >>> Navigation:
 ----------------------------------------------------------------
-# Method - number of tests
-# create - 2
-# _firstStep - 5
-# _secondStep - 3
-# _unbindEvents - 1
-# _animateEndingCoords - 1
+#create
+  - checks if lineCreator._firstStep was called one time with 'point' as the first argument when lineCreator.create was called one time
+  - checks if lineCreator._firstStep was called one time with 'point' as the first argument and lineCreator._secondStep was called one time when lineCreator.create was called one time
+#_firstStep
+  - checks if lineCreator.line is an instace of Line
+  - checks coords of lineCreator.line
+  - checks if lineCreator.line.types contains 'solid-bold'
+  - checks if lineCreator._bindEvents was called one time
+  - checks if lineCreator.step equals 1
+#_secondStep
+  - checks if lineCreator._unbindEvents was called one time
+  - checks if this.line was pushed into objects
+  - resets step
+#reset
+  - checks if lineCreator._unbindEvents was called once
+  - checks if lineCreator.line.el.remove was called once
+  - resets step
+#_animateEndingCoords
+  - checks ending coords
 --------------------------------------------------------------*/
 
-describe("create", () => {
+describe("#create", () => {
   let canvas;
   let store;
   let lineCreator;
@@ -60,7 +73,7 @@ describe("create", () => {
   });
 });
 
-describe("_firstStep", () => {
+describe("#_firstStep", () => {
   let canvas;
   let getters;
   let store;
@@ -118,7 +131,7 @@ describe("_firstStep", () => {
   });
 });
 
-describe("_secondStep", () => {
+describe("#_secondStep", () => {
   let canvas;
   let state;
   let getters;
@@ -160,75 +173,16 @@ describe("_secondStep", () => {
     expect(store.getters.getObjects).toContain(lineCreator.line);
   });
 
-  it("checks if this.line was pushed into objects", () => {
+  it("resets step", () => {
+    lineCreator.step = 1;
+
     lineCreator._secondStep();
 
     expect(lineCreator.step).toBe(0);
   });
 });
 
-describe("_unbindEvents", () => {
-  let canvas;
-  let store;
-  let lineCreator;
-
-  beforeEach(() => {
-    canvas = new Snap(800, 600);
-    store = new Vuex.Store();
-    lineCreator = new LineCreator(canvas, store);
-  });
-
-  it("checks if lineCreator.canvas.node.onmousemove is undefined", () => {
-    lineCreator._bindEvents();
-    lineCreator._unbindEvents();
-
-    expect(lineCreator.canvas.node.onmousemove).toBeNull();
-  });
-});
-
-describe("_animateEndingCoords", () => {
-  let canvas;
-  let getters;
-  let store;
-  let lineCreator;
-
-  beforeEach(() => {
-    canvas = new Snap(800, 600);
-
-    getters = {
-      getCurrentTool() {
-        return {
-          strokeType: "solid-bold"
-        };
-      },
-      getObjects() {
-        return [];
-      },
-      getScrollDistance() {
-        return 0;
-      }
-    };
-    store = new Vuex.Store({
-      getters
-    });
-
-    lineCreator = new LineCreator(canvas, store);
-  });
-
-  it("checks ending coords", () => {
-    const mousemoveEvent = new MouseEvent("mousemove");
-    mousemoveEvent.offsetX = 250;
-    mousemoveEvent.offsetY = 150;
-
-    lineCreator.create(new Point(100, 100));
-    lineCreator._animateEndingCoords(mousemoveEvent);
-
-    expect(lineCreator.line.x2).toBe(250);
-    expect(lineCreator.line.y2).toBe(150);
-  });
-});
-
-describe("reset", () => {
+describe("#reset", () => {
   let canvas;
   let getters;
   let store;
@@ -269,11 +223,53 @@ describe("reset", () => {
     expect(lineCreator.line.el.remove.mock.calls.length).toBe(1);
   });
 
-  it("checks if lineCreator.line.el.remove was called once", () => {
+  it("resets step", () => {
     lineCreator.create(new Point(100, 100));
 
     lineCreator.reset();
 
     expect(lineCreator.step).toBe(0);
+  });
+});
+
+describe("#_animateEndingCoords", () => {
+  let canvas;
+  let getters;
+  let store;
+  let lineCreator;
+
+  beforeEach(() => {
+    canvas = new Snap(800, 600);
+
+    getters = {
+      getCurrentTool() {
+        return {
+          strokeType: "solid-bold"
+        };
+      },
+      getObjects() {
+        return [];
+      },
+      getScrollDistance() {
+        return 0;
+      }
+    };
+    store = new Vuex.Store({
+      getters
+    });
+
+    lineCreator = new LineCreator(canvas, store);
+  });
+
+  it("checks ending coords", () => {
+    const mousemoveEvent = new MouseEvent("mousemove");
+    mousemoveEvent.offsetX = 250;
+    mousemoveEvent.offsetY = 150;
+
+    lineCreator.create(new Point(100, 100));
+    lineCreator._animateEndingCoords(mousemoveEvent);
+
+    expect(lineCreator.line.x2).toBe(250);
+    expect(lineCreator.line.y2).toBe(150);
   });
 });

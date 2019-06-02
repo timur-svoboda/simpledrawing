@@ -1,3 +1,14 @@
+/*--------------------------------------------------------------
+>>> Navigation:
+----------------------------------------------------------------
+# Method - number of tests
+#init
+  - calls scroll._bindEvents once
+#_doScroll
+  - checks scrollDistance after two scrolls up
+  - checks scrollDistance after two scrolls down
+  - checks scrollDistance after one scrolls up and one scroll down
+--------------------------------------------------------------*/
 import { createLocalVue } from "@vue/test-utils";
 import Vuex from "vuex";
 import Scroll from "@/classes/Scroll.js";
@@ -7,14 +18,26 @@ const localVue = createLocalVue();
 
 localVue.use(Vuex);
 
-/*--------------------------------------------------------------
->>> Navigation:
-----------------------------------------------------------------
-# Method - number of tests
-# _doScroll - 3
---------------------------------------------------------------*/
+describe("#init", () => {
+  let canvas;
+  let store;
+  let scroll;
 
-describe("_doScroll", () => {
+  beforeEach(() => {
+    canvas = new Snap(800, 600);
+    store = new Vuex.Store();
+    scroll = new Scroll(canvas, store);
+    scroll._bindEvents = jest.fn();
+  });
+
+  it("calls scroll._bindEvents once", () => {
+    scroll.init();
+
+    expect(scroll._bindEvents.mock.calls.length).toBe(1);
+  });
+});
+
+describe("#_doScroll", () => {
   let canvas;
   let store;
   let scroll;
