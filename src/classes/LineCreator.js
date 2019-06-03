@@ -1,5 +1,4 @@
 import Mouse from "./Mouse.js";
-import Point from "./Point.js";
 import Line from "./Line.js";
 
 export default class LineCreator {

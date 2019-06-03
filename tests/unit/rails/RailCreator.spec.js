@@ -160,7 +160,6 @@ describe("#toggleRails", () => {
 
 describe("#create", () => {
   let canvas;
-  let railCreator;
 
   beforeEach(() => {
     canvas = new Snap(800, 600);
@@ -335,7 +334,6 @@ describe("#_register", () => {
 
 describe("#reset", () => {
   let canvas;
-  let railCreator;
 
   beforeEach(() => {
     canvas = new Snap(800, 600);

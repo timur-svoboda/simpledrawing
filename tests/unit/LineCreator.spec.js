@@ -1,9 +1,8 @@
-import { shallowMount, createLocalVue } from "@vue/test-utils";
+import { createLocalVue } from "@vue/test-utils";
 import Vuex from "vuex";
 import LineCreator from "@/classes/LineCreator.js";
 import Line from "@/classes/Line.js";
 import Point from "@/classes/Point.js";
-import Mouse from "@/classes/Mouse.js";
 const Snap = require("./../../node_modules/snapsvg/dist/snap.svg-min.js");
 
 const localVue = createLocalVue();

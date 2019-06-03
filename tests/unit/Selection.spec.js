@@ -23,9 +23,7 @@ localVue.use(Vuex);
 
 describe("#select", () => {
   let store;
-  let objects;
   let selection;
-  let coords;
   let closest;
   let co;
   let dist;
@@ -33,12 +31,10 @@ describe("#select", () => {
 
   beforeEach(() => {
     store = new Vuex.Store();
-    objects = store.getters.getObjects = [];
 
     selection = new Selection(store);
     selection.unselectAll = jest.fn();
 
-    coords = selection.mouse.getCoords = jest.fn();
     closest = selection.mouse.getClosestObject = jest.fn();
     co = {};
     co.select = jest.fn();

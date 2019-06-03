@@ -210,31 +210,31 @@ describe("#getClosestObject", () => {
   it("checks if co is null when objects length equals 0", () => {
     objects = [];
 
-    const { co, dist } = mouse.getClosestObject(point, objects);
+    const { co } = mouse.getClosestObject(point, objects);
 
     expect(co).toBeNull();
   });
 
   it("checks if co isn't null when objects length is more than 0", () => {
-    const { co, dist } = mouse.getClosestObject(point, objects);
+    const { co } = mouse.getClosestObject(point, objects);
 
     expect(co).not.toBeNull();
   });
 
   it("checks if co id is 2", () => {
-    const { co, dist } = mouse.getClosestObject(point, objects);
+    const { co } = mouse.getClosestObject(point, objects);
 
     expect(co.id).toBe(2);
   });
 
   it("checks if dist isn't null when objects length is more than 0", () => {
-    const { co, dist } = mouse.getClosestObject(point, objects);
+    const { dist } = mouse.getClosestObject(point, objects);
 
     expect(dist).not.toBeNull();
   });
 
   it("checks if dist equals 65", () => {
-    const { co, dist } = mouse.getClosestObject(point, objects);
+    const { dist } = mouse.getClosestObject(point, objects);
 
     expect(dist).toBe(65);
   });

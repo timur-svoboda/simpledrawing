@@ -298,7 +298,7 @@ describe("#_secondStep", () => {
     canvas = new Snap(800, 600);
 
     getters = {
-      getCurrentTool(state) {
+      getCurrentTool() {
         return {
           strokeType: "solid-bold"
         };

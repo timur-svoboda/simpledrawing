@@ -1,6 +1,5 @@
 import CircleCreator from "./CircleCreator.js";
 import CircularArcCreator from "./CircularArcCreator.js";
-import Point from "./../Point.js";
 
 export default class ArcCreator {
   constructor(canvas, store) {

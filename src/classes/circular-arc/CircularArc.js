@@ -99,7 +99,7 @@ export default class CircularArc extends CanvasObject {
 
   get radius() {
     const parsedD = this.parseD(this.d);
-    if (parsedD.rx === parsedD.ry) return parsedD.rx;
+    return parsedD.rx;
   }
 
   set radius(value) {

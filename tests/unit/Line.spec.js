@@ -12,7 +12,6 @@ const Snap = require("./../../node_modules/snapsvg/dist/snap.svg-min.js");
 
 describe("distToPoint", () => {
   let canvas;
-  let types;
   let el;
   let line;
 
@@ -75,7 +74,6 @@ describe("distToPoint", () => {
 
 describe("coords", () => {
   let canvas;
-  let types;
   let el;
   let line;
 
