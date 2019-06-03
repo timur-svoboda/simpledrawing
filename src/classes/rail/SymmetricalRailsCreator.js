@@ -76,21 +76,21 @@ export default class SymmetricalRailsCreator {
   }
 
   _bindEvents() {
-    this.canvas.node.onmousemove = e => {
-      const point = this.mouse.getCoords(e);
-      const offset = this.baseRail.offset;
-      const deltaOffset = this.baseRail.distToPoint(point);
-      this._setOffset(offset, deltaOffset);
-      this.store.commit("setDistToBaseRail", deltaOffset);
-    };
+    this.canvas.node.onmousemove = this._animateOffset.bind(this);
   }
 
   _unbindEvents() {
     this.canvas.node.onmousemove = undefined;
   }
 
-  _setOffset(offset, deltaOffset) {
+  _animateOffset(e) {
+    const point = this.mouse.getCoords(e);
+    const offset = this.baseRail.offset;
+    const deltaOffset = this.baseRail.distToPoint(point);
+
     this.rails[0].offset = offset + deltaOffset;
     this.rails[1].offset = offset - deltaOffset;
+
+    this.store.commit("setDistToBaseRail", deltaOffset);
   }
 }

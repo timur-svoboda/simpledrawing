@@ -4,7 +4,7 @@
 #reset
   - calls _unbindEvents once(reset)
   - calls baseRail.unselect once(reset)
-  - calls rail.el.remove once
+  - calls rail.el.remove once for each rail
   - calls store.commit with 'setDistToBaseRail', 0 once(reset)
   - removes 'DistToBaseRail' from toolControllers(reset)
   - resets step(reset)
@@ -15,7 +15,8 @@
   - calls _secondStep once when step equals 1
 #_firstStep
   - calls mouse.getClosestObject with point, rails once
-  - calls co.clone once
+  - calls co.clone twice
+  - adds 100 and 200 to symmetricalRailsCreator.rails
   - calls co.select once
   - adds 'DistToBaseRailControl' to toolControllers
   - calls _bindEvents once
@@ -28,15 +29,15 @@
   - removes 'DistToBaseRailControl' from toolControllers(_secondStep)
   - resets step(_secondStep)
   - checks if res.done is true
-  - checks if res.value contains parallelRailCreator.rail
+  - checks if res.value is symmetricalRailsCreator.rails
 #_animateOffset
-  - checks rail offset if rail is horizontal
-  - checks rail offset if rail is vertical
+  - checks the first rail offset
+  - checks the second rail offset
   - calls store.commit with 'setDistToBaseRail', 100 once
 --------------------------------------------------------------*/
 import { createLocalVue } from "@vue/test-utils";
 import Vuex from "vuex";
-import ParallelRailCreator from "@/classes/rail/ParallelRailCreator.js";
+import SymmetricalRailsCreator from "@/classes/rail/SymmetricalRailsCreator.js";
 import Point from "@/classes/Point.js";
 const Snap = require("./../../../node_modules/snapsvg/dist/snap.svg-min.js");
 
@@ -47,7 +48,7 @@ localVue.use(Vuex);
 describe("#reset", () => {
   let canvas;
   let store;
-  let parallelRailCreator;
+  let symmetricalRailsCreator;
 
   beforeEach(() => {
     canvas = new Snap(800, 600);
@@ -56,39 +57,44 @@ describe("#reset", () => {
     store.commit = jest.fn();
     store.getters.getCurrentTool = { toolControllers: ["DistToBaseRail"] };
 
-    parallelRailCreator = new ParallelRailCreator(canvas, store);
-    parallelRailCreator._unbindEvents = jest.fn();
-    parallelRailCreator.baseRail = { unselect: jest.fn() };
-    parallelRailCreator.rail = { el: { remove: jest.fn() } };
-    parallelRailCreator.step = 1;
+    symmetricalRailsCreator = new SymmetricalRailsCreator(canvas, store);
+    symmetricalRailsCreator._unbindEvents = jest.fn();
+    symmetricalRailsCreator.baseRail = { unselect: jest.fn() };
+    symmetricalRailsCreator.rails = [];
+    for (let i = 0; i < 2; i++) {
+      symmetricalRailsCreator.rails.push({ el: { remove: jest.fn() } });
+    }
+    symmetricalRailsCreator.step = 1;
   });
 
   it("calls _unbindEvents once(reset)", () => {
-    parallelRailCreator.reset();
+    symmetricalRailsCreator.reset();
 
-    expect(parallelRailCreator._unbindEvents).toHaveBeenCalled();
+    expect(symmetricalRailsCreator._unbindEvents).toHaveBeenCalled();
   });
 
   it("calls baseRail.unselect once(reset)", () => {
-    parallelRailCreator.reset();
+    symmetricalRailsCreator.reset();
 
-    expect(parallelRailCreator.baseRail.unselect).toHaveBeenCalled();
+    expect(symmetricalRailsCreator.baseRail.unselect).toHaveBeenCalled();
   });
 
-  it("calls rail.el.remove once", () => {
-    parallelRailCreator.reset();
+  it("calls rail.el.remove once for each rail", () => {
+    symmetricalRailsCreator.reset();
 
-    expect(parallelRailCreator.rail.el.remove).toHaveBeenCalled();
+    symmetricalRailsCreator.rails.forEach(rail => {
+      expect(rail.el.remove).toHaveBeenCalled();
+    });
   });
 
   it("calls store.commit with 'setDistToBaseRail', 0 once(reset)", () => {
-    parallelRailCreator.reset();
+    symmetricalRailsCreator.reset();
 
     expect(store.commit).toHaveBeenCalledWith("setDistToBaseRail", 0);
   });
 
   it("removes 'DistToBaseRail' from toolControllers(reset)", () => {
-    parallelRailCreator.reset();
+    symmetricalRailsCreator.reset();
 
     expect(store.getters.getCurrentTool.toolControllers).not.toContain(
       "DistToBaseRail"
@@ -96,60 +102,60 @@ describe("#reset", () => {
   });
 
   it("resets step(reset)", () => {
-    parallelRailCreator.reset();
+    symmetricalRailsCreator.reset();
 
-    expect(parallelRailCreator.step).toBe(0);
+    expect(symmetricalRailsCreator.step).toBe(0);
   });
 });
 
 describe("#create", () => {
   let canvas;
   let store;
-  let parallelRailCreator;
+  let symmetricalRailsCreator;
 
   beforeEach(() => {
     canvas = new Snap(800, 600);
     store = new Vuex.Store();
 
-    parallelRailCreator = new ParallelRailCreator(canvas, store);
-    parallelRailCreator._firstStep = jest.fn();
-    parallelRailCreator._secondStep = jest.fn();
+    symmetricalRailsCreator = new SymmetricalRailsCreator(canvas, store);
+    symmetricalRailsCreator._firstStep = jest.fn();
+    symmetricalRailsCreator._secondStep = jest.fn();
   });
 
   it("calls _firstStep once when step equals 0", () => {
     const point = new Point(100, 100);
-    parallelRailCreator.step = 0;
+    symmetricalRailsCreator.step = 0;
 
-    parallelRailCreator.create(point);
+    symmetricalRailsCreator.create(point);
 
-    expect(parallelRailCreator._firstStep).toHaveBeenCalledWith(point);
+    expect(symmetricalRailsCreator._firstStep).toHaveBeenCalledWith(point);
   });
 
   it("doesn't call _secondStep when step equals 0", () => {
     const point = new Point(100, 100);
-    parallelRailCreator.step = 0;
+    symmetricalRailsCreator.step = 0;
 
-    parallelRailCreator.create(point);
+    symmetricalRailsCreator.create(point);
 
-    expect(parallelRailCreator._secondStep).not.toHaveBeenCalled();
+    expect(symmetricalRailsCreator._secondStep).not.toHaveBeenCalled();
   });
 
   it("doesn't call _firstStep when step equals 1", () => {
     const point = new Point(100, 100);
-    parallelRailCreator.step = 1;
+    symmetricalRailsCreator.step = 1;
 
-    parallelRailCreator.create(point);
+    symmetricalRailsCreator.create(point);
 
-    expect(parallelRailCreator._firstStep).not.toHaveBeenCalled();
+    expect(symmetricalRailsCreator._firstStep).not.toHaveBeenCalled();
   });
 
   it("calls _secondStep once when step equals 1", () => {
     const point = new Point(100, 100);
-    parallelRailCreator.step = 1;
+    symmetricalRailsCreator.step = 1;
 
-    parallelRailCreator.create(point);
+    symmetricalRailsCreator.create(point);
 
-    expect(parallelRailCreator._secondStep).toHaveBeenCalledWith();
+    expect(symmetricalRailsCreator._secondStep).toHaveBeenCalledWith();
   });
 });
 
@@ -157,7 +163,7 @@ describe("#_firstStep", () => {
   let canvas;
   let store;
   let rails;
-  let parallelRailCreator;
+  let symmetricalRailsCreator;
   let co;
   let point;
 
@@ -171,44 +177,53 @@ describe("#_firstStep", () => {
       toolControllers: []
     };
 
-    parallelRailCreator = new ParallelRailCreator(canvas, store);
-    parallelRailCreator.mouse.getClosestObject = jest.fn();
+    symmetricalRailsCreator = new SymmetricalRailsCreator(canvas, store);
+    symmetricalRailsCreator.mouse.getClosestObject = jest.fn();
     co = {
       clone: jest.fn(),
       select: jest.fn()
     };
-    parallelRailCreator.mouse.getClosestObject.mockReturnValue({
+    co.clone.mockReturnValueOnce(100).mockReturnValueOnce(200);
+    symmetricalRailsCreator.mouse.getClosestObject.mockReturnValue({
       co,
       dist: 10
     });
-    parallelRailCreator._bindEvents = jest.fn();
+    symmetricalRailsCreator._bindEvents = jest.fn();
+    symmetricalRailsCreator.rails = [];
 
     point = new Point(100, 100);
   });
 
   it("calls mouse.getClosestObject with point, rails once", () => {
-    parallelRailCreator._firstStep(point);
+    symmetricalRailsCreator._firstStep(point);
 
-    expect(parallelRailCreator.mouse.getClosestObject).toHaveBeenCalledWith(
+    expect(symmetricalRailsCreator.mouse.getClosestObject).toHaveBeenCalledWith(
       point,
       rails
     );
   });
 
-  it("calls co.clone once", () => {
-    parallelRailCreator._firstStep(point);
+  it("calls co.clone twice", () => {
+    symmetricalRailsCreator._firstStep(point);
 
-    expect(co.clone).toHaveBeenCalled();
+    expect(co.clone).toHaveBeenCalledTimes(2);
+  });
+
+  it("adds 100 and 200 to symmetricalRailsCreator.rails", () => {
+    symmetricalRailsCreator._firstStep(point);
+
+    expect(symmetricalRailsCreator.rails[0]).toBe(100);
+    expect(symmetricalRailsCreator.rails[1]).toBe(200);
   });
 
   it("calls co.select once", () => {
-    parallelRailCreator._firstStep(point);
+    symmetricalRailsCreator._firstStep(point);
 
     expect(co.select).toHaveBeenCalled();
   });
 
   it("adds 'DistToBaseRailControl' to toolControllers", () => {
-    parallelRailCreator._firstStep(point);
+    symmetricalRailsCreator._firstStep(point);
 
     expect(store.getters.getCurrentTool.toolControllers).toContain(
       "DistToBaseRailControl"
@@ -216,19 +231,19 @@ describe("#_firstStep", () => {
   });
 
   it("calls _bindEvents once", () => {
-    parallelRailCreator._firstStep(point);
+    symmetricalRailsCreator._firstStep(point);
 
-    expect(parallelRailCreator._bindEvents).toHaveBeenCalled();
+    expect(symmetricalRailsCreator._bindEvents).toHaveBeenCalled();
   });
 
   it("increases step to 1", () => {
-    parallelRailCreator._firstStep(point);
+    symmetricalRailsCreator._firstStep(point);
 
-    expect(parallelRailCreator.step).toBe(1);
+    expect(symmetricalRailsCreator.step).toBe(1);
   });
 
   it("checks if res.done is false", () => {
-    const res = parallelRailCreator._firstStep(point);
+    const res = symmetricalRailsCreator._firstStep(point);
 
     expect(res.done).toBeFalsy();
   });
@@ -237,7 +252,7 @@ describe("#_firstStep", () => {
 describe("#_secondStep", () => {
   let canvas;
   let store;
-  let parallelRailCreator;
+  let symmetricalRailsCreator;
 
   beforeEach(() => {
     canvas = new Snap(800, 600);
@@ -248,32 +263,32 @@ describe("#_secondStep", () => {
       toolControllers: ["DistToBaseRailControl"]
     };
 
-    parallelRailCreator = new ParallelRailCreator(canvas, store);
-    parallelRailCreator._unbindEvents = jest.fn();
-    parallelRailCreator.baseRail = { unselect: jest.fn() };
-    parallelRailCreator.rail = {};
+    symmetricalRailsCreator = new SymmetricalRailsCreator(canvas, store);
+    symmetricalRailsCreator._unbindEvents = jest.fn();
+    symmetricalRailsCreator.baseRail = { unselect: jest.fn() };
+    symmetricalRailsCreator.rail = {};
   });
 
   it("calls _unbindEvents once(_secondStep)", () => {
-    parallelRailCreator._secondStep();
+    symmetricalRailsCreator._secondStep();
 
-    expect(parallelRailCreator._unbindEvents).toHaveBeenCalled();
+    expect(symmetricalRailsCreator._unbindEvents).toHaveBeenCalled();
   });
 
   it("calls baseRail.unselect once(_secondStep)", () => {
-    parallelRailCreator._secondStep();
+    symmetricalRailsCreator._secondStep();
 
-    expect(parallelRailCreator.baseRail.unselect).toHaveBeenCalled();
+    expect(symmetricalRailsCreator.baseRail.unselect).toHaveBeenCalled();
   });
 
   it("calls store.commit with 'setDistToBaseRail', 0 once(_secondStep)", () => {
-    parallelRailCreator._secondStep();
+    symmetricalRailsCreator._secondStep();
 
     expect(store.commit).toHaveBeenCalledWith("setDistToBaseRail", 0);
   });
 
   it("removes 'DistToBaseRailControl' from toolControllers(_secondStep)", () => {
-    parallelRailCreator._secondStep();
+    symmetricalRailsCreator._secondStep();
 
     expect(store.getters.getCurrentTool.toolControllers).not.toContain(
       "DistToBaseRailControl"
@@ -281,28 +296,28 @@ describe("#_secondStep", () => {
   });
 
   it("resets step(_secondStep)", () => {
-    parallelRailCreator._secondStep();
+    symmetricalRailsCreator._secondStep();
 
-    expect(parallelRailCreator.step).toBe(0);
+    expect(symmetricalRailsCreator.step).toBe(0);
   });
 
   it("checks if res.done is true", () => {
-    const res = parallelRailCreator._secondStep();
+    const res = symmetricalRailsCreator._secondStep();
 
     expect(res.done).toBeTruthy();
   });
 
-  it("checks if res.value contains parallelRailCreator.rail", () => {
-    const res = parallelRailCreator._secondStep();
+  it("checks if res.value is symmetricalRailsCreator.rails", () => {
+    const res = symmetricalRailsCreator._secondStep();
 
-    expect(res.value).toContain(parallelRailCreator.rail);
+    expect(res.value).toBe(symmetricalRailsCreator.rails);
   });
 });
 
 describe("#_animateOffset", () => {
   let canvas;
   let store;
-  let parallelRailCreator;
+  let symmetricalRailsCreator;
   let event;
 
   beforeEach(() => {
@@ -311,38 +326,35 @@ describe("#_animateOffset", () => {
     store = new Vuex.Store();
     store.commit = jest.fn();
 
-    parallelRailCreator = new ParallelRailCreator(canvas, store);
-    parallelRailCreator.mouse.getCoords = jest.fn();
-    parallelRailCreator.mouse.getCoords.mockReturnValue(new Point(123, 321));
-    parallelRailCreator.baseRail = {
+    symmetricalRailsCreator = new SymmetricalRailsCreator(canvas, store);
+    symmetricalRailsCreator.mouse.getCoords = jest.fn();
+    symmetricalRailsCreator.mouse.getCoords.mockReturnValue(
+      new Point(222, 333)
+    );
+    symmetricalRailsCreator.baseRail = {
+      offset: 200,
       distToPoint: jest.fn()
     };
-    parallelRailCreator.baseRail.distToPoint.mockReturnValue(100);
-    parallelRailCreator.rail = {
-      types: []
-    };
+    symmetricalRailsCreator.baseRail.distToPoint.mockReturnValue(100);
+    symmetricalRailsCreator.rails = [{ offset: 0 }, { offset: 0 }];
 
     event = new MouseEvent("click");
   });
 
-  it("checks rail offset if rail is horizontal", () => {
-    parallelRailCreator.rail.types.push("horizontal");
+  it("checks the first rail offset", () => {
+    symmetricalRailsCreator._animateOffset(event);
 
-    parallelRailCreator._animateOffset(event);
-
-    expect(parallelRailCreator.rail.offset).toBe(321);
+    expect(symmetricalRailsCreator.rails[0].offset).toBe(300);
   });
 
-  it("checks rail offset if rail is vertical", () => {
-    parallelRailCreator.rail.types.push("vertical");
+  it("checks the second rail offset", () => {
+    symmetricalRailsCreator._animateOffset(event);
 
-    parallelRailCreator._animateOffset(event);
-
-    expect(parallelRailCreator.rail.offset).toBe(123);
+    expect(symmetricalRailsCreator.rails[1].offset).toBe(100);
   });
 
   it("calls store.commit with 'setDistToBaseRail', 100 once", () => {
-    parallelRailCreator._animateOffset(event);
+    symmetricalRailsCreator._animateOffset(event);
 
     expect(store.commit).toHaveBeenCalledWith("setDistToBaseRail", 100);
   });

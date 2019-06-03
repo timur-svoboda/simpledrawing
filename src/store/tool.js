@@ -35,11 +35,6 @@ export default {
         toolControllers: ["IconControl", "ArcTypeControl", "StrokeTypeControl"],
         arcType: "circle",
         strokeType: "solid-bold"
-      },
-      {
-        id: "ruler",
-        iconName: "ruler.svg",
-        toolControllers: ["IconControl"]
       }
     ],
     currentTool: {
