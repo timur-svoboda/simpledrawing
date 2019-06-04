@@ -38,16 +38,24 @@ export default {
 };
 </script>
 
-<style lang="stylus" scoped>
+<style lang="stylus">
 .tool-panel
   display flex
   align-items center
-  padding 15px 20px
+  padding 0 20px
   border-bottom 1px solid rgba(0,0,0,0.5)
   user-select none
+  height 60px
 
 .tool-panel__tool-item
   display flex
   align-items center
   margin-right 20px
+
+.tool-panel__select
+  border-radius 3px
+  padding 5px
+  font-family: Arial, sans-serif
+  &:focus
+    outline none
 </style>

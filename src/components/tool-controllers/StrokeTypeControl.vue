@@ -1,6 +1,6 @@
 <template>
   <div class="tool-item">
-    <select v-model="currentStrokeType">
+    <select v-model="currentStrokeType" class="tool-panel__select">
       <option
         v-for="strokeType of strokeTypes"
         :value="strokeType.id"

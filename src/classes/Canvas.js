@@ -110,6 +110,7 @@ export default class Canvas {
     if (key === "Delete") {
       this.trash.removeSelectedObjects();
     } else if (e.key === "a" && e.ctrlKey) {
+      e.preventDefault();
       this.selection.selectAll();
     } else if (e.key === "h" && e.ctrlKey) {
       e.preventDefault();

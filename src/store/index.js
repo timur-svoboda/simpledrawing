@@ -4,10 +4,12 @@ import Vuex from "vuex";
 Vue.use(Vuex);
 
 import tool from "./tool.js";
+import guide from "./guide.js";
 
 export default new Vuex.Store({
   modules: {
-    tool
+    tool,
+    guide
   },
   state: {
     scale: 4,

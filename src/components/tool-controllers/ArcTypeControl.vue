@@ -1,6 +1,6 @@
 <template>
   <div class="tool-item">
-    <select v-model="currentArcType">
+    <select v-model="currentArcType" class="tool-panel__select">
       <option
         v-for="arcType of arcTypes"
         :value="arcType.id"

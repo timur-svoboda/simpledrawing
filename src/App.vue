@@ -1,5 +1,6 @@
 <template>
   <div id="app">
+    <guide></guide>
     <tool-panel></tool-panel>
     <drawing-window></drawing-window>
   </div>
@@ -8,12 +9,14 @@
 <script>
 import ToolPanel from "./components/ToolPanel.vue";
 import DrawingWindow from "./components/DrawingWindow.vue";
+import Guide from "./components/Guide.vue";
 
 export default {
   name: "app",
   components: {
     ToolPanel,
-    DrawingWindow
+    DrawingWindow,
+    Guide
   }
 };
 </script>

@@ -1,6 +1,6 @@
 <template>
   <div class="tool-item">
-    <select v-model="currentRailType">
+    <select v-model="currentRailType" class="tool-panel__select">
       <option
         v-for="railType of railTypes"
         :value="railType.id"
