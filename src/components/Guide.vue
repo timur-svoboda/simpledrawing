@@ -1,13 +1,21 @@
 <template>
-  <div id="guide-modal-window" class="guide-modal-window" v-if="!isHiddenGuideWindow">
+  <div
+    id="guide-modal-window"
+    class="guide-modal-window"
+    v-if="!isHiddenGuideWindow"
+  >
     <div class="guide-modal-window__lang" v-if="guideStep === 0">
       <span>Language: </span>
-      <select class="guide-modal-window__lang-select" v-model="currentGuideLanguage">
+      <select
+        class="guide-modal-window__lang-select"
+        v-model="currentGuideLanguage"
+      >
         <option
-        v-for="language of guideLanguages"
-        :value="language.id"
-        :key="language.id"
-        >{{ language.label }}</option>
+          v-for="language of guideLanguages"
+          :value="language.id"
+          :key="language.id"
+          >{{ language.label }}</option
+        >
       </select>
     </div>
     <div class="guide-modal-window__content" v-html="currentGuideText"></div>
@@ -101,7 +109,7 @@ export default {
     display none
   a
     color rgba( 65, 184, 131, 1 )
-    
+
 .guide-modal-window__lang-select
   margin-left 10px
   border 1px solid #fff
@@ -119,7 +127,7 @@ export default {
   display flex
   justify-content flex-end
   user-select none
-  
+
 .guide-modal-window__button
   margin-left 10px
   border 1px solid #fff
