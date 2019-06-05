@@ -7,6 +7,10 @@ export default {
         label: "English"
       },
       {
+        id: "ua",
+        label: "Українська"
+      },
+      {
         id: "ru",
         label: "Русский"
       }
@@ -17,9 +21,9 @@ export default {
         ru: `
         <h3>Начало</h3>
         <p>Добро пожаловать в Simpledrawing. Simpledrawing - это приложение для черчения, созданное энтузиастом для улучшения навыков программирования и пополнения портфолио. Проект не используется в коммерческих целях.<br><br>
-        Ссылка на github-репозиторий: <a href="https://github.com/timur-svoboda/simpledrawing">https://github.com/timur-svoboda/simpledrawing</a><br>
+        Ссылка на GitHub репозиторий: <a href="https://github.com/timur-svoboda/simpledrawing">https://github.com/timur-svoboda/simpledrawing</a><br>
         Связаться с автором по вопросам связанным с проектом: simpledrawing.qna@gmail.com<br><br>
-        Вы можете пройти интерактивное руководство по редактору для того, чтобы освоить его или же пропустить руководство, если вы уже знакомы с редактором.
+        Вы можете пройти руководство по приложению для того, чтобы освоить его или же пропустить руководство, если вы уже знакомы с приложением.
         </p>
         `,
         en: `
@@ -27,7 +31,15 @@ export default {
         <p>Welcome to Simpledrawing. Simpledrawing is an app for drafting, which was created by an enthusiast to improve programming skills and to add a project to his portfolio. The project is not used for commercial purposes.<br><br>
         Link to GitHub repository: <a href="https://github.com/timur-svoboda/simpledrawing">https://github.com/timur-svoboda/simpledrawing</a><br>
         Contact the author for questions related to the project: simpledrawing.qna@gmail.com<br><br>
-        You can go through an interactive guide to the editor in order to master it or skip it if you are already familiar with the editor.
+        You can go through an interactive guide to the app in order to master it or skip it if you are already familiar with the app.
+        </p>
+        `,
+        ua: `
+        <h3>Початок</h3>
+        <p>Ласкаво просимо в Simpledrawing. Simpledrawing - це додаток для креслення, створений ентузіастом для поліпшення навичок програмування і поповнення портфоліо. Проект не використовується в комерційних цілях.<br><br>
+        Посилання на GitHub-репозиторій: <a href="https://github.com/timur-svoboda/simpledrawing">https://github.com/timur-svoboda/simpledrawing</a><br>
+        Зв'язатися з автором з питань, пов'язаних з проектом: simpledrawing.qna@gmail.com<br><br>
+        Ви можете пройти посібник по додатку для того, щоб його освоїти або пропустити посібник, якщо ви вже знайомі з додатком.
         </p>
         `
       },
@@ -37,7 +49,7 @@ export default {
         <p>Rails - это инструмент для создания вспомогательных прямых. На пересечении этих прямых создаются точки привязки. Чтобы выбрать инструмент Rails,</p>
         <ul>
           <li>зажмите правую кнопку мыши(далее ПКМ) в любом месте холста;</li>
-          <li>наведите мыши на сектор “#” появившегося радиального меню и отпустите ПКМ.</li>
+          <li>наведите мышку на сектор “#” появившегося радиального меню и отпустите ПКМ.</li>
         </ul>
         `,
         en: `
@@ -46,6 +58,14 @@ export default {
         <ul>
           <li>hold down the right mouse button(RMB) anywhere on the canvas;</li>
           <li>move the mouse on the “#” sector of the appeared radial menu and release the RMB.</li>
+        </ul>
+        `,
+        ua: `
+        <h3>Перший крок: Вибрати інструмент Rails.</h3>
+        <p>Rails - це інструмент для створення допоміжних прямих. На перетині цих прямих створюються точки прив'язки. Щоб вибрати інструмент Rails,</p>
+        <ul>
+          <li>затисніть праву кнопку миші (далі ПКМ) в будь-якому місці полотна;</li>
+          <li>наведіть мишку на сектор "#" з'явився радіального меню і відпустіть ПКМ.</li>
         </ul>
         `
       },
@@ -57,6 +77,10 @@ export default {
         en: `
         <h3>Second step: Draw a vertical rail.</h3>
         <p>To draw a vertical rail, left click anywhere on the canvas.</p>
+        `,
+        ua: `
+        <h3>Другий крок: Намалювати вертикальну пряму.</h3>
+        <p>Щоб намалювати вертикальну пряму, клікніть в будь-якому місці полотна</p>
         `
       },
       {
@@ -74,6 +98,14 @@ export default {
         <ul>
           <li>click on the drop-down menu on the top, on the toolbar and change the tool type to Horizontal rail;</li>
           <li>left click anywhere on the canvas.</li>
+        </ul>
+        `,
+        ua: `
+        <h3>Третій крок: Намалювати горизонтальну пряму.</h3>
+        <p>Щоб намалювати горизонтальну пряму,</p>
+        <ul>
+          <li>натисніть на меню, що випадає вгорі, на панель інструменту і змініть тип інструменту на Horizontal rail;</li>
+          <li>натисніть ліву кнопку миші (далі ЛКМ) в будь-якому місці полотна.</li>
         </ul>
         `
       },
@@ -95,6 +127,15 @@ export default {
           <li>left click on the area near any rail;</li>
           <li>move the cursor to an arbitrary distance from the highlighted rail and click the left mouse button(LMB).</li>
         </ul>
+        `,
+        ua: `
+        <h3>Четвертий крок: Намалювати паралельну пряму.</h3>
+        <p>Щоб намалювати паралельну пряму,</p>
+        <ul>
+          <li>натисніть на меню, що випадає вгорі, на панель інструменту і змініть тип інструменту на Parallel rail;</li>
+          <li>клікніть ЛКМ на область біля будь-якої прямої;</li>
+          <li>відведіть курсор на довільну відстань від виділеної прямої і натисніть ЛКМ.</li>
+        </ul>
         `
       },
       {
@@ -114,6 +155,15 @@ export default {
           <li>click on the drop-down menu on the top, on the toolbar and change the tool type to Symmetrical rail;</li>
           <li>left click on the area near any rail;</li>
           <li>move the cursor to an arbitrary distance from the highlighted rail and click the LMB.</li>
+        </ul>
+        `,
+        ua: `
+        <h3>П'ятий крок: Намалювати симетричні прямі.</h3>
+        <p>Щоб намалювати симетричні прямі,</p>
+        <ul>
+          <li>натисніть на меню, що випадає вгорі, на панель інструменту і змініть тип інструменту на Symmetrical rail;</li>
+          <li>клікніть ЛКМ на область біля будь-якої прямої;</li>
+          <li>відведіть курсор на довільну відстань від виділеної прямої і натисніть ЛКМ.</li>
         </ul>
         `
       },
@@ -135,6 +185,15 @@ export default {
           <li>left click at the intersection of rails;</li>
           <li>move the mouse to another intersection of rails and click LMB.</li>
         </ul>
+        `,
+        ua: `
+        <h3>Шостий крок: Намалювати відрізок.</h3>
+        <p>Щоб намалювати відрізок,</p>
+        <ul>
+          <li>виберіть інструмент Line;</li>
+          <li>натисніть ЛКМ на перетині прямих;</li>
+          <li>відведіть курсор до іншого перетину прямих і натисніть ЛКМ.</li>
+        </ul>
         `
       },
       {
@@ -154,6 +213,15 @@ export default {
           <li>select the Arc tool;</li>
           <li>left click at the intersection of rails;</li>
           <li>move the mouse to another intersection of rails and click LMB.</li>
+        </ul>
+        `,
+        ua: `
+        <h3>Сьомий крок: Намалювати коло.</h3>
+        <p>Щоб намалювати коло,</p>
+        <ul>
+          <li>виберіть інструмент Arc;</li>
+          <li>натисніть ЛКМ на перетині прямих;</li>
+          <li>відведіть курсор до іншого перетину прямих і натисніть ЛКМ.</li>
         </ul>
         `
       },
@@ -177,6 +245,16 @@ export default {
           <li>move the mouse to another intersection of rails and click LMB;</li>
           <li>move the cursor around the circle to select the appropriate arc, then press the LMB.</li>
         </ul>
+        `,
+        ua: `
+        <h3>Восьмий крок: Намалювати дугу.</h3>
+        <p>Щоб намалювати дугу,</p>
+        <ul>
+          <li>змініть тип інструменту на Circular Arc;</li>
+          <li>натисніть ЛКМ на перетині прямих;</li>
+          <li>відведіть курсор до іншого перетину прямих і натисніть ЛКМ;</li>
+          <li>водите курсором навколо кола, щоб вибрати відповідну дугу, після чого натисніть ЛКМ.</li>
+        </ul>
         `
       },
       {
@@ -199,6 +277,16 @@ export default {
           <li>try to select another object;</li>
           <li>press the Del key to delete the selected object.</li>
         </ul>
+        `,
+        ua: `
+        <h3>Дев'ятий крок: Виділити і видалити об'єкт.</h3>
+        <p>Щоб виділити об'єкт,</p>
+        <ul>
+          <li>виберіть інструмент Selection;</li>
+          <li>натисніть ЛКМ на область поряд з будь-яким об'єктом;</li>
+          <li>спробуйте виділити інший об'єкт;</li>
+          <li>натисніть клавішу Del, щоб видалити виділений об'єкт.</li>
+        </ul>
         `
       },
       {
@@ -211,11 +299,17 @@ export default {
         <h3>Tenth step: Advanced selection.</h3>
         <p>To select multiple objects, hold down the Ctrl key.<br>
         To select all objects, hold down the keyboard shortcut Ctrl + A.</p>
+        `,
+        ua: `
+        <h3>Десятий крок: Просунуте виділення.</h3>
+        <p>Щоб виділити кілька об'єктів, затисніть клавішу Ctrl.<br>
+        Щоб виділити всі об'єкти, затисніть поєднання клавіш Ctrl + A.</p>
         `
       },
       {
-        ru: `<h3>Вы готови приступить к черчению</h3>`,
-        en: `<h3>You're ready to start drafting</h3>`
+        ru: `<h3>Вы готови приступить к черчению?</h3>`,
+        en: `<h3>Are you ready to start drafting?</h3>`,
+        ua: `<h3>Ви готові приступити до креслення?</h3>`
       }
     ]
   },

@@ -25,28 +25,52 @@
         class="guide-modal-window__button"
         v-if="guideStep < guideTexts.length - 1"
       >
-        {{ currentGuideLanguage === "en" ? "Skip" : "Пропустить" }}
+        {{
+          currentGuideLanguage === "en"
+            ? "Skip"
+            : currentGuideLanguage === "ru"
+            ? "Пропустить"
+            : "Пропустити"
+        }}
       </button>
       <button
         @click="guideStep -= 1"
         class="guide-modal-window__button"
         v-if="guideStep > 0"
       >
-        {{ currentGuideLanguage === "en" ? "Prev" : "Назад" }}
+        {{
+          currentGuideLanguage === "en"
+            ? "Prev"
+            : currentGuideLanguage === "ru"
+            ? "Назад"
+            : "Назад"
+        }}
       </button>
       <button
         @click="guideStep += 1"
         class="guide-modal-window__button"
         v-if="guideStep < guideTexts.length - 1"
       >
-        {{ currentGuideLanguage === "en" ? "Next" : "Вперёд" }}
+        {{
+          currentGuideLanguage === "en"
+            ? "Next"
+            : currentGuideLanguage === "ru"
+            ? "Вперёд"
+            : "Вперед"
+        }}
       </button>
       <button
         class="guide-modal-window__button"
         v-if="guideStep === guideTexts.length - 1"
         @click="isHiddenGuideWindow = true"
       >
-        {{ currentGuideLanguage === "en" ? "Close" : "Закрыть" }}
+        {{
+          currentGuideLanguage === "en"
+            ? "Yes"
+            : currentGuideLanguage === "ru"
+            ? "Да"
+            : "Так"
+        }}
       </button>
     </nav>
   </div>
