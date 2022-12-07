@@ -30,7 +30,7 @@
     "imports-loader": "^0.8.0",
     "jsdoc": "^3.5.5",
     "jsdoc-vuejs": "^2.4.3",
-    "lint-staged": "^8.1.5",
+    "lint-staged": "^13.1.0",
     "snapsvg": "^0.5.1",
     "stylus": "^0.54.5",
     "stylus-loader": "^3.0.2",
